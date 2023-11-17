@@ -1,7 +1,7 @@
 // File: api/getMeal.ts
 
 import cohere from "cohere-ai";
-import { queryWeaviate } from "../utils/Weaviate";
+import { queryWeaviate } from "./Weaviate";
 
 const getMeal = async (req, res) => {
   // Load API Key
