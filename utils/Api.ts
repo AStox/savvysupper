@@ -1,4 +1,4 @@
-async function getMealRecipe(mealCount: number = 1): Promise<string[]> {
+async function getMeal() {
   try {
     const response = await fetch("https://savvysupper.vercel.app/api/GetMeal");
     if (!response.ok) {

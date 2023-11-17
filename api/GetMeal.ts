@@ -74,7 +74,7 @@ const getMeal = async (req: VercelRequest, res: VercelResponse) => {
     ];
     const message = "Generate the first recipe";
 
-    const response = await cohere.chat({
+    const response = await (cohere as any).chat({
       chat_history: chatHistory,
       message: message,
       documents: documents,
