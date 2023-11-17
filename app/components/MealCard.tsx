@@ -9,6 +9,7 @@ export interface Meal {
   title: string;
   cost: number;
   savings: number;
+  ingredients: string[];
 }
 
 interface MealCardProps {

@@ -72,12 +72,7 @@ const Home = () => {
   return (
     <div>
       <TopBar />
-      <MealPlan
-        meals={mockMeals}
-        showSummary={showSummary}
-        totalCost={totalCost}
-        totalSavings={totalSavings}
-      />
+      <MealPlan meals={mockMeals} totalCost={totalCost} totalSavings={totalSavings} />
     </div>
   );
 };
