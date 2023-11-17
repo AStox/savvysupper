@@ -1,10 +1,9 @@
 // File: api/getMeal.ts
 
 import cohere from "cohere-ai";
-import { VercelRequest, VercelResponse } from "@vercel/node";
 import { queryWeaviate } from "../utils/Weaviate";
 
-const getMeal = async (req: VercelRequest, res: VercelResponse) => {
+const getMeal = async (req, res) => {
   // Load API Key
   const apiKey = process.env.COHERE_API_KEY;
 
@@ -15,7 +14,7 @@ const getMeal = async (req: VercelRequest, res: VercelResponse) => {
   }
 
   // Initialize Cohere Client
-  (cohere as any).init(apiKey);
+  cohere.init(apiKey);
 
   try {
     // Query Weaviate
@@ -74,7 +73,7 @@ const getMeal = async (req: VercelRequest, res: VercelResponse) => {
     ];
     const message = "Generate the first recipe";
 
-    const response = await (cohere as any).chat({
+    const response = await cohere.chat({
       chat_history: chatHistory,
       message: message,
       documents: documents,
@@ -82,7 +81,7 @@ const getMeal = async (req: VercelRequest, res: VercelResponse) => {
     });
 
     res.status(200).json(response);
-  } catch (error: unknown) {
+  } catch (error) {
     if (error instanceof Error) {
       res.status(500).send(`Error processing request: ${error.message}`);
     } else {
