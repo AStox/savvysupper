@@ -1,11 +1,13 @@
 // File: api/getMeal.ts
 
 const cohere = require("cohere-ai");
-import { VercelRequest, VercelResponse } from "@vercel/node";
+const { vercelNode } = require("@vercel/node");
+const { queryWeaviate } = require("../utils/Weaviate");
 
-import { queryWeaviate } from "../utils/Weaviate";
-
-const getMeal = async (req: VercelRequest, res: VercelResponse) => {
+const getMeal = async (
+  req: typeof vercelNode.VercelRequest,
+  res: typeof vercelNode.VercelResponse
+) => {
   // Load API Key
   const apiKey = process.env.COHERE_API_KEY;
 
