@@ -1,13 +1,13 @@
-import weaviate, { ApiKey, WeaviateClient } from "weaviate-ts-client";
+import weaviate from "weaviate-ts-client";
 
-export async function queryWeaviate(queryString: string, resultLimit: number = 20): Promise<any[]> {
+export async function queryWeaviate(queryString, resultLimit = 20) {
   const cohereApiKey = process.env.COHERE_API_KEY || "";
-
   const weaviateApiKey = process.env.WEAVIATE_API_KEY || "";
-  const client: WeaviateClient = weaviate.client({
+
+  const client = weaviate.client({
     scheme: "https",
     host: "https://adcorp-vghi1hv6.weaviate.network",
-    apiKey: new ApiKey(weaviateApiKey),
+    apiKey: new weaviate.ApiKey(weaviateApiKey),
     headers: { "X-Cohere-Api-Key": cohereApiKey },
   });
 
@@ -21,8 +21,8 @@ export async function queryWeaviate(queryString: string, resultLimit: number = 2
       .do();
 
     // Process the query result
-    const processedDocuments: any[] = [];
-    queryResult.data.Get.Sales.forEach((item: any) => {
+    const processedDocuments = [];
+    queryResult.data.Get.Sales.forEach((item) => {
       processedDocuments.push({
         title: item.title || "",
         snippet: `${item.title} (price: $${
@@ -31,6 +31,7 @@ export async function queryWeaviate(queryString: string, resultLimit: number = 2
       });
     });
 
+    console.log(`Processed ${processedDocuments.length} documents`);
     return processedDocuments;
   } catch (error) {
     console.error("Error querying Weaviate:", error);

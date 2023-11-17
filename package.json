@@ -14,7 +14,9 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@vercel/node": "^3.0.11",
     "cohere-ai": "^7.2.0",
+    "graphql": "^16.8.1",
     "next": "^14.0.3",
+    "node-fetch": "^3.3.2",
     "react": "^18",
     "react-dom": "^18",
     "weaviate-ts-client": "^1.6.0"
