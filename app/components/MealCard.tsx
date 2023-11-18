@@ -17,11 +17,15 @@ export interface Meal {
 interface MealCardProps {
   meal: Meal;
   onReroll: () => void;
+  onSelect: (meal: Meal) => void;
 }
 
-const MealCard: React.FC<MealCardProps> = ({ meal, onReroll }) => {
+const MealCard: React.FC<MealCardProps> = ({ meal, onReroll, onSelect }) => {
   return (
-    <div className="relative max-w-sm rounded-lg overflow-hidden h-72 shadow-blurry z-10">
+    <div
+      className="relative max-w-sm rounded-lg overflow-hidden h-72 shadow-blurry z-10 cursor-pointer"
+      onClick={() => onSelect(meal)}
+    >
       <Image src={meal.image} alt={meal.title} layout="fill" objectFit="cover" />
       <div className="absolute top-0 left-0 right-0 bg-gray-700 text-white p-2 flex justify-between items-center">
         <h3 className="text-lg font-bold">{meal.title}</h3>

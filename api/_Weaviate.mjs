@@ -1,8 +1,8 @@
 import weaviate from "weaviate-ts-client";
 
 export async function queryWeaviate(queryString, resultLimit = 20) {
-  const cohereApiKey = process.env.COHERE_API_KEY || "";
-  const weaviateApiKey = process.env.WEAVIATE_API_KEY || "";
+  const cohereApiKey = process.env.NEXT_PUBLIC_COHERE_API_KEY || "";
+  const weaviateApiKey = process.env.NEXT_PUBLIC_WEAVIATE_API_KEY || "";
 
   const client = weaviate.client({
     scheme: "https",

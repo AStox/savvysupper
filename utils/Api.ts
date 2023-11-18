@@ -12,7 +12,7 @@ async function getMeal(
   setChatHistory([]);
   try {
     const baseUrl =
-      process.env.NODE_ENV === "development"
+      process.env.NEXT_PUBLIC_NODE_ENV === "development"
         ? "http://localhost:3000"
         : "https://savvysupper.vercel.app";
 

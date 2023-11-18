@@ -4,7 +4,7 @@ import { cohereApiCall } from "./_CohereApiCall.mjs";
 
 export default async function getMeal(req, res) {
   // Load API Key
-  const apiKey = process.env.COHERE_API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_COHERE_API_KEY;
 
   // Check if API Key is available
   if (!apiKey) {
@@ -53,13 +53,12 @@ export default async function getMeal(req, res) {
 
     const jsonPart = response.text
       .replace(/```json\n/, "") // Remove the starting Markdown code block
-      .replace(/^.*?(\{)/, "$1") // Remove text before json
+      .replace(/[\s\S]*?(\{[\s\S]*\}\s*\]\s*\})/, "$1") // Remove text before json
       .replace(/""/g, '"') // Replace double quotes with single quotes
       .replace(/,\s*\n\s*\]/g, "\n]") // Remove trailing commas
       .replace(/(\w)'(\w)/g, "$1’$2") // Replace single quotes with apostrophes
       .replace(/'/g, '"') // Replace single quotes with double quotes
       .replace(/\$/g, "") // Remove dollar signs
-      .replace(/(\}\s*\]\s*\}\s*)([\s\S]*)$/, "$1")
       .replace(/\n```/, ""); // Remove the ending Markdown code block
 
     let jsonData;

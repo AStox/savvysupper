@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 
 export async function cohereApiCall(chat_history, message, documents) {
   const url = "https://api.cohere.ai/v1/chat";
-  const cohereApiKey = process.env.COHERE_API_KEY || "";
+  const cohereApiKey = process.env.NEXT_PUBLIC_COHERE_API_KEY || "";
 
   const headers = {
     Accept: "application/json",
