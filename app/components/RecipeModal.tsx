@@ -16,6 +16,20 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ meal, onClose }) => {
     return pricing.reduce((acc, item) => acc + item.savings, 0);
   };
 
+  const findIngredientPrice = (ingredientName: string) => {
+    const ingredient = meal.pricing.find((item) =>
+      ingredientName.toLowerCase().includes(item.name.toLowerCase())
+    );
+    return ingredient && ingredient.cost > 0 ? `$${ingredient.cost.toFixed(2)}` : "";
+  };
+
+  const findIngredientSavings = (ingredientName: string) => {
+    const ingredient = meal.pricing.find((item) =>
+      ingredientName.toLowerCase().includes(item.name.toLowerCase())
+    );
+    return ingredient && ingredient.savings > 0 ? `$${ingredient.savings.toFixed(2)}` : "";
+  };
+
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
       <div className="relative top-20 mx-auto p-5 border w-3/4 md:w-1/2 lg:w-1/3 shadow-lg rounded-md bg-white">
@@ -34,7 +48,13 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ meal, onClose }) => {
             <ul className="list-disc pl-5">
               {meal.ingredients.map((ingredient, index) => (
                 <li key={index} className="text-gray-600">
-                  {ingredient}
+                  {ingredient}{" "}
+                  {findIngredientPrice(ingredient) && (
+                    <span className="text-gray-500">
+                      (Cost: {findIngredientPrice(ingredient)}, Save:{" "}
+                      {findIngredientSavings(ingredient)})
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>

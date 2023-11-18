@@ -27,11 +27,21 @@ const MealPlan = () => {
   return (
     <div className="container mx-auto px-4 py-32 md:px-8 lg:px-16">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {generating && <PlaceholderMealCard />}
         {meals.map((meal) => (
-          <MealCard key={meal.id} meal={meal} onReroll={() => {}} onSelect={handleMealSelect} />
+          <MealCard
+            key={meal.id}
+            meal={meal}
+            onReroll={() => {}}
+            onSelect={() => handleMealSelect(meal)}
+          />
         ))}
-        <MealCard key="dummy" meal={dummyMeal} onReroll={() => {}} onSelect={handleMealSelect} />
+        {generating && <PlaceholderMealCard />}
+        <MealCard
+          key="meal"
+          meal={dummyMeal}
+          onReroll={() => {}}
+          onSelect={() => handleMealSelect(dummyMeal)}
+        />
         <MealCustomizationCard key="customization" />
         <WeeklySummaryCard
           key="summary"
