@@ -29,7 +29,8 @@ export async function cohereApiCall(chat_history, message, documents) {
     }
 
     const data = await response.json();
-    console.log(data);
+    console.log("RESPONSE FROM COHERE CALL:", data);
+    return data;
   } catch (error) {
     console.error("Error making API call:", error);
   }

@@ -1,29 +1,78 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Meal } from "./MealCard";
 import { getMeal } from "../../utils/Api";
-import { useAppState } from "./AppStateContext";
+import { defaultChatHistory, useAppState } from "./AppStateContext";
 
 type props = {
   setMeals: (meals: Meal[]) => void;
 };
 
 const SecondaryTopBar: React.FC = (props) => {
-  const { setMeals, chatHistory, setChatHistory, numberOfMeals, setNumberOfMeals } = useAppState();
+  const {
+    meals,
+    setMeals,
+    chatHistory,
+    setChatHistory,
+    numberOfMeals,
+    setNumberOfMeals,
+    generating,
+    setGenerating,
+  } = useAppState();
 
   const [groceryStore, setGroceryStore] = useState("metro");
 
-  const handleGenerate = async () => {
-    const mealPromises = [];
-    for (let i = 0; i < numberOfMeals; i++) {
-      mealPromises.push(getMeal(i === 0, chatHistory, setChatHistory));
-    }
+  const [generateTries, setGenerateTries] = useState(0);
 
-    try {
-      const meals = await Promise.all(mealPromises);
-      if (setMeals) setMeals(meals as Meal[]);
-    } catch (error) {
-      console.error("Error fetching meals:", error);
+  const handleGenerate = async () => {
+    setMeals([]); // Reset meals state
+    setChatHistory(defaultChatHistory); // Reset chat history state
+
+    for (let i = 0; i < numberOfMeals; i++) {
+      setGenerating(true);
+      // Update chat history for each meal
+      // const updatedChatHistory = [
+      //   ...chatHistory,
+      //   {
+      //     role: "USER",
+      //     message: i === 0 ? "Generate the first meal..." : "Now generate the next meal...",
+      //   },
+      // ];
+      // setChatHistory(updatedChatHistory);
+
+      // Wait for each meal to be generated before proceeding to the next
+      // await getMeal(i === 0, chatHistory, setChatHistory, setMeals);
+
+      let meal: Meal | null | undefined = null;
+      let generationTries = 0;
+      while (!meal && generationTries < 2) {
+        meal = await getMeal(
+          i === 0,
+          i === 0 ? defaultChatHistory : chatHistory,
+          setChatHistory,
+          setMeals
+        );
+        if (!meal) console.log("api call failed, trying again...");
+        generationTries++;
+      }
+      // const meal = await getMeal(i === 0, chatHistory, setChatHistory, setMeals);
+
+      // if (!meal) {
+      // setGenerating(false);
+      // console.log("api call failed, trying again...");
+      // if (generateTries < 2) {
+      //   setGenerateTries(generateTries + 1);
+      //   handleGenerate();
+      // } else {
+      //   console.log("api call failed too many times, giving up");
+      //   return;
+      // }
+      // }
+      console.log("Meal:", meal);
+      if (meal) {
+        setMeals((meals) => [...meals, meal] as Meal[]);
+      }
+      setGenerating(false);
     }
   };
 
@@ -79,7 +128,7 @@ const SecondaryTopBar: React.FC = (props) => {
             onClick={handleGenerate}
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full"
           >
-            Generate
+            {generating ? "Generating..." : "Generate"}
           </button>
         </div>
       </div>
