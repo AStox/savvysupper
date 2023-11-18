@@ -20,5 +20,5 @@ body {
   color: rgb(var(--foreground-rgb));
   background-image: url("/background.webp");
   background-position: center -10%;
-  background-size: auto 150%;
+  background-size: cover;
 }
