@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import TopBar from "./components/TopBar";
-import MealPlan from "./components/MealPlan";
-import { Meal } from "./components/MealCard"; // Import the Meal interface
-import SecondaryTopBar from "./components/SecondaryTopBar";
-import { AppStateProvider, useAppState } from "./components/AppStateContext";
+import TopBar from "../../components/TopBar";
+import MealPlan from "../../components/MealPlan";
+import { Meal } from "../../components/MealCard"; // Import the Meal interface
+import SecondaryTopBar from "../../components/SecondaryTopBar";
+import { AppStateProvider, useAppState } from "../../components/AppStateContext";
 
 // Define your mock data with types
 const mockMeals: Meal[] = [
