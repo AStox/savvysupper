@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Meal } from "./MealCard";
-import { getMeal } from "../../utils/Api";
+import { getMeal } from "../api";
 import { defaultChatHistory, useAppState } from "./AppStateContext";
 
 type props = {

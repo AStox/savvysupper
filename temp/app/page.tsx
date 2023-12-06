@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import TopBar from "../app/components/TopBar";
-import MealPlan from "../app/components/MealPlan";
-import { Meal } from "../app/components/MealCard"; // Import the Meal interface
+import TopBar from "./components/TopBar";
+import MealPlan from "./components/MealPlan";
+import { Meal } from "./components/MealCard"; // Import the Meal interface
 import SecondaryTopBar from "./components/SecondaryTopBar";
 import { AppStateProvider, useAppState } from "./components/AppStateContext";
 
