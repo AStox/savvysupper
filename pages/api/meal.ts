@@ -1,7 +1,3 @@
-import { queryWeaviate } from "./_Weaviate.mjs";
-import { CohereClient } from "cohere-ai";
-import { cohereApiCall } from "./_CohereApiCall.mjs";
-
 export default async function getMeal(req, res) {
   // Load API Key
   const apiKey = process.env.NEXT_PUBLIC_COHERE_API_KEY;

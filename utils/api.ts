@@ -1,7 +1,5 @@
-import { defaultChatHistory } from "@/app/components/AppStateContext";
-import { Meal } from "@/app/components/MealCard";
-import { get } from "http";
-import jsonic from "jsonic";
+import { defaultChatHistory } from "../components/AppStateContext";
+import { Meal } from "../components/MealCard";
 
 async function getMeal(
   first: boolean,
@@ -16,13 +14,12 @@ async function getMeal(
         ? "http://localhost:3000"
         : "https://savvysupper.vercel.app";
 
-    const url = new URL(`${baseUrl}/api/GetMeal`);
     chatHistory = chatHistory.length === 0 ? defaultChatHistory : chatHistory;
     const chatHistoryString = JSON.stringify(chatHistory);
     // const encodedChatHistory = btoa(chatHistoryString);
     console.log("FIRST", first);
 
-    const response = await fetch('/api/GetMeal', {
+    const response = await fetch("/api/meal", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
