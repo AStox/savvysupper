@@ -4,8 +4,8 @@ import { Meal } from "./MealCard";
 const AppStateContext = createContext<{
   meals: Meal[];
   setMeals: React.Dispatch<React.SetStateAction<Meal[]>>;
-  chatHistory: { role: string; message: string }[];
-  setChatHistory: React.Dispatch<React.SetStateAction<{ role: string; message: string }[]>>;
+  chatHistory: { role: string; content: string }[];
+  setChatHistory: React.Dispatch<React.SetStateAction<{ role: string; content: string }[]>>;
   numberOfMeals: number;
   setNumberOfMeals: React.Dispatch<React.SetStateAction<number>>;
   generating: boolean;
@@ -53,14 +53,20 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
 
 export const defaultChatHistory = [
   {
-    role: "USER",
-    message: `Use RAG and the provided documents containing grocery sale information to generate a recipe using as many of the items as reasonably possible.
-    You should prioritize making a realistic recipe over using as many items as possible however. 
-    Feel free to add in items that aren't on sale if you think it will make the recipe more realistic. 
-    And tell me the pricing information for each ingredient where this information can be cited using the attached documents. 
-    If you don't know an ingredients price then just say null. Here's an example recipe. 
-    Always respond in valid JSON, following an identical structure to the following example. cost and savings fields should be numbers not strings. Always use double quotes instead of single quotes:
+    role: "system",
+    content: `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes using as many of the sale items as possible.
+    Be sure to cite pricing data for all ingredients pulled from the list of sale data. Any ingredients not on sale should be listed with a cost of 0.
+    Always respond in valid JSON, following an identical structure to the following examples. cost and savings fields should be numbers not strings.
 
+    EXMAPLE SALE DATA:
+    [
+      { name: "Sweet Potato", cost: 1.12, savings: 3.27 },
+      { name: "Chicken Breast", cost: 4.61, savings: 18.52 },
+      { name: "Red Onion", cost: 1.32, savings: 4.61 },
+      { name: "Zucchini", cost: 1.08, savings: 4.85 },
+    ]
+
+    EXAMPLE RECIPES USING SALE DATA:
     {
       title: "Sweet Potato and Chicken Hash",
       ingredients: [

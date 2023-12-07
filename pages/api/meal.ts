@@ -1,96 +1,108 @@
-export default async function getMeal(req, res) {
-  // Load API Key
-  const apiKey = process.env.NEXT_PUBLIC_COHERE_API_KEY;
+import { OpenAIChatClient } from "./_OpenAIChatClient";
+import { documents } from "./_documents";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-  // Check if API Key is available
+export default async function getMeal(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+  const apiKey: string | undefined = process.env.OPENAI_API_KEY;
+
   if (!apiKey) {
-    res.status(500).send("API key is missing");
+    res.status(500).send("No OpenAI API key found");
     return;
   }
 
-  // Initialize Cohere Client
-  const cohere = new CohereClient({
-    token: apiKey,
-  });
-
   try {
-    // Query Weaviate
-    const proteinDocuments = await queryWeaviate("protein", 3);
-    const vegetableDocuments = await queryWeaviate("vegetable", 6);
-    const carbDocuments = await queryWeaviate("carbohydrate", 2);
-    const documents = proteinDocuments.concat(vegetableDocuments, carbDocuments);
+    // const cleanMessage = (message: string): string => {
+    //   return message.replace(/\+/g, " ").replace(/�/g, "°");
+    // };
 
-    const cleanMessage = (message) => {
-      return message.replace(/\+/g, " ").replace(/�/g, "°");
-    };
+    const chatHistory = [
+      {
+        role: "system",
+        content: `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes using as many of the sale items as possible.
+        Be sure to cite pricing data for all ingredients pulled from the list of sale data. Any ingredients not on sale should be listed with a cost of 0.
+        Always respond in valid JSON, following an identical structure to the following examples. cost and savings fields should be numbers not strings.
+    
+        EXMAPLE SALE DATA:
+        [
+          { name: "Sweet Potato", cost: 1.12, savings: 3.27 },
+          { name: "Chicken Breast", cost: 4.61, savings: 18.52 },
+          { name: "Red Onion", cost: 1.32, savings: 4.61 },
+          { name: "Zucchini", cost: 1.08, savings: 4.85 },
+        ]
+    
+        EXAMPLE RECIPES USING SALE DATA:
+        {
+          title: "Sweet Potato and Chicken Hash",
+          ingredients: [
+            "2 sweet potatoes",
+            "4 chicken breasts",
+            "1 red onion",
+            "1 zucchini",
+            "1 head of broccoli",
+            "1/2 cup of cooked brown rice",
+            "1/4 cup of olive oil",
+            "1/2 teaspoon of salt",
+            "1/4 teaspoon of black pepper"
+          ],
+          instructions: [
+            "Preheat oven to 425°F.",
+            "Chop all vegetables.",
+            "In a large bowl, toss sweet potatoes, zucchini, onion, and broccoli with olive oil, salt, and pepper.",
+            "Spread the vegetables on a baking sheet and roast in the oven for 25 minutes.",
+            "Cook the brown rice as per the instructions on the package.",
+            "Meanwhile, heat a large non-stick skillet over medium-high heat and cook the chicken breasts for 6-8 minutes on each side or until cooked through.",
+            "Once the vegetables are roasted, add the rice and chicken to the bowl and toss to combine.",
+            "Serve immediately and enjoy!"
+          ],
+          pricing: [
+            { name: "Sweet Potato", cost: 1.12, savings: 3.27 },
+            { name: "Chicken Breast", cost: 4.61, savings: 18.52 },
+            { name: "Red Onion", cost: 1.32, savings: 4.61 },
+            { name: "Zucchini", cost: 1.08, savings: 4.85 },
+            { name: "Broccoli", cost: 0, savings: 0 },
+            { name: "Brown Rice", cost: 0, savings: 0 },
+            { name: "Olive Oil", cost: 0, savings: 0 },
+            { name: "Salt", cost: 0, savings: 0 },
+            { name: "Black Pepper", cost: 0, savings: 0 }
+          ],
+       }`,
+      },
+      {
+        role: "system",
+        content: `GROCERY SALE DATA:
+        ${JSON.stringify(documents)}`,
+      },
+    ];
 
-    const chatHistoryEncoded = req.query.chatHistory;
-    const chatHistoryDecoded = Buffer.from(chatHistoryEncoded, "base64").toString("utf-8");
-    const chunkedChatHistory = JSON.parse(chatHistoryDecoded);
-    const chatHistory = chunkedChatHistory.map((item) => ({
-      ...item,
-      message: cleanMessage(item.message),
-    }));
-    const message = "Generate the next recipe";
+    // const message: string = "Generate the next recipe";
 
-    console.log("CHAT HISTORY:", chatHistory);
-    console.log("MESSAGE:", message);
-
-    // const response = await cohere.chat({
-    //   chatHistory: chatHistory,
-    //   message: message,
-    //   documents: documents,
-    //   temperature: 0.9,
+    // chatHistory.push({
+    //   content: cleanMessage(message),
+    //   role: "user",
     // });
+    console.log("CHAT HISTORY:", chatHistory);
 
-    const response = await cohereApiCall(chatHistory, message, documents);
+    const chatClient = new OpenAIChatClient(apiKey);
+    const response = await chatClient.chat(chatHistory, documents);
 
-    // console.log("RESPONSE FROM API:", response);
+    console.log("RESPONSE FROM API:", response);
 
-    const jsonPart = response.text
-      .replace(/```json\n/, "") // Remove the starting Markdown code block
-      .replace(/[\s\S]*?(\{[\s\S]*\}\s*\]\s*\})/, "$1") // Remove text before json
-      .replace(/""/g, '"') // Replace double quotes with single quotes
-      .replace(/,\s*\n\s*\]/g, "\n]") // Remove trailing commas
-      .replace(/(\w)'(\w)/g, "$1’$2") // Replace single quotes with apostrophes
-      .replace(/'/g, '"') // Replace single quotes with double quotes
-      .replace(/\$/g, "") // Remove dollar signs
-      .replace(/\n```/, ""); // Remove the ending Markdown code block
+    // Parse JSON part (if needed, uncomment and adjust this section based on your requirements)
+    // let jsonData: any;
+    // try {
+    //   jsonData = JSON.parse(jsonPart);
+    //   // Additional JSON processing can be added here
+    // } catch (error) {
+    //   // Error handling for JSON parsing
+    // }
 
-    let jsonData;
-    try {
-      jsonData = JSON.parse(jsonPart);
-    } catch (error) {
-      console.log("JSON FROM API:", jsonPart);
-      console.error("Error parsing JSON:", error);
-      if (error instanceof Error) {
-        if (error.message === "Timeout") {
-          res.status(408);
-        }
-        res.status(500).send(`Error processing request:${error.stack}`);
-      } else {
-        res.status(500).send("An unknown error occurred");
-      }
-    }
-
-    jsonData.pricing = jsonData.pricing.map((item) => {
-      if (typeof item.cost === "string") {
-        item.cost = parseFloat(item.cost.replace(/[^\d.-]/g, ""));
-      }
-      if (typeof item.savings === "string") {
-        item.savings = parseFloat(item.savings.replace(/[^\d.-]/g, ""));
-      }
-      return item;
-    });
-
-    res.status(200).json(jsonData);
+    // Return response (adjust this part based on your specific data structure and requirements)
+    res.status(200).json(response);
   } catch (error) {
     if (error instanceof Error) {
       res
         .status(500)
-        .send(
-          `Error processing request:${error.stack}, ${error.name}, ${error.code}, ${error.type}`
-        );
+        .send(`Error processing request:${error.stack}, ${error.name}, ${error.message}`);
     } else {
       res.status(500).send("An unknown error occurred");
     }

@@ -3,8 +3,8 @@ import { Meal } from "../components/MealCard";
 
 async function getMeal(
   first: boolean,
-  chatHistory: { role: string; message: string }[],
-  setChatHistory: React.Dispatch<React.SetStateAction<{ role: string; message: string }[]>>,
+  chatHistory: { role: string; content: string }[],
+  setChatHistory: React.Dispatch<React.SetStateAction<{ role: string; content: string }[]>>,
   setMeals: React.Dispatch<React.SetStateAction<Meal[]>>
 ): Promise<Meal | null> {
   setChatHistory([]);
@@ -17,7 +17,6 @@ async function getMeal(
     chatHistory = chatHistory.length === 0 ? defaultChatHistory : chatHistory;
     const chatHistoryString = JSON.stringify(chatHistory);
     // const encodedChatHistory = btoa(chatHistoryString);
-    console.log("FIRST", first);
 
     const response = await fetch("/api/meal", {
       method: "POST",
@@ -40,15 +39,15 @@ async function getMeal(
 
     if (first) {
       chatHistory.push({
-        role: "USER",
-        message:
+        role: "user",
+        content:
           "Generate a full 7 day dinner meal plan for me. Start with just the first meal. You should prioritize making a realistic recipe over using as many items as possible however. Feel free to add in items that aren't on sale if you think it will make the recipe more realistic. And tell me the pricing information for each ingredient where this information can be cited using the attached documents. If you don't know an ingredients price then just say N/A.",
       });
       setChatHistory(chatHistory);
     } else {
       chatHistory.push({
         role: "USER",
-        message:
+        content:
           "Now generate the next meal. Base it around a different protein than the other recipes but follow the exact same format as the other recipes. Make sure to include price information for each ingredient where possible. If you don't know the price of an ingredient then just say N/A.",
       });
       setChatHistory(chatHistory);
@@ -59,8 +58,8 @@ async function getMeal(
     console.log("Success:", data);
 
     chatHistory.push({
-      role: "CHATBOT",
-      message: JSON.stringify(data),
+      role: "assistant",
+      content: JSON.stringify(data),
     });
     setChatHistory(chatHistory);
 
