@@ -15,6 +15,7 @@ model Ingredient {
     amount     String?
     unit     String?
     pricePerUnit Float?
+    recipes Recipe[]
 }
 
 model Recipe {

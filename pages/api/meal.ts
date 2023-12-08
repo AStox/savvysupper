@@ -2,6 +2,18 @@ import { OpenAIChatClient } from "./_OpenAIChatClient";
 import { documents } from "./_documents";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+export const getStaticProps: GetStaticProps = async () => {
+  const recipes = await prisma.recipe.findMany();
+  return {
+    props: { recipes: recipes },
+    revalidate: 10,
+  };
+};
+
+type Props = {
+  recipes: any[];
+};
+
 export default async function getMeal(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   const apiKey: string | undefined = process.env.OPENAI_API_KEY;
 

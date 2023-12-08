@@ -4,34 +4,33 @@ import MealPlan from "../components/MealPlan";
 import { Meal } from "../components/MealCard"; // Import the Meal interface
 import SecondaryTopBar from "../components/SecondaryTopBar";
 import { AppStateProvider, useAppState } from "../components/AppStateContext";
+import { GetStaticProps } from "next";
+import prisma from "../lib/prisma";
 
-// Define your mock data with types
-const mockMeals: Meal[] = [
-  // Populate with mock meal data according to the Meal interface
-  {
-    id: 1,
-    image: "/RedBeansRice.png",
-    title: "Meal Title",
-    ingredients: ["Ingredient 1", "Ingredient 2"],
-    instructions: ["Instruction 1", "Instruction 2"],
-    pricing: [],
-    cost: 10.99,
-    savings: 2.99,
-  },
-];
+export const getStaticProps: GetStaticProps = async () => {
+  const recipes = await prisma.recipe.findMany();
+  return {
+    props: { recipes: recipes },
+    revalidate: 10,
+  };
+};
 
-const Home = () => {
-  const { meals } = useAppState();
+type Props = {
+  recipes: any[];
+};
 
-  const totalCost = mockMeals.reduce((acc, meal) => acc + meal.cost, 0); // Example calculation
-  const totalSavings = mockMeals.reduce((acc, meal) => acc + meal.savings, 0); // Example calculation
+const Home: React.FC<Props> = (props) => {
+  // const { meals } = useAppState();
+
+  // const totalCost = mockMeals.reduce((acc, meal) => acc + meal.cost, 0); // Example calculation
+  // const totalSavings = mockMeals.reduce((acc, meal) => acc + meal.savings, 0); // Example calculation
 
   return (
     <AppStateProvider>
       <div>
         <TopBar />
         <SecondaryTopBar />
-        <MealPlan />
+        <MealPlan recipes={props.recipes} />
       </div>
     </AppStateProvider>
   );
