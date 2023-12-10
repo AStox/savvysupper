@@ -1,7 +1,5 @@
-// pages/api/scraper.ts
-
 import type { NextApiRequest, NextApiResponse } from "next";
-import puppeteer from "puppeteer";
+import puppeteer, { Page } from "puppeteer";
 import fs from "fs";
 
 interface Ingredient {
@@ -24,12 +22,13 @@ const plantBased = "https://voila.ca/products?sublocationId=6ef9b3da-5cd8-495e-8
 const international =
   "https://voila.ca/products?sublocationId=a14f9339-0c02-45cd-81a0-1e02c43a0188";
 
-async function scrapeUrl(page: puppeteer.Page, url: string): Promise<Ingredient[]> {
+async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
   await page.goto(url, { waitUntil: "networkidle2" });
 
   let items: Ingredient[] = [];
   let reachedBottom = false;
-  const maxItems = 10;
+  let itemLength = 0;
+  const maxItems = 1000;
   const addedTitles = new Set();
 
   while (!reachedBottom && items.length < maxItems) {
@@ -67,6 +66,7 @@ async function scrapeUrl(page: puppeteer.Page, url: string): Promise<Ingredient[
         }
       }
     });
+    console.log("scraping page... found", items.length, "items so far");
 
     await page.evaluate(() => window.scrollBy(0, window.innerHeight));
     await page.waitForTimeout(1000);
@@ -74,6 +74,13 @@ async function scrapeUrl(page: puppeteer.Page, url: string): Promise<Ingredient[
     reachedBottom = await page.evaluate(() => {
       return window.scrollY + window.innerHeight >= document.documentElement.scrollHeight;
     });
+
+    // if itemLength is not 0 and the length of items is the same as itemLength, we've reached the end
+    if (itemLength !== 0 && items.length === itemLength) {
+      reachedBottom = true;
+    } else {
+      itemLength = items.length;
+    }
   }
 
   return items;
@@ -81,25 +88,27 @@ async function scrapeUrl(page: puppeteer.Page, url: string): Promise<Ingredient[
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Launch Puppeteer in non-headless mode
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
 
   const urls = [
-    meatAndSeafood,
-    fruitsAndVegetables,
-    dairyAndEggs,
-    cheese,
-    breadAndBakery,
-    plantBased,
-    international,
+    { name: "meatAndSeafood", url: meatAndSeafood },
+    { name: "fruitsAndVegetables", url: fruitsAndVegetables },
+    { name: "dairyAndEggs", url: dairyAndEggs },
+    { name: "cheese", url: cheese },
+    { name: "breadAndBakery", url: breadAndBakery },
+    { name: "plantBased", url: plantBased },
+    { name: "international", url: international },
   ];
 
   let allItems: Ingredient[] = [];
 
   try {
-    for (const url of urls) {
-      const items = await scrapeUrl(page, url);
+    for (let i = 0; i < urls.length; i++) {
+      console.log(`Scraping ${urls[i].name}... (page ${i + 1} of ${urls.length})`);
+      const items = await scrapeUrl(page, urls[i].url);
       allItems = allItems.concat(items);
+      console.log(`Total scraped items so far: ${allItems.length}`);
     }
   } catch (error) {
     console.error("Error during scraping:", error);
@@ -109,6 +118,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await browser.close();
   }
 
+  console.log(`Total items scraped: ${allItems.length}`);
   // Write results to a file
   fs.writeFileSync("sobeys_ingredients.json", JSON.stringify(allItems, null, 2));
 
