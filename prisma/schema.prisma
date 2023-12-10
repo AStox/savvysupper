@@ -11,10 +11,12 @@ datasource db {
 model Ingredient {
     id        String     @default(cuid()) @id
     name     String
-    image     String?
-    amount     String?
-    unit     String?
-    pricePerUnit Float?
+    image     String
+    amount     String
+    unit     String
+    currentPrice Float
+    regularPrice Float
+    onSale Boolean
     recipes Recipe[]
 }
 
@@ -33,23 +35,4 @@ model Recipe {
     preparationMinutes Int?
     cookingMinutes Int?
     pricePerServing Float?
-}
-
-model Post {
-  id        String     @default(cuid()) @id
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
-}
-
-model User {
-  id            String       @default(cuid()) @id
-  name          String?
-  email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  posts         Post[]
-  @@map(name: "users")
 }

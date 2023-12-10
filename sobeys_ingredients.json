@@ -1,0 +1,604 @@
+[
+  {
+    "title": "Janes Fully Cooked Frozen Chicken Breast Strips Pub Style 700 g",
+    "quantity": "700g",
+    "currentPrice": 9.99,
+    "onSale": true,
+    "regularPrice": 15.99
+  },
+  {
+    "title": "Extra Lean Ground Beef 454 g",
+    "quantity": "454g",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Boneless Salmon Fillets",
+    "quantity": "0.438kg",
+    "currentPrice": 14.44,
+    "onSale": true,
+    "regularPrice": null
+  },
+  {
+    "title": "Mastro Genoa Sliced Meat Salami 150 g",
+    "quantity": "150g",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Compliments Frozen Uncooked White Shrimp 71-90 Count 340 g",
+    "quantity": "340g",
+    "currentPrice": 7.99,
+    "onSale": true,
+    "regularPrice": 9.99
+  },
+  {
+    "title": "Ground Beef Extra Lean Value Size 908 g",
+    "quantity": "908g",
+    "currentPrice": 12.99,
+    "onSale": true,
+    "regularPrice": 15.99
+  },
+  {
+    "title": "San Daniele Gluten-Free Ham Prosciutto Sliced 100 g",
+    "quantity": "100g",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Compliments Frozen Uncooked Peeled Deveined Shrimp 31/40 Count 340 g",
+    "quantity": "340g",
+    "currentPrice": 7.99,
+    "onSale": true,
+    "regularPrice": 10.99
+  },
+  {
+    "title": "Piller's Turkey Bites 300g",
+    "quantity": "300g",
+    "currentPrice": 9.99,
+    "onSale": true,
+    "regularPrice": 11.99
+  },
+  {
+    "title": "Johnsonville Gluten-Free Frozen Breakfast Sausage Original 375 g",
+    "quantity": "375g",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "San Daniele Mortadella Sliced Meat 175 g",
+    "quantity": "175g",
+    "currentPrice": 4.99,
+    "onSale": true,
+    "regularPrice": 6.29
+  },
+  {
+    "title": "Prime Frozen Chicken Strips Raised Without Antibiotics 560 g",
+    "quantity": "560g",
+    "currentPrice": 13.99,
+    "onSale": true,
+    "regularPrice": 15.99
+  },
+  {
+    "title": "Janes Fully Cooked Frozen Chicken Breast Nuggets 700 g",
+    "quantity": "700g",
+    "currentPrice": 9.99,
+    "onSale": true,
+    "regularPrice": 15.99
+  },
+  {
+    "title": "Johnsonville Gluten-Free Frozen Breakfast Sausage Maple 375 g",
+    "quantity": "375g",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Brandt Turkey Kolbassa Chubs 250 g",
+    "quantity": "250g",
+    "currentPrice": 6.49,
+    "onSale": true,
+    "regularPrice": 7.29
+  },
+  {
+    "title": "Janes Fully Cooked Frozen Popcorn Chicken 700 g",
+    "quantity": "700g",
+    "currentPrice": 9.99,
+    "onSale": true,
+    "regularPrice": 15.99
+  },
+  {
+    "title": "Chicken Leg Quarters Value Size 3-5 Pieces",
+    "quantity": "1.425kg",
+    "currentPrice": 12.54,
+    "onSale": true,
+    "regularPrice": null
+  },
+  {
+    "title": "Pear Bartlett 1 Count",
+    "currentPrice": 0.99,
+    "onSale": true,
+    "regularPrice": 1.19
+  },
+  {
+    "title": "English Cucumber Seedless 1 Count",
+    "currentPrice": 1.99,
+    "onSale": true,
+    "regularPrice": 2.49
+  },
+  {
+    "title": "Driscoll's Raspberries 170 g",
+    "quantity": "170g",
+    "currentPrice": 2.5,
+    "onSale": true,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Broccoli Crowns 1 Count",
+    "currentPrice": 1.99,
+    "onSale": true,
+    "regularPrice": 2.89
+  },
+  {
+    "title": "Lemon Large 1 Count",
+    "currentPrice": 0.99,
+    "onSale": true,
+    "regularPrice": 1.19
+  },
+  {
+    "title": "Clementines / Mandarins 907 g",
+    "quantity": "907g",
+    "currentPrice": 5.59,
+    "onSale": true,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Red Pepper Extra Large 1 Count",
+    "currentPrice": 2.39,
+    "onSale": true,
+    "regularPrice": 2.99
+  },
+  {
+    "title": "Grape Tomatoes 1 Pint",
+    "currentPrice": 2.49,
+    "onSale": true,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Pears Bosc Large 1 Count",
+    "currentPrice": 1.09,
+    "onSale": true,
+    "regularPrice": 1.39
+  },
+  {
+    "title": "Grapes Seedless Red 907 g",
+    "quantity": "907g",
+    "currentPrice": 7.99,
+    "onSale": true,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Oikos Fat-Free 0% Greek Yogurt Plain No Added Sugar 750 g",
+    "quantity": "750g",
+    "currentPrice": 6.49,
+    "onSale": true,
+    "regularPrice": 7.79
+  },
+  {
+    "title": "Natrel 2% Milk Partly Skimmed 2 L",
+    "quantity": "2L",
+    "currentPrice": 4.99,
+    "onSale": true,
+    "regularPrice": 5.59
+  },
+  {
+    "title": "Natrel 1% Milk Partly Skimmed 2 L",
+    "quantity": "2L",
+    "currentPrice": 4.99,
+    "onSale": true,
+    "regularPrice": 5.59
+  },
+  {
+    "title": "Gay Lea 14% Sour Cream Original 500 ml",
+    "quantity": "500ml",
+    "currentPrice": 2.5,
+    "onSale": true,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Natrel Lactose-Free 2% Milk 2 L",
+    "quantity": "2L",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 6.39
+  },
+  {
+    "title": "Liberté Greek 0% Yogurt Plain High Protein 750 g",
+    "quantity": "750g",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Natrel 3.25% Milk Homogenized 2 L",
+    "quantity": "2L",
+    "currentPrice": 4.99,
+    "onSale": true,
+    "regularPrice": 5.89
+  },
+  {
+    "title": "Earth's Own Plant-Based Dairy-Free Oat Barista Original 946 ml",
+    "quantity": "946ml",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Activia Probiotic Yogurt Strawberry/Blueberry/Raspberry/Peach Flavour 12 x 100 g",
+    "quantity": "12 x 100g",
+    "currentPrice": 7.49,
+    "onSale": true,
+    "regularPrice": 8.69
+  },
+  {
+    "title": "Astro Kosher Original 6% Yogurt Plain 750 g",
+    "quantity": "750g",
+    "currentPrice": 4.79,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Natrel Lactose-Free 1% Milk 2 L",
+    "quantity": "2L",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 6.39
+  },
+  {
+    "title": "Liberté Greek 2% Yogurt Plain High Protein 750 g",
+    "quantity": "750g",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Kraft Singles Cheddar Cheese Slices Original 410 g",
+    "quantity": "410g",
+    "currentPrice": 4.99,
+    "onSale": true,
+    "regularPrice": 6.29
+  },
+  {
+    "title": "Philadelphia Cream Cheese Original 340 g",
+    "quantity": "340g",
+    "currentPrice": 6.49,
+    "onSale": true,
+    "regularPrice": 7.79
+  },
+  {
+    "title": "Cracker Barrel Cheese Marble Cheddar 400 g",
+    "quantity": "400g",
+    "currentPrice": 4.97,
+    "onSale": true,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Cracker Barrel Cheese Old Cheddar 400 g",
+    "quantity": "400g",
+    "currentPrice": 4.97,
+    "onSale": true,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Cracker Barrel Cheese Shreds Double Cheddar 320 g",
+    "quantity": "320g",
+    "currentPrice": 4.97,
+    "onSale": true,
+    "regularPrice": 8.69
+  },
+  {
+    "title": "Panache Cheese Parmigiano Reggiano 200 g",
+    "quantity": "200g",
+    "currentPrice": 9.99,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Cracker Barrel Shreds Cheese Tex Mex 320 g",
+    "quantity": "320g",
+    "currentPrice": 4.97,
+    "onSale": true,
+    "regularPrice": 8.69
+  },
+  {
+    "title": "Philadelphia Cream Cheese Original 450 g",
+    "quantity": "450g",
+    "currentPrice": 9.49,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Tre Stelle Natural Cream Cheese 200 g",
+    "quantity": "200g",
+    "currentPrice": 3.99,
+    "onSale": true,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Amooza Cheese Mozzarella Cheddar Twists 228 g",
+    "quantity": "228g",
+    "currentPrice": 4.97,
+    "onSale": true,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Dempster’s 100% Whole Grains 12 Grain Bread 600 g",
+    "quantity": "600g",
+    "currentPrice": 4.49,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Dempster's English Muffins Original 6 Pack 340 g",
+    "quantity": "340g",
+    "currentPrice": 3,
+    "onSale": true,
+    "regularPrice": 3.49
+  },
+  {
+    "title": "Villaggio White Bread Classico Italian Style Thick Slice 675 g",
+    "quantity": "675g",
+    "currentPrice": 3.5,
+    "onSale": true,
+    "regularPrice": 4.49
+  },
+  {
+    "title": "Dempster’s 100% Whole Grains Bread Ancient Grains With Quinoa 600 g",
+    "quantity": "600g",
+    "currentPrice": 4.49,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Dempster’s Whole Grain English Muffins 340 g",
+    "quantity": "340g",
+    "currentPrice": 3,
+    "onSale": true,
+    "regularPrice": 3.49
+  },
+  {
+    "title": "Dempster’s Tortillas Original Large 610 g",
+    "quantity": "610g",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Dempster’s Tortillas Original 7-Inch 340 g",
+    "quantity": "340g",
+    "currentPrice": 3.5,
+    "onSale": true,
+    "regularPrice": 4.49
+  },
+  {
+    "title": "Dempster’s Tortillas 100% Whole Wheat Medium 340 g",
+    "quantity": "340g",
+    "currentPrice": 3.5,
+    "onSale": true,
+    "regularPrice": 4.49
+  },
+  {
+    "title": "Dempster’s 100% Whole Grains Bread Honey & Oatmeal 600 g",
+    "quantity": "600g",
+    "currentPrice": 4.49,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Dempster’s Tortillas 100% Whole Wheat Large 610 g",
+    "quantity": "610g",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Dempster’s Bread 100% Whole Grains Multigrain 600 g",
+    "quantity": "600g",
+    "currentPrice": 4.49,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Compliments Mini White Pita Bread 2-Inch 200 g",
+    "quantity": "200g",
+    "currentPrice": 3.69,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Villaggio Sausage Buns Extra Soft Toscana 6 x 71 g",
+    "quantity": "6 x 71g",
+    "currentPrice": 3.5,
+    "onSale": true,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Villaggio Hamburger Buns Toscana Extra Soft  8 x 66 g",
+    "quantity": "8 x 66g",
+    "currentPrice": 3.5,
+    "onSale": true,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Dempster’s Whole Grains Bread Smooth Multigrain 600 g",
+    "quantity": "600g",
+    "currentPrice": 4.49,
+    "onSale": true,
+    "regularPrice": 0
+  },
+  {
+    "title": "Compliments Naan Dippers 200 g (frozen)",
+    "quantity": "200g",
+    "currentPrice": 4.59,
+    "onSale": true,
+    "regularPrice": 4.79
+  },
+  {
+    "title": "Earth's Own Plant-Based Dairy-Free Oat Barista Original 946 ml",
+    "quantity": "946ml",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Earth's Own Dairy-Free Plant Based Beverage Almond Milk Unsweetened Original 1.89 L",
+    "quantity": "1.89L",
+    "currentPrice": 3.5,
+    "onSale": true,
+    "regularPrice": 4.69
+  },
+  {
+    "title": "Beyond Meat Plant-Based Ground Beef 340 g (frozen)",
+    "quantity": "340g",
+    "currentPrice": 6.99,
+    "onSale": true,
+    "regularPrice": 9.99
+  },
+  {
+    "title": "Earth's Own Almond Milk Unsweetened Vanilla Dairy-Free Plant-Based Beverage 1.89 L",
+    "quantity": "1.89L",
+    "currentPrice": 3.5,
+    "onSale": true,
+    "regularPrice": 4.69
+  },
+  {
+    "title": "Fontaine Santé Hummus Cocktail Roasted Red Pepper 227 g",
+    "quantity": "227g",
+    "currentPrice": 3.99,
+    "onSale": true,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Beyond Meat Frozen Plant-Based Beyond Burgers 226 g",
+    "quantity": "226g",
+    "currentPrice": 6.99,
+    "onSale": true,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Silk Protein Almond & Cashew Beverage Unsweetened Original 1.75 L",
+    "quantity": "1.75L",
+    "currentPrice": 4.99,
+    "onSale": true,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Sunrise Tofu Firm 500 g",
+    "quantity": "500g",
+    "currentPrice": 2.99,
+    "onSale": true,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Fontaine Santé Vegan Hummus Cocktail Caramelized Onions 227 g",
+    "quantity": "227g",
+    "currentPrice": 3.99,
+    "onSale": true,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Silk Nextmilk Dairy-Free Plant Based Milk Alternative Original 1.74 L",
+    "quantity": "1.74L",
+    "currentPrice": 4.99,
+    "onSale": true,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "VH Dipping Sauce Plum 341 ml",
+    "quantity": "341ml",
+    "currentPrice": 3.99,
+    "onSale": true,
+    "regularPrice": 4.69
+  },
+  {
+    "title": "Tilda Basmati Rice Original 1.81 kg",
+    "quantity": "1.81kg",
+    "currentPrice": 12.99,
+    "onSale": true,
+    "regularPrice": 14.99
+  },
+  {
+    "title": "VH Soya Sauce 380 ml",
+    "quantity": "380ml",
+    "currentPrice": 3.99,
+    "onSale": true,
+    "regularPrice": 4.69
+  },
+  {
+    "title": "VH Soya Sauce Light 380 ml",
+    "quantity": "380ml",
+    "currentPrice": 3.99,
+    "onSale": true,
+    "regularPrice": 4.69
+  },
+  {
+    "title": "VH Stir Fry Sauce Teriyaki 355 ml",
+    "quantity": "355ml",
+    "currentPrice": 3.99,
+    "onSale": true,
+    "regularPrice": 4.69
+  },
+  {
+    "title": "VH Marinade Honey Garlic 341 ml",
+    "quantity": "341ml",
+    "currentPrice": 3.99,
+    "onSale": true,
+    "regularPrice": 4.69
+  },
+  {
+    "title": "Grace Island Soda Ginger Beer 330 ml (bottle)",
+    "quantity": "355ml",
+    "currentPrice": 1.59,
+    "onSale": true,
+    "regularPrice": 1.99
+  },
+  {
+    "title": "Kadoya Pure Sesame Oil 163 ml",
+    "quantity": "163ml",
+    "currentPrice": 6.49,
+    "onSale": true,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "VH Simmering Sauce Butter Chicken 341 ml",
+    "quantity": "341ml",
+    "currentPrice": 3.99,
+    "onSale": true,
+    "regularPrice": 4.69
+  },
+  {
+    "title": "Young & Young Trading Chow Mein Noodles 3 Minute 454 g",
+    "quantity": "454g",
+    "currentPrice": 2.99,
+    "onSale": true,
+    "regularPrice": 3.79
+  },
+  {
+    "title": "Grace Peanut Punch Beverage 240 ml",
+    "quantity": "240ml",
+    "currentPrice": 1.59,
+    "onSale": true,
+    "regularPrice": 1.69
+  },
+  {
+    "title": "VH Dipping Sauce Sweet & Sour 341 ml",
+    "quantity": "341ml",
+    "currentPrice": 3.99,
+    "onSale": true,
+    "regularPrice": 4.69
+  }
+]
