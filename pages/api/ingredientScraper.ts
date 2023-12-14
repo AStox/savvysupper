@@ -92,13 +92,69 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const page = await browser.newPage();
 
   const urls = [
-    { name: "meatAndSeafood", url: meatAndSeafood },
-    { name: "fruitsAndVegetables", url: fruitsAndVegetables },
-    { name: "dairyAndEggs", url: dairyAndEggs },
-    { name: "cheese", url: cheese },
-    { name: "breadAndBakery", url: breadAndBakery },
-    { name: "plantBased", url: plantBased },
-    { name: "international", url: international },
+    // { name: "meatAndSeafood", url: meatAndSeafood },
+    // { name: "fruitsAndVegetables", url: fruitsAndVegetables },
+    // { name: "dairyAndEggs", url: dairyAndEggs },
+    // { name: "cheese", url: cheese },
+    // { name: "breadAndBakery", url: breadAndBakery },
+    // { name: "plantBased", url: plantBased },
+    // { name: "international", url: international },
+    {
+      name: "chickenBreast",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=ed0ab052-00b0-49ed-815a-b8faec03e332",
+    },
+    {
+      name: "wholeChicken",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=f716a0b3-9a60-40f4-96f5-e46f57a48b59",
+    },
+    {
+      name: "chickenThighsDrumsticksWings",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=7057f1c2-840d-4f76-aeb8-52f83d659315",
+    },
+    {
+      name: "groundChickenAndBurgers",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=a23bf7ee-a337-4d10-8f72-47ad57970ba2",
+    },
+    {
+      name: "chickenBacon",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=319636cb-007b-4e4d-91b3-4eacbcfed975",
+    },
+    {
+      name: "beefAndVeal",
+      url: "https://voila.ca/products?source=navigation&sublocationId=dce34da9-8018-4916-9c5d-7fc6427e354a",
+    },
+    {
+      name: "turkey",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=d1dc09ce-d009-4d95-811a-bbe31c9fba30",
+    },
+    {
+      name: "pork",
+      url: "https://voila.ca/products?sublocationId=5637ec5b-0aa6-4972-8585-6a15d78b9799",
+    },
+    {
+      name: "lamb",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=207a429c-0ff9-4d22-87d4-451dbf93fc0f",
+    },
+    {
+      name: "freshFish",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=0c370bc0-95e5-44f0-8894-8e08e798028a",
+    },
+    {
+      name: "smokedAndPreparedFish",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=8e23bfb0-14e2-437e-8bcf-e4d0682f1056",
+    },
+    {
+      name: "freshSeafood",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=093c1ea7-07fd-4650-be73-3ebc12506a1d",
+    },
+    {
+      name: "frozenSeafood",
+      url: "https://voila.ca/products?sortBy=favorite&sublocationId=41fdb84a-1bdf-4402-acaf-385a27f6de1d",
+    },
+    {
+      name: "frozenFish",
+      url: "https://voila.ca/products?brands=Compliments&sortBy=favorite&sublocationId=bb2090c8-cfda-4cf7-96ad-3f692cd739a3",
+    },
   ];
 
   let allItems: Ingredient[] = [];
@@ -120,7 +176,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   console.log(`Total items scraped: ${allItems.length}`);
   // Write results to a file
-  fs.writeFileSync("sobeys_ingredients.json", JSON.stringify(allItems, null, 2));
+  fs.writeFileSync("sobeys_protein_ingredients.json", JSON.stringify(allItems, null, 2));
 
   res
     .status(200)
