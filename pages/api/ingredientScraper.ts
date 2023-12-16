@@ -61,7 +61,7 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
     newItems.forEach((item) => {
       if (item.title && item.onSale && item.currentPrice > 0) {
         if (!addedTitles.has(item.title)) {
-          items.push(item);
+          items.push(item as Ingredient);
           addedTitles.add(item.title);
         }
       }

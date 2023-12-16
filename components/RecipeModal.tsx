@@ -17,17 +17,12 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ meal, onClose }) => {
   };
 
   const findIngredientPrice = (ingredientName: string) => {
-    const ingredient = meal.pricing.find((item) =>
+    const ingredient = meal.ingredients.find((item) =>
       ingredientName.toLowerCase().includes(item.name.toLowerCase())
     );
-    return ingredient && ingredient.cost > 0 ? `$${ingredient.cost.toFixed(2)}` : "";
-  };
-
-  const findIngredientSavings = (ingredientName: string) => {
-    const ingredient = meal.pricing.find((item) =>
-      ingredientName.toLowerCase().includes(item.name.toLowerCase())
-    );
-    return ingredient && ingredient.savings > 0 ? `$${ingredient.savings.toFixed(2)}` : "";
+    return ingredient && ingredient.currentPrice > 0
+      ? `$${ingredient.currentPrice.toFixed(2)}`
+      : "";
   };
 
   return (
@@ -48,11 +43,10 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ meal, onClose }) => {
             <ul className="list-disc pl-5">
               {meal.ingredients.map((ingredient, index) => (
                 <li key={index} className="text-gray-600">
-                  {ingredient}{" "}
-                  {findIngredientPrice(ingredient) && (
+                  {ingredient.name}{" "}
+                  {findIngredientPrice(ingredient.name) && (
                     <span className="text-gray-500">
-                      (Cost: {findIngredientPrice(ingredient)}, Save:{" "}
-                      {findIngredientSavings(ingredient)})
+                      (Cost: {findIngredientPrice(ingredient.name)}
                     </span>
                   )}
                 </li>
@@ -67,17 +61,6 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ meal, onClose }) => {
                 </li>
               ))}
             </ol>
-
-            <div className="mt-4 text-gray-700">
-              <p>
-                Total Cost:{" "}
-                <span className="font-semibold">${calculateTotal(meal.pricing).toFixed(2)}</span>
-              </p>
-              <p>
-                Total Savings:{" "}
-                <span className="font-semibold">${calculateSavings(meal.pricing).toFixed(2)}</span>
-              </p>
-            </div>
           </div>
 
           <button

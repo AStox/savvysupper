@@ -16,7 +16,6 @@ export class OpenAiAssistantClient {
         tools: [{ type: "retrieval" }],
         model: "gpt-4-1106-preview",
       });
-      return response.choices[0].message.content;
     } catch (error) {
       console.error("Error with OpenAI Assistant:", error);
       throw error;

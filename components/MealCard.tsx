@@ -27,6 +27,7 @@ export interface Ingredient {
   amount: number;
   unit: string;
   pricePerUnit: number;
+  currentPrice: number;
 }
 
 interface MealCardProps {
