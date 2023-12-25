@@ -13,7 +13,6 @@ export class OpenAIChatClient {
         model: "gpt-4-1106-preview",
         messages: chatHistory,
         temperature: 0.7,
-        // top_p: 0.8,
         response_format: { type: "json_object" },
       });
       return response.choices[0].message.content;
