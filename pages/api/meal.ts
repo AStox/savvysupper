@@ -4,10 +4,15 @@ import fruitAndVeg from "../../Fresh_Fruits_&_Vegetables_ingredients.json";
 import dairyAndEggs from "../../Dairy_&_Eggs_ingredients.json";
 import cheese from "../../Cheese_ingredients.json";
 import { exampleRecipes } from "@/example_recipes";
-
+import { MilvusClient } from "@zilliz/milvus2-sdk-node";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+  const MILVUS_HOST = "https://in03-9479dd5ae4f429f.api.gcp-us-west1.zillizcloud.com";
+  const MILVUS_PORT = "19530";
+
+  const milvusClient = new MilvusClient(`${MILVUS_HOST}:${MILVUS_PORT}`);
+
   const apiKey: string | undefined = process.env.OPENAI_API_KEY;
 
   if (!apiKey) {

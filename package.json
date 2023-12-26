@@ -13,6 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@prisma/client": "^5.7.0",
+    "@zilliz/milvus2-sdk-node": "^2.3.5",
     "apollo-server-micro": "^3.13.0",
     "axios": "^1.6.2",
     "cheerio": "^1.0.0-rc.12",

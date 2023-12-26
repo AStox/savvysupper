@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer, { Page } from "puppeteer";
 import fs from "fs";
 
-interface Ingredient {
+export interface Ingredient {
   title: string;
   quantity: string;
   currentPrice: number;

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import React from "react";
+import { Ingredient } from "@/pages/api/ingredientScraper";
 
 export interface Meal {
   id: string;
@@ -18,16 +19,6 @@ export interface Meal {
   preparationMinutes: number;
   cookingMinutes: number;
   pricePerServing: number;
-}
-
-export interface Ingredient {
-  id: string;
-  name: string;
-  image: string;
-  amount: number;
-  unit: string;
-  pricePerUnit: number;
-  currentPrice: number;
 }
 
 interface MealCardProps {
