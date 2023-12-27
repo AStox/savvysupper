@@ -5,15 +5,18 @@ import { Ingredient } from "./ingredientScraper";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  const MILVUS_HOST = "https://in03-9479dd5ae4f429f.api.gcp-us-west1.zillizcloud.com";
-  const MILVUS_PORT = "19530";
-
-  const milvusClient = new MilvusClient(`${MILVUS_HOST}:${MILVUS_PORT}`);
-
   const data = JSON.parse(fs.readFileSync("Fresh_Fruits_&_Vegetables_ingredients.json", "utf8"));
+  // const address = process.env.MILVUS_ENDPOINT as string;
+  // const token = process.env.MILVUS_TOKEN as string;
+  // const milvusClient = new MilvusClient({ address, token });
+  // const response = await milvusClient.describeCollection({
+  //   collection_name: "Ingredients",
+  // });
+  // console.log(response);
   const vectors = await vectorizeData(data);
 
-  // store in milvus
+  await storeVectorsInMilvus(vectors);
+  res.status(200).json({ message: "Vectorization and storage completed" });
 }
 
 async function vectorizeData(data: any) {
@@ -23,7 +26,6 @@ async function vectorizeData(data: any) {
     model: "text-embedding-ada-002",
     input: data.map(ingredientToPlaneText),
   });
-  console.log(response);
   return data.map((ingredient: Ingredient, index: number) => {
     return {
       ...ingredient,
@@ -32,8 +34,34 @@ async function vectorizeData(data: any) {
   });
 }
 
+interface VectorizedIngredient extends Ingredient {
+  vector: number[];
+}
+
+async function storeVectorsInMilvus(vectorizedData: VectorizedIngredient[]) {
+  const address = process.env.MILVUS_ENDPOINT as string;
+  const token = process.env.MILVUS_TOKEN as string;
+  const milvusClient = new MilvusClient({ address, token });
+
+  const data = { ...vectorizedData[0] };
+
+  const res = await milvusClient.insert({
+    collection_name: "Ingredients",
+    data: [data],
+  });
+
+  console.log("RESPONSE:", res);
+}
+
 function ingredientToPlaneText(ingredient: Ingredient) {
   return `${ingredient.quantity} of ${ingredient.title} for ${ingredient.currentPrice}${
     ingredient.onSale ? " on sale. Regularly " + ingredient.regularPrice : ""
   }`;
+}
+
+function generateUniqueId(): string {
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 1000000);
+  const uniqueId = BigInt(timestamp) * BigInt(1000000) + BigInt(random);
+  return uniqueId.toString();
 }
