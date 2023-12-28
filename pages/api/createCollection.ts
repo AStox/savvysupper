@@ -9,4 +9,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     collection_name: "Ingredients",
     dimension: 1536,
   });
+  if (response.code !== 0) {
+    res.status(500).json(response);
+    return;
+  }
+  res.status(200).json(response);
+  return;
 }

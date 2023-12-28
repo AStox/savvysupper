@@ -8,4 +8,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const response = await milvusClient.dropCollection({
     collection_name: "Ingredients",
   });
+  if (response.code !== 0) {
+    res.status(500).json(response);
+    return;
+  }
+  res.status(200).json(response);
+  return;
 }

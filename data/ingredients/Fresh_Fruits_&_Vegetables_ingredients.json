@@ -1,32 +1,5 @@
 [
   {
-    "title": "Blueberries 170 g",
-    "quantity": "170g",
-    "currentPrice": 4.99,
-    "onSale": true,
-    "regularPrice": 6.19
-  },
-  {
-    "title": "Oranges Bag 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 6.99,
-    "onSale": true,
-    "regularPrice": 9.99
-  },
-  {
-    "title": "Lemons Bag 908 g",
-    "quantity": "908g",
-    "currentPrice": 5.49,
-    "onSale": true,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "Clementines Box 4 lbs",
-    "currentPrice": 5.99,
-    "onSale": true,
-    "regularPrice": 7.99
-  },
-  {
     "title": "Compliments Apples McIntosh 1.36 kg",
     "quantity": "1.36kg",
     "currentPrice": 5.99,
@@ -34,11 +7,23 @@
     "regularPrice": 6.99
   },
   {
-    "title": "Grapefruit Red 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 7.99,
+    "title": "Golden Pineapple 1 Count",
+    "currentPrice": 4.99,
     "onSale": true,
-    "regularPrice": 9.99
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Watermelon Seedless Mini 1 Count",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Limes 454 g",
+    "quantity": "454g",
+    "currentPrice": 5.99,
+    "onSale": true,
+    "regularPrice": 6.99
   },
   {
     "title": "Large Hass Avocado 1 Count",
@@ -47,93 +32,52 @@
     "regularPrice": 2.49
   },
   {
-    "title": "Fresh Cranberries 340 g",
-    "quantity": "340g",
-    "currentPrice": 2.99,
-    "onSale": true,
-    "regularPrice": 3.99
-  },
-  {
     "title": "White Green Seedless Grapes 1 Bunch",
     "quantity": "1.008kg",
-    "currentPrice": 11.06,
+    "currentPrice": 9.75,
     "onSale": true,
-    "regularPrice": 12.86
-  },
-  {
-    "title": "Fresh Chinese Mandarins 1.81 kg",
-    "quantity": "1.81kg",
-    "currentPrice": 5.99,
-    "onSale": true,
-    "regularPrice": 7.99
-  },
-  {
-    "title": "Compliments Oranges 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 6.99,
-    "onSale": true,
-    "regularPrice": 9.99
+    "regularPrice": 11.75
   },
   {
     "title": "Red Seedless Grapes 1 Bunch",
     "quantity": "1.008kg",
-    "currentPrice": 11.06,
+    "currentPrice": 9.75,
     "onSale": true,
-    "regularPrice": 12.86
+    "regularPrice": 11.75
   },
   {
-    "title": "Mangoes Case",
-    "currentPrice": 13,
+    "title": "Large Red Mango 1 Count",
+    "currentPrice": 1.66,
     "onSale": true,
-    "regularPrice": 14.99
-  },
-  {
-    "title": "Zespri Kiwi Fruit Green 454 g",
-    "quantity": "454g",
-    "currentPrice": 5.99,
-    "onSale": true,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "Organic Cranberries 227 g",
-    "quantity": "340g",
-    "currentPrice": 3.99,
-    "onSale": true,
-    "regularPrice": 4.99
-  },
-  {
-    "title": "Deep Red Grapefruit 1 Count",
-    "currentPrice": 1.99,
-    "onSale": true,
-    "regularPrice": 3.29
+    "regularPrice": 3.69
   },
   {
     "title": "Compliments Lemons Bag 907 g",
     "quantity": "907g",
-    "currentPrice": 5.49,
+    "currentPrice": 4.99,
     "onSale": true,
-    "regularPrice": 5.99
+    "regularPrice": 6.49
   },
   {
     "title": "Cored Golden Pineapples 650 g",
     "quantity": "650g",
-    "currentPrice": 6.49,
+    "currentPrice": 4.99,
     "onSale": true,
-    "regularPrice": 6.79
+    "regularPrice": 7.49
   },
   {
     "title": "Grapes Black Seedless 1 Bunch",
     "quantity": "0.795kg",
-    "currentPrice": 8.71,
+    "currentPrice": 8.44,
     "onSale": true,
     "regularPrice": 9.27
   },
   {
-    "title": "Compliments Apples Spartan 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 5.99,
+    "title": "Cosmic Crisp Apples 3 Count",
+    "quantity": "0.6kg",
+    "currentPrice": 3.28,
     "onSale": true,
-    "regularPrice": 6.99
+    "regularPrice": 3.95
   },
   {
     "title": "Golden Delicious Apple Large 3 Count",
@@ -150,13 +94,6 @@
     "regularPrice": 5
   },
   {
-    "title": "Cosmic Crisp Apples 3 Count",
-    "quantity": "0.6kg",
-    "currentPrice": 3.28,
-    "onSale": true,
-    "regularPrice": 3.95
-  },
-  {
     "title": "Bosc Pears 3 Count",
     "quantity": "0.63kg",
     "currentPrice": 4.16,
@@ -171,50 +108,24 @@
     "regularPrice": 4.15
   },
   {
-    "title": "Compliments Red Grapefruit 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 7.99,
-    "onSale": true,
-    "regularPrice": 9.99
-  },
-  {
-    "title": "D'Anjou Red Pears 3 Count",
-    "quantity": "0.63kg",
-    "currentPrice": 4.16,
-    "onSale": true,
-    "regularPrice": 4.84
-  },
-  {
-    "title": "Sharonfruit / Fuyu Persimmons 1 Count",
-    "currentPrice": 1.29,
-    "onSale": true,
-    "regularPrice": 1.99
-  },
-  {
-    "title": "Kaki Persimmon Vanilla 1 Case",
-    "currentPrice": 7.99,
-    "onSale": true,
-    "regularPrice": 10.99
-  },
-  {
-    "title": "Chinese Mandarins",
-    "quantity": "2.27kg",
-    "currentPrice": 5.99,
-    "onSale": true,
-    "regularPrice": 7.99
-  },
-  {
     "title": "Pomelo Gift Pack 4 Colour",
-    "currentPrice": 12.88,
+    "currentPrice": 13.88,
     "onSale": true,
     "regularPrice": 14.88
   },
   {
     "title": "Driscoll's Raspberries 170 g",
     "quantity": "170g",
-    "currentPrice": 5.49,
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 5.49
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Blueberries 170 g",
+    "quantity": "170g",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
   },
   {
     "title": "Strawberries 454 g",
@@ -225,9 +136,9 @@
   },
   {
     "title": "Lemon Large 1 Count",
-    "currentPrice": 1.29,
+    "currentPrice": 1.19,
     "onSale": false,
-    "regularPrice": 1.29
+    "regularPrice": 1.19
   },
   {
     "title": "Hass Avocados 5 Count (Ripe in 3-5 days)",
@@ -239,9 +150,9 @@
   {
     "title": "Clementines / Mandarines 907 g",
     "quantity": "907g",
-    "currentPrice": 7.49,
+    "currentPrice": 7.99,
     "onSale": false,
-    "regularPrice": 7.49
+    "regularPrice": 7.99
   },
   {
     "title": "Grapes Seedless Red 907 g",
@@ -251,11 +162,11 @@
     "regularPrice": 8.99
   },
   {
-    "title": "Grapes Green Seedless 907 g",
-    "quantity": "907g",
-    "currentPrice": 6.99,
+    "title": "Oranges Bag 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 6.99
+    "regularPrice": 9.99
   },
   {
     "title": "Blackberries 170 g",
@@ -265,11 +176,11 @@
     "regularPrice": 5.49
   },
   {
-    "title": "Organic Blueberries 170 g",
-    "quantity": "170g",
-    "currentPrice": 5.99,
+    "title": "Grapes Green Seedless 907 g",
+    "quantity": "907g",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 5.99
+    "regularPrice": 6.99
   },
   {
     "title": "Organic Raspberries 170 g",
@@ -279,11 +190,17 @@
     "regularPrice": 6.99
   },
   {
-    "title": "Bananas 1 Bunch (5 - 6 bananas)",
-    "quantity": "1.09kg",
-    "currentPrice": 1.9,
+    "title": "Organic Blueberries 170 g",
+    "quantity": "170g",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 1.9
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Clementines Box 4 lbs",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
   },
   {
     "title": "Strawberries Hot House 340 g",
@@ -293,8 +210,29 @@
     "regularPrice": 6.49
   },
   {
+    "title": "Bananas 1 Bunch (5 - 6 bananas)",
+    "quantity": "1.09kg",
+    "currentPrice": 1.9,
+    "onSale": false,
+    "regularPrice": 1.9
+  },
+  {
     "title": "Organic Blackberries 170 g",
     "quantity": "170g",
+    "currentPrice": 6.99,
+    "onSale": false,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Lemons Bag 908 g",
+    "quantity": "908g",
+    "currentPrice": 6.49,
+    "onSale": false,
+    "regularPrice": 6.49
+  },
+  {
+    "title": "Compliments Apples Gala 1.36 kg",
+    "quantity": "1.36kg",
     "currentPrice": 6.99,
     "onSale": false,
     "regularPrice": 6.99
@@ -307,11 +245,11 @@
     "regularPrice": 7.99
   },
   {
-    "title": "Compliments Apples Gala 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 6.99,
+    "title": "Grapes Duo Green and Red 907 g",
+    "quantity": "907g",
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 6.99
+    "regularPrice": 9.99
   },
   {
     "title": "Cantaloupe Large 1 Count",
@@ -320,24 +258,11 @@
     "regularPrice": 6.99
   },
   {
-    "title": "Grapes Duo Green and Red 907 g",
-    "quantity": "907g",
-    "currentPrice": 9.99,
-    "onSale": false,
-    "regularPrice": 9.99
-  },
-  {
     "title": "Organic Strawberries 454 g",
     "quantity": "454g",
     "currentPrice": 8.99,
     "onSale": false,
     "regularPrice": 8.99
-  },
-  {
-    "title": "Golden Pineapple 1 Count",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
   },
   {
     "title": "Ataulfo Mango",
@@ -352,31 +277,11 @@
     "regularPrice": 3.99
   },
   {
-    "title": "Watermelon Seedless Mini 1 Count",
-    "currentPrice": 6.99,
+    "title": "Fresh Cranberries 340 g",
+    "quantity": "340g",
+    "currentPrice": 3.99,
     "onSale": false,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "Granny Smith Apples",
-    "quantity": "1.36kg",
-    "currentPrice": 8.99,
-    "onSale": false,
-    "regularPrice": 8.99
-  },
-  {
-    "title": "Limes 454 g",
-    "quantity": "454g",
-    "currentPrice": 6.49,
-    "onSale": false,
-    "regularPrice": 6.49
-  },
-  {
-    "title": "Organic Apples Royal Gala Bag 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 8.99,
-    "onSale": false,
-    "regularPrice": 8.99
+    "regularPrice": 3.99
   },
   {
     "title": "Organic Kiwi 454 g",
@@ -386,11 +291,32 @@
     "regularPrice": 6.99
   },
   {
+    "title": "Organic Apples Royal Gala Bag 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 8.99,
+    "onSale": false,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Granny Smith Apples",
+    "quantity": "1.36kg",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Grapefruit Red 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 9.99,
+    "onSale": false,
+    "regularPrice": 9.99
+  },
+  {
     "title": "Navel Oranges Large 1 Count",
     "quantity": "0.3kg",
-    "currentPrice": 1.65,
+    "currentPrice": 2.31,
     "onSale": false,
-    "regularPrice": 1.65
+    "regularPrice": 2.31
   },
   {
     "title": "Bartlett Pear Large 3 Count",
@@ -400,10 +326,11 @@
     "regularPrice": 4.61
   },
   {
-    "title": "Melon Honeydew Extra-Large 1 Count",
-    "currentPrice": 8.99,
+    "title": "Organic Oranges 1.36 kg (May contain seeds)",
+    "quantity": "1.36kg",
+    "currentPrice": 13.99,
     "onSale": false,
-    "regularPrice": 8.99
+    "regularPrice": 13.99
   },
   {
     "title": "Honeycrisp Apples 3 Count",
@@ -413,11 +340,10 @@
     "regularPrice": 5.94
   },
   {
-    "title": "Organic Oranges 1.36 kg (May contain seeds)",
-    "quantity": "1.36kg",
-    "currentPrice": 12.99,
+    "title": "Melon Honeydew Extra-Large 1 Count",
+    "currentPrice": 8.99,
     "onSale": false,
-    "regularPrice": 12.99
+    "regularPrice": 8.99
   },
   {
     "title": "Watermelon Seedless 1 Count",
@@ -426,11 +352,24 @@
     "regularPrice": 8.99
   },
   {
+    "title": "Fresh Chinese Mandarins 1.81 kg",
+    "quantity": "1.81kg",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
     "title": "Seedless Mandarins Orange Bulk 1 Count",
     "quantity": "0.09kg",
     "currentPrice": 0.49,
     "onSale": false,
     "regularPrice": 0.49
+  },
+  {
+    "title": "Lime 1 Count",
+    "currentPrice": 0.99,
+    "onSale": false,
+    "regularPrice": 0.99
   },
   {
     "title": "Organic Apples Ambrosia",
@@ -441,22 +380,16 @@
   },
   {
     "title": "Kiwi Large 1 Count",
-    "currentPrice": 1.49,
+    "currentPrice": 1.79,
     "onSale": false,
-    "regularPrice": 1.49
-  },
-  {
-    "title": "Lime 1 Count",
-    "currentPrice": 0.99,
-    "onSale": false,
-    "regularPrice": 0.99
+    "regularPrice": 1.79
   },
   {
     "title": "Organic Limes 454 g",
     "quantity": "454g",
-    "currentPrice": 7.99,
+    "currentPrice": 8.99,
     "onSale": false,
-    "regularPrice": 7.99
+    "regularPrice": 8.99
   },
   {
     "title": "Small Avocado 1 Count",
@@ -469,6 +402,20 @@
     "currentPrice": 9.99,
     "onSale": false,
     "regularPrice": 9.99
+  },
+  {
+    "title": "Compliments Oranges 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 8.99,
+    "onSale": false,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Apples Honeycrisp",
+    "quantity": "1.36kg",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
   },
   {
     "title": "Ambrosia Apples",
@@ -485,8 +432,8 @@
     "regularPrice": 2.99
   },
   {
-    "title": "Spartan Apples",
-    "quantity": "1.36kg",
+    "title": "Clementines / Mandarins Halos 907 g",
+    "quantity": "907g",
     "currentPrice": 6.99,
     "onSale": false,
     "regularPrice": 6.99
@@ -498,6 +445,13 @@
     "regularPrice": 15.99
   },
   {
+    "title": "Apples Ambrosia",
+    "quantity": "1.36kg",
+    "currentPrice": 6.99,
+    "onSale": false,
+    "regularPrice": 6.99
+  },
+  {
     "title": "McIntosh Apples 3 Count",
     "quantity": "0.48kg",
     "currentPrice": 3.16,
@@ -505,10 +459,17 @@
     "regularPrice": 3.16
   },
   {
-    "title": "Maradol Formosa Papaya 1 Count",
-    "currentPrice": 8.49,
+    "title": "Spartan Apples",
+    "quantity": "1.36kg",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 8.49
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Maradol Formosa Papaya 1 Count",
+    "currentPrice": 8.99,
+    "onSale": false,
+    "regularPrice": 8.99
   },
   {
     "title": "Royal Gala Apples 3 Count",
@@ -518,31 +479,24 @@
     "regularPrice": 3.8
   },
   {
-    "title": "Large Red Mango 1 Count",
-    "currentPrice": 3.69,
-    "onSale": false,
-    "regularPrice": 3.69
-  },
-  {
-    "title": "Apples Ambrosia",
-    "quantity": "1.36kg",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "Organic Apples McIntosh 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
-  },
-  {
     "title": "Granny Smith Apples Large 3 Count",
     "quantity": "0.65kg",
     "currentPrice": 5,
     "onSale": false,
     "regularPrice": 5
+  },
+  {
+    "title": "Green Grapes Seedless Cotton Candy 454 g",
+    "quantity": "454g",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Mangoes Case",
+    "currentPrice": 14.99,
+    "onSale": false,
+    "regularPrice": 14.99
   },
   {
     "title": "Melon Canary/Yellow Honeydew 1 Count",
@@ -553,16 +507,16 @@
   {
     "title": "Royal Gala Apples Large 3 Count",
     "quantity": "0.65kg",
-    "currentPrice": 4.57,
-    "onSale": false,
-    "regularPrice": 4.57
-  },
-  {
-    "title": "Pink Lady Apples Large 3 Count",
-    "quantity": "0.65kg",
     "currentPrice": 4.28,
     "onSale": false,
     "regularPrice": 4.28
+  },
+  {
+    "title": "Zespri Kiwi Fruit Green 454 g",
+    "quantity": "454g",
+    "currentPrice": 6.99,
+    "onSale": false,
+    "regularPrice": 6.99
   },
   {
     "title": "Dragon Fruit 1 Count",
@@ -571,11 +525,30 @@
     "regularPrice": 4.99
   },
   {
-    "title": "Green Grapes Seedless Cotton Candy 454 g",
-    "quantity": "454g",
+    "title": "Organic Apples McIntosh 1.36 kg",
+    "quantity": "1.36kg",
     "currentPrice": 7.99,
     "onSale": false,
     "regularPrice": 7.99
+  },
+  {
+    "title": "Deep Red Grapefruit 1 Count",
+    "currentPrice": 3.29,
+    "onSale": false,
+    "regularPrice": 3.29
+  },
+  {
+    "title": "Pink Lady Apples Large 3 Count",
+    "quantity": "0.65kg",
+    "currentPrice": 6.44,
+    "onSale": false,
+    "regularPrice": 6.44
+  },
+  {
+    "title": "Organic Hass Avocado 1 Count",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
   },
   {
     "title": "Pitahaya Yellow 1 Count",
@@ -584,17 +557,31 @@
     "regularPrice": 7.99
   },
   {
-    "title": "Organic Hass Avocado 1 Count",
-    "currentPrice": 4.49,
-    "onSale": false,
-    "regularPrice": 4.49
-  },
-  {
     "title": "Lil Snapper Organic Apples Gala 1.36 kg",
     "quantity": "1.36kg",
     "currentPrice": 9.99,
     "onSale": false,
     "regularPrice": 9.99
+  },
+  {
+    "title": "Clementine With Stem And Leaf",
+    "quantity": "0.15kg",
+    "currentPrice": 1.49,
+    "onSale": false,
+    "regularPrice": 1.49
+  },
+  {
+    "title": "Pomegranate Large 1 Count",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Organic Cranberries 227 g",
+    "quantity": "340g",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
   },
   {
     "title": "Avocados 4 Count",
@@ -609,23 +596,11 @@
     "regularPrice": 2.49
   },
   {
-    "title": "Pomegranate Large 1 Count",
-    "currentPrice": 3.99,
+    "title": "D'Anjou Pears 3 Count",
+    "quantity": "0.57kg",
+    "currentPrice": 4.38,
     "onSale": false,
-    "regularPrice": 3.99
-  },
-  {
-    "title": "Clementines / Mandarins Halos 907 g",
-    "quantity": "907g",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "Melon Honeydew 1 Count",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
+    "regularPrice": 4.38
   },
   {
     "title": "Asian Pears 3 Count",
@@ -635,38 +610,31 @@
     "regularPrice": 2.77
   },
   {
-    "title": "Apples Honeycrisp",
+    "title": "Melon Honeydew 1 Count",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Compliments Apples Granny Smith",
     "quantity": "1.36kg",
     "currentPrice": 7.99,
     "onSale": false,
     "regularPrice": 7.99
   },
   {
-    "title": "Plums Black Large 1 Count",
-    "quantity": "0.103kg",
-    "currentPrice": 0.91,
-    "onSale": false,
-    "regularPrice": 0.91
-  },
-  {
-    "title": "D'Anjou Pears 3 Count",
-    "quantity": "0.57kg",
-    "currentPrice": 3.76,
-    "onSale": false,
-    "regularPrice": 3.76
-  },
-  {
-    "title": "Compliments Apples Granny Smith",
+    "title": "Apples McIntosh",
     "quantity": "1.36kg",
-    "currentPrice": 8.99,
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 8.99
+    "regularPrice": 5.99
   },
   {
-    "title": "Green Figs Case 1 Count",
-    "currentPrice": 15.99,
+    "title": "Raspberries 340 g",
+    "quantity": "340g",
+    "currentPrice": 9.49,
     "onSale": false,
-    "regularPrice": 15.99
+    "regularPrice": 9.49
   },
   {
     "title": "Black Figs Case",
@@ -675,11 +643,17 @@
     "regularPrice": 14.99
   },
   {
-    "title": "Raspberries 340 g",
-    "quantity": "340g",
-    "currentPrice": 9.49,
+    "title": "Compliments Apples Spartan 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 9.49
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Green Figs Case 1 Count",
+    "currentPrice": 15.99,
+    "onSale": false,
+    "regularPrice": 15.99
   },
   {
     "title": "Sanlucar Seedless Tangerine",
@@ -691,43 +665,28 @@
   {
     "title": "Lil Snapper Organic Apples Granny 1.36 kg",
     "quantity": "1.36kg",
-    "currentPrice": 10.99,
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 10.99
-  },
-  {
-    "title": "Apples McIntosh",
-    "quantity": "1.36kg",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
+    "regularPrice": 9.99
   },
   {
     "title": "Lil Snappers Organic Apple Fuji 1.36 kg",
     "quantity": "1.36kg",
-    "currentPrice": 10.99,
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 10.99
+    "regularPrice": 9.99
   },
   {
-    "title": "Hami Melon 1 Count",
-    "currentPrice": 6.99,
+    "title": "Sharoni Persimmon Case 1 Count",
+    "currentPrice": 11.99,
     "onSale": false,
-    "regularPrice": 6.99
+    "regularPrice": 11.99
   },
   {
-    "title": "Clementine With Stem And Leaf",
-    "quantity": "0.15kg",
-    "currentPrice": 1.49,
+    "title": "Santa Claus Melon 1 Count",
+    "currentPrice": 8.99,
     "onSale": false,
-    "regularPrice": 1.49
-  },
-  {
-    "title": "Globe Red Grapes 1 Bunch",
-    "quantity": "1.008kg",
-    "currentPrice": 11.09,
-    "onSale": false,
-    "regularPrice": 11.09
+    "regularPrice": 8.99
   },
   {
     "title": "Navel Oranges Medium 1 Count",
@@ -737,24 +696,24 @@
     "regularPrice": 1.36
   },
   {
-    "title": "Organic Kiwi Green 454 g",
-    "quantity": "454g",
-    "currentPrice": 8.49,
+    "title": "Globe Red Grapes 1 Bunch",
+    "quantity": "1.008kg",
+    "currentPrice": 11.09,
     "onSale": false,
-    "regularPrice": 8.49
+    "regularPrice": 11.09
   },
   {
-    "title": "Santa Claus Melon 1 Count",
-    "currentPrice": 8.99,
+    "title": "Pom Poms Wonderful Fresh Arils Pomegranate 113 g",
+    "quantity": "113g",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 8.99
+    "regularPrice": 5.99
   },
   {
-    "title": "Zespri Sungold Kiwi 454 g",
-    "quantity": "454g",
-    "currentPrice": 8.99,
+    "title": "Hami Melon 1 Count",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 8.99
+    "regularPrice": 6.99
   },
   {
     "title": "Apples Royal Gala Bag",
@@ -764,10 +723,38 @@
     "regularPrice": 8.99
   },
   {
-    "title": "Sharoni Persimmon Case 1 Count",
-    "currentPrice": 11.99,
+    "title": "Honey Pomelo 1 Count",
+    "currentPrice": 3.99,
     "onSale": false,
-    "regularPrice": 11.99
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Plums Black Large 1 Count",
+    "quantity": "0.103kg",
+    "currentPrice": 0.91,
+    "onSale": false,
+    "regularPrice": 0.91
+  },
+  {
+    "title": "Organic Kiwi Green 454 g",
+    "quantity": "454g",
+    "currentPrice": 8.99,
+    "onSale": false,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Organic Lemons 907 g",
+    "quantity": "907g",
+    "currentPrice": 9.99,
+    "onSale": false,
+    "regularPrice": 9.99
+  },
+  {
+    "title": "Minneola Tangelos 1 Count",
+    "quantity": "0.23kg",
+    "currentPrice": 1.36,
+    "onSale": false,
+    "regularPrice": 1.36
   },
   {
     "title": "Cara Cara Red Navel Orange 1 Count",
@@ -777,18 +764,17 @@
     "regularPrice": 1.69
   },
   {
-    "title": "Tree Ripe Peaches Large 1 Count",
-    "quantity": "0.19kg",
-    "currentPrice": 2.51,
+    "title": "Organic Mango 1 Count",
+    "currentPrice": 3.29,
     "onSale": false,
-    "regularPrice": 2.51
+    "regularPrice": 3.29
   },
   {
-    "title": "Organic Lemons 907 g",
-    "quantity": "907g",
-    "currentPrice": 11.99,
+    "title": "Zespri Sungold Kiwi 454 g",
+    "quantity": "454g",
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 11.99
+    "regularPrice": 9.99
   },
   {
     "title": "Organic Apples Royal Gala 3 Count",
@@ -798,31 +784,25 @@
     "regularPrice": 5.37
   },
   {
-    "title": "Honey Pomelo 1 Count",
-    "currentPrice": 3.99,
+    "title": "Commercial Apples Royal Gala",
+    "quantity": "0.54kg",
+    "currentPrice": 3.56,
     "onSale": false,
-    "regularPrice": 3.99
+    "regularPrice": 3.56
   },
   {
-    "title": "Seedless Green Grapes 907 g",
-    "quantity": "907g",
+    "title": "Dandy Meyer Lemons 454 g",
+    "quantity": "454g",
     "currentPrice": 7.99,
     "onSale": false,
     "regularPrice": 7.99
   },
   {
-    "title": "Commercial Apples Royal Gala",
-    "quantity": "0.54kg",
-    "currentPrice": 2.96,
+    "title": "Clementines 1 Count",
+    "quantity": "0.175kg",
+    "currentPrice": 1.93,
     "onSale": false,
-    "regularPrice": 2.96
-  },
-  {
-    "title": "Minneola Tangelos 1 Count",
-    "quantity": "0.23kg",
-    "currentPrice": 1.36,
-    "onSale": false,
-    "regularPrice": 1.36
+    "regularPrice": 1.93
   },
   {
     "title": "Fuji Apples Large 3 Count",
@@ -839,30 +819,10 @@
     "regularPrice": 10.5
   },
   {
-    "title": "Tree Ripe Nectarines Large 1 Count",
-    "quantity": "0.19kg",
-    "currentPrice": 2.51,
-    "onSale": false,
-    "regularPrice": 2.51
-  },
-  {
     "title": "Small Red Mangoes Count 1",
     "currentPrice": 2.99,
     "onSale": false,
     "regularPrice": 2.99
-  },
-  {
-    "title": "Organic Mango 1 Count",
-    "currentPrice": 3.29,
-    "onSale": false,
-    "regularPrice": 3.29
-  },
-  {
-    "title": "Clementines 1 Count",
-    "quantity": "0.175kg",
-    "currentPrice": 1.93,
-    "onSale": false,
-    "regularPrice": 1.93
   },
   {
     "title": "Bagged Organic Avocado 3 Count",
@@ -872,6 +832,19 @@
     "regularPrice": 7.49
   },
   {
+    "title": "Spartan East Apples Small 3 Count",
+    "quantity": "0.61kg",
+    "currentPrice": 4.02,
+    "onSale": false,
+    "regularPrice": 4.02
+  },
+  {
+    "title": "Passion Fruit 1 Count",
+    "currentPrice": 2.99,
+    "onSale": false,
+    "regularPrice": 2.99
+  },
+  {
     "title": "Lil Snappers Organic Pear Bartlett King Size 907 g",
     "quantity": "907g",
     "currentPrice": 7.99,
@@ -879,17 +852,24 @@
     "regularPrice": 7.99
   },
   {
-    "title": "Pom Poms Wonderful Fresh Arils Pomegranate 113 g",
-    "quantity": "113g",
-    "currentPrice": 5.99,
+    "title": "Compliments Red Grapefruit 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 5.99
+    "regularPrice": 9.99
   },
   {
-    "title": "Passion Fruit 1 Count",
-    "currentPrice": 2.99,
+    "title": "Sharonfruit / Fuyu Persimmons 1 Count",
+    "currentPrice": 2.49,
     "onSale": false,
-    "regularPrice": 2.99
+    "regularPrice": 2.49
+  },
+  {
+    "title": "Tree Ripe Peaches Large 1 Count",
+    "quantity": "0.19kg",
+    "currentPrice": 2.51,
+    "onSale": false,
+    "regularPrice": 2.51
   },
   {
     "title": "Organic Apples Granny Smith 3 Count",
@@ -899,24 +879,24 @@
     "regularPrice": 5.28
   },
   {
-    "title": "Organic Grapes Green Seedless 1 Bunch",
-    "quantity": "0.795kg",
-    "currentPrice": 10.5,
-    "onSale": false,
-    "regularPrice": 10.5
-  },
-  {
     "title": "Yellow Ataulfo Mangoes 1 Count",
     "currentPrice": 2.99,
     "onSale": false,
     "regularPrice": 2.99
   },
   {
-    "title": "Spartan East Apples Small 3 Count",
-    "quantity": "0.61kg",
-    "currentPrice": 4.02,
+    "title": "Jazz Apples 3 Count",
+    "quantity": "0.6kg",
+    "currentPrice": 3.95,
     "onSale": false,
-    "regularPrice": 4.02
+    "regularPrice": 3.95
+  },
+  {
+    "title": "Organic Grapes Green Seedless 1 Bunch",
+    "quantity": "0.795kg",
+    "currentPrice": 10.5,
+    "onSale": false,
+    "regularPrice": 10.5
   },
   {
     "title": "Granny Smith Apples Small 3 Count",
@@ -926,87 +906,18 @@
     "regularPrice": 4.15
   },
   {
-    "title": "Pink Cripps Apples 3 Count",
-    "quantity": "0.6kg",
-    "currentPrice": 4.61,
+    "title": "D'Anjou Red Pears 3 Count",
+    "quantity": "0.63kg",
+    "currentPrice": 4.84,
     "onSale": false,
-    "regularPrice": 4.61
+    "regularPrice": 4.84
   },
   {
-    "title": "Fuji Apples 3 Count",
-    "quantity": "0.6kg",
-    "currentPrice": 4.61,
-    "onSale": false,
-    "regularPrice": 4.61
-  },
-  {
-    "title": "Pink Lady Apples",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
-  },
-  {
-    "title": "Jazz Apples 3 Count",
-    "quantity": "0.6kg",
-    "currentPrice": 4.61,
-    "onSale": false,
-    "regularPrice": 4.61
-  },
-  {
-    "title": "Dandy Meyer Lemons 454 g",
-    "quantity": "454g",
-    "currentPrice": 8.49,
-    "onSale": false,
-    "regularPrice": 8.49
-  },
-  {
-    "title": "Red Plums Large 1 Count",
-    "quantity": "0.103kg",
-    "currentPrice": 0.91,
-    "onSale": false,
-    "regularPrice": 0.91
-  },
-  {
-    "title": "Flesh Peaches White Large",
+    "title": "Tree Ripe Nectarines Large 1 Count",
     "quantity": "0.19kg",
     "currentPrice": 2.51,
     "onSale": false,
     "regularPrice": 2.51
-  },
-  {
-    "title": "Sumo Orange",
-    "quantity": "0.23kg",
-    "currentPrice": 4.56,
-    "onSale": false,
-    "regularPrice": 4.56
-  },
-  {
-    "title": "Lil Snappers Organic Pear Red King Size 907 g",
-    "quantity": "907g",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
-  },
-  {
-    "title": "Organic Nectarine 1 Count",
-    "quantity": "0.19kg",
-    "currentPrice": 2.3,
-    "onSale": false,
-    "regularPrice": 2.3
-  },
-  {
-    "title": "McIntosh Commercial Apples",
-    "quantity": "0.54kg",
-    "currentPrice": 2.37,
-    "onSale": false,
-    "regularPrice": 2.37
-  },
-  {
-    "title": "Apples Gingergold Small",
-    "quantity": "0.54kg",
-    "currentPrice": 2.96,
-    "onSale": false,
-    "regularPrice": 2.96
   },
   {
     "title": "Red Delicious Apples 3 Count",
@@ -1016,8 +927,63 @@
     "regularPrice": 4.15
   },
   {
-    "title": "Apples Red Delicious",
-    "quantity": "1.36kg",
+    "title": "Fuji Apples 3 Count",
+    "quantity": "0.6kg",
+    "currentPrice": 4.61,
+    "onSale": false,
+    "regularPrice": 4.61
+  },
+  {
+    "title": "Pink Cripps Apples 3 Count",
+    "quantity": "0.6kg",
+    "currentPrice": 4.61,
+    "onSale": false,
+    "regularPrice": 4.61
+  },
+  {
+    "title": "Seedless Green Grapes 907 g",
+    "quantity": "907g",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Lil Snappers Organic Pear Red King Size 907 g",
+    "quantity": "907g",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Sumo Orange",
+    "quantity": "0.23kg",
+    "currentPrice": 4.56,
+    "onSale": false,
+    "regularPrice": 4.56
+  },
+  {
+    "title": "Envy Apples 3 Count",
+    "quantity": "0.6kg",
+    "currentPrice": 4.61,
+    "onSale": false,
+    "regularPrice": 4.61
+  },
+  {
+    "title": "Moro Blood Oranges 1 Count",
+    "quantity": "0.16kg",
+    "currentPrice": 1.05,
+    "onSale": false,
+    "regularPrice": 1.05
+  },
+  {
+    "title": "Organic Nectarine 1 Count",
+    "quantity": "0.19kg",
+    "currentPrice": 2.3,
+    "onSale": false,
+    "regularPrice": 2.3
+  },
+  {
+    "title": "Pink Lady Apples",
     "currentPrice": 7.99,
     "onSale": false,
     "regularPrice": 7.99
@@ -1029,18 +995,38 @@
     "regularPrice": 2.49
   },
   {
-    "title": "Golden Delicious Apples 3 Count",
-    "quantity": "0.54kg",
-    "currentPrice": 2.96,
+    "title": "Persimmons 1 Count",
+    "currentPrice": 2.49,
     "onSale": false,
-    "regularPrice": 2.96
+    "regularPrice": 2.49
   },
   {
-    "title": "Moro Blood Oranges 1 Count",
-    "quantity": "0.16kg",
-    "currentPrice": 1.05,
+    "title": "Apples Red Delicious",
+    "quantity": "1.36kg",
+    "currentPrice": 7.99,
     "onSale": false,
-    "regularPrice": 1.05
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Chinese Organic Mandarins",
+    "quantity": "1.82kg",
+    "currentPrice": 10.99,
+    "onSale": false,
+    "regularPrice": 10.99
+  },
+  {
+    "title": "Murcott Mandarins 1 Count",
+    "quantity": "0.09kg",
+    "currentPrice": 0.59,
+    "onSale": false,
+    "regularPrice": 0.59
+  },
+  {
+    "title": "Red Plums Large 1 Count",
+    "quantity": "0.103kg",
+    "currentPrice": 0.91,
+    "onSale": false,
+    "regularPrice": 0.91
   },
   {
     "title": "Peaches Large",
@@ -1056,18 +1042,31 @@
     "regularPrice": 4.99
   },
   {
-    "title": "Nicola Apples 3 Count",
-    "quantity": "0.66kg",
-    "currentPrice": 2.9,
+    "title": "Blueberries 510 g",
+    "quantity": "510g",
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 2.9
+    "regularPrice": 9.99
   },
   {
-    "title": "Nectarines White Flesh",
-    "quantity": "0.25kg",
-    "currentPrice": 3.3,
+    "title": "Kaki Persimmon Vanilla 1 Case",
+    "currentPrice": 10.99,
     "onSale": false,
-    "regularPrice": 3.3
+    "regularPrice": 10.99
+  },
+  {
+    "title": "McIntosh Commercial Apples",
+    "quantity": "0.54kg",
+    "currentPrice": 2.37,
+    "onSale": false,
+    "regularPrice": 2.37
+  },
+  {
+    "title": "Golden Delicious Apples 3 Count",
+    "quantity": "0.54kg",
+    "currentPrice": 2.96,
+    "onSale": false,
+    "regularPrice": 2.96
   },
   {
     "title": "Organic Large Anjou Pears",
@@ -1077,6 +1076,13 @@
     "regularPrice": 5.41
   },
   {
+    "title": "Cherries 1 Bunch",
+    "quantity": "0.5kg",
+    "currentPrice": 14.32,
+    "onSale": false,
+    "regularPrice": 14.32
+  },
+  {
     "title": "Plums Red Small",
     "quantity": "0.102kg",
     "currentPrice": 0.9,
@@ -1084,23 +1090,11 @@
     "regularPrice": 0.9
   },
   {
-    "title": "Pint Strawberries",
-    "currentPrice": 6.49,
+    "title": "Nectarines White Flesh",
+    "quantity": "0.25kg",
+    "currentPrice": 3.3,
     "onSale": false,
-    "regularPrice": 6.49
-  },
-  {
-    "title": "Pint Blueberries 340 g",
-    "currentPrice": 9.99,
-    "onSale": false,
-    "regularPrice": 9.99
-  },
-  {
-    "title": "Yellow Lemon Plums 1 Count",
-    "quantity": "0.103kg",
-    "currentPrice": 1.02,
-    "onSale": false,
-    "regularPrice": 1.02
+    "regularPrice": 3.3
   },
   {
     "title": "Organic Apples Ambrosia 3 Count",
@@ -1110,23 +1104,50 @@
     "regularPrice": 4.69
   },
   {
+    "title": "Pint Strawberries",
+    "currentPrice": 6.49,
+    "onSale": false,
+    "regularPrice": 6.49
+  },
+  {
+    "title": "Chestnuts 454 g",
+    "quantity": "454g",
+    "currentPrice": 10.99,
+    "onSale": false,
+    "regularPrice": 10.99
+  },
+  {
+    "title": "Yellow Lemon Plums 1 Count",
+    "quantity": "0.103kg",
+    "currentPrice": 1.02,
+    "onSale": false,
+    "regularPrice": 1.02
+  },
+  {
     "title": "Green Regular Large Papaya Count 1",
     "currentPrice": 4.99,
     "onSale": false,
     "regularPrice": 4.99
   },
   {
-    "title": "Murcott Mandarins 1 Count",
-    "quantity": "0.09kg",
-    "currentPrice": 0.59,
-    "onSale": false,
-    "regularPrice": 0.59
-  },
-  {
     "title": "Starfruit 1 Count",
     "currentPrice": 2.49,
     "onSale": false,
     "regularPrice": 2.49
+  },
+  {
+    "title": "Nicola Apples 3 Count",
+    "quantity": "0.66kg",
+    "currentPrice": 2.9,
+    "onSale": false,
+    "regularPrice": 2.9
+  },
+  {
+    "title": "Apples Gingergold Small",
+    "quantity": "0.54kg",
+    "currentPrice": 2.96,
+    "onSale": false,
+    "regularPrice": 2.96
   },
   {
     "title": "Pluots Interspecific",
@@ -1149,6 +1170,13 @@
     "regularPrice": 3.99
   },
   {
+    "title": "Organic Apples Pink Lady 3 Count",
+    "quantity": "0.6kg",
+    "currentPrice": 4.61,
+    "onSale": false,
+    "regularPrice": 4.61
+  },
+  {
     "title": "Comice Pears",
     "quantity": "0.6kg",
     "currentPrice": 4.61,
@@ -1163,28 +1191,8 @@
     "regularPrice": 5.28
   },
   {
-    "title": "Envy Apples 3 Count",
-    "quantity": "0.6kg",
-    "currentPrice": 5.94,
-    "onSale": false,
-    "regularPrice": 5.94
-  },
-  {
-    "title": "Coronation Grapes Blue 2 L",
-    "quantity": "2L",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
-  },
-  {
     "title": "Black/Red Plums 907 g",
     "quantity": "907g",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
-  },
-  {
-    "title": "Rivermaid Bartlett Pears 1.36 kg",
     "currentPrice": 7.99,
     "onSale": false,
     "regularPrice": 7.99
@@ -1195,27 +1203,6 @@
     "currentPrice": 9.99,
     "onSale": false,
     "regularPrice": 9.99
-  },
-  {
-    "title": "Blueberries 510 g",
-    "quantity": "510g",
-    "currentPrice": 9.99,
-    "onSale": false,
-    "regularPrice": 9.99
-  },
-  {
-    "title": "Chinese Organic Mandarins",
-    "quantity": "1.82kg",
-    "currentPrice": 10.99,
-    "onSale": false,
-    "regularPrice": 10.99
-  },
-  {
-    "title": "Cherries 1 Bunch",
-    "quantity": "0.5kg",
-    "currentPrice": 14.32,
-    "onSale": false,
-    "regularPrice": 14.32
   },
   {
     "title": "Small Lemons",
@@ -1242,12 +1229,6 @@
     "currentPrice": 4.15,
     "onSale": false,
     "regularPrice": 4.15
-  },
-  {
-    "title": "Blueberries 1 Quart",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
   },
   {
     "title": "Organic Apples Honey Crisp",
@@ -1277,14 +1258,14 @@
     "regularPrice": 7.99
   },
   {
-    "title": "Organic Watermelon Mini Personal 1 Count",
+    "title": "Lil Snappers Organic Pears Bosc 907 g",
+    "quantity": "907g",
     "currentPrice": 7.99,
     "onSale": false,
     "regularPrice": 7.99
   },
   {
-    "title": "Lil Snappers Organic Pears Bosc 907 g",
-    "quantity": "907g",
+    "title": "Rivermaid Bartlett Pears 1.36 kg",
     "currentPrice": 7.99,
     "onSale": false,
     "regularPrice": 7.99
@@ -1317,11 +1298,10 @@
     "regularPrice": 9.99
   },
   {
-    "title": "Chestnuts 454 g",
-    "quantity": "454g",
-    "currentPrice": 10.99,
+    "title": "Pint Blueberries 340 g",
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 10.99
+    "regularPrice": 9.99
   },
   {
     "title": "Ataulfo Mango Case",
@@ -1330,7 +1310,7 @@
     "regularPrice": 15.99
   },
   {
-    "title": "Navel California Orange 4.54 kg",
+    "title": "Orange Navel California 4.54 kg",
     "quantity": "4.54kg",
     "currentPrice": 16.99,
     "onSale": false,
@@ -1350,10 +1330,11 @@
     "regularPrice": 1.85
   },
   {
-    "title": "Persimmons 1 Count",
-    "currentPrice": 1.99,
+    "title": "Flesh Peaches White Large",
+    "quantity": "0.19kg",
+    "currentPrice": 2.51,
     "onSale": false,
-    "regularPrice": 1.99
+    "regularPrice": 2.51
   },
   {
     "title": "Red Pluot",
@@ -1404,13 +1385,6 @@
     "regularPrice": 4.31
   },
   {
-    "title": "Organic Apples Pink Lady 3 Count",
-    "quantity": "0.6kg",
-    "currentPrice": 4.61,
-    "onSale": false,
-    "regularPrice": 4.61
-  },
-  {
     "title": "Plantain 1 Bunch",
     "quantity": "0.7kg",
     "currentPrice": 4.61,
@@ -1440,6 +1414,12 @@
   },
   {
     "title": "High Bush Pint Blueberries",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Blueberries 1 Quart",
     "currentPrice": 4.99,
     "onSale": false,
     "regularPrice": 4.99
@@ -1596,6 +1576,13 @@
     "regularPrice": 7.99
   },
   {
+    "title": "Coronation Grapes Blue 2 L",
+    "quantity": "2L",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
     "title": "Black Sapphire Seedless Grapes 907 g",
     "quantity": "907g",
     "currentPrice": 7.99,
@@ -1631,6 +1618,19 @@
     "regularPrice": 7.99
   },
   {
+    "title": "Organic Watermelon Mini Personal 1 Count",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Chinese Mandarins",
+    "quantity": "2.27kg",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
     "title": "Fresh Clamshell Blueberries 908 g",
     "quantity": "908g",
     "currentPrice": 7.99,
@@ -1653,13 +1653,6 @@
   {
     "title": "Candy Dreams Seedless Grapes Black 454 g",
     "quantity": "454g",
-    "currentPrice": 8.99,
-    "onSale": false,
-    "regularPrice": 8.99
-  },
-  {
-    "title": "Cara Cara Oranges",
-    "quantity": "1.36kg",
     "currentPrice": 8.99,
     "onSale": false,
     "regularPrice": 8.99
@@ -1723,6 +1716,13 @@
   {
     "title": "Jumbo Blueberries 277 g",
     "quantity": "277g",
+    "currentPrice": 9.99,
+    "onSale": false,
+    "regularPrice": 9.99
+  },
+  {
+    "title": "Cara Cara Oranges",
+    "quantity": "1.36kg",
     "currentPrice": 9.99,
     "onSale": false,
     "regularPrice": 9.99
@@ -1841,31 +1841,10 @@
     "regularPrice": 15.99
   },
   {
-    "title": "Grape Tomatoes 1 Pint",
-    "currentPrice": 3.79,
+    "title": "English Cucumber Seedless 1 Count",
+    "currentPrice": 1.49,
     "onSale": true,
-    "regularPrice": 4.99
-  },
-  {
-    "title": "Romaine Lettuce Hearts 3 Count",
-    "quantity": "624g",
-    "currentPrice": 4.99,
-    "onSale": true,
-    "regularPrice": 6.79
-  },
-  {
-    "title": "Compliments Organic Mushrooms Whole White 227 g",
-    "quantity": "227g",
-    "currentPrice": 1.5,
-    "onSale": true,
-    "regularPrice": 3.49
-  },
-  {
-    "title": "Yellow Onions 2.27 kg",
-    "quantity": "2.27kg",
-    "currentPrice": 3.99,
-    "onSale": true,
-    "regularPrice": 6.99
+    "regularPrice": 2.99
   },
   {
     "title": "Nature Fresh Farms Mini Sweet Peppers 454 g",
@@ -1875,17 +1854,17 @@
     "regularPrice": 6.49
   },
   {
-    "title": "Carrots Bag 2.27 kg",
-    "quantity": "2.27kg",
-    "currentPrice": 3.99,
+    "title": "Orange Flesh Yams Sweet Potato",
+    "quantity": "0.34kg",
+    "currentPrice": 1.11,
     "onSale": true,
-    "regularPrice": 5.99
+    "regularPrice": 2.02
   },
   {
-    "title": "Tomatoes Medley 1 Pint",
-    "currentPrice": 4.49,
+    "title": "Green Onions 1 Count",
+    "currentPrice": 0.99,
     "onSale": true,
-    "regularPrice": 4.99
+    "regularPrice": 1.99
   },
   {
     "title": "Organic Onions Yellow 1.36 kg",
@@ -1895,32 +1874,38 @@
     "regularPrice": 6.49
   },
   {
-    "title": "Grape Tomatoes Angel Sweet 1 Pint",
-    "quantity": "255g",
-    "currentPrice": 4.49,
+    "title": "Plum Roma Tomatoes 2 Count",
+    "quantity": "0.3kg",
+    "currentPrice": 1.85,
     "onSale": true,
-    "regularPrice": 5.49
+    "regularPrice": 2.31
   },
   {
-    "title": "Sweet Green Bell Peppers Large 2 Count",
-    "quantity": "0.45kg",
-    "currentPrice": 3.45,
+    "title": "Red Onion 1 Count",
+    "quantity": "0.35kg",
+    "currentPrice": 1.77,
     "onSale": true,
-    "regularPrice": 3.96
-  },
-  {
-    "title": "Brussels Sprouts Approx. 10-20 Count",
-    "quantity": "0.345kg",
-    "currentPrice": 3.04,
-    "onSale": true,
-    "regularPrice": 3.8
+    "regularPrice": 1.92
   },
   {
     "title": "Russet Potatoes 1 Count",
     "quantity": "0.27kg",
-    "currentPrice": 1.18,
+    "currentPrice": 1.01,
     "onSale": true,
     "regularPrice": 1.36
+  },
+  {
+    "title": "Romaine Lettuce 1 Bunch",
+    "currentPrice": 2.29,
+    "onSale": true,
+    "regularPrice": 2.99
+  },
+  {
+    "title": "Green Jalapeno Peppers",
+    "quantity": "0.09kg",
+    "currentPrice": 0.99,
+    "onSale": true,
+    "regularPrice": 1.09
   },
   {
     "title": "Carrots Bulk 1 Count",
@@ -1930,11 +1915,18 @@
     "regularPrice": 0.79
   },
   {
+    "title": "Compliments Potatoes Yellow Mini 680 g",
+    "quantity": "680g",
+    "currentPrice": 4.99,
+    "onSale": true,
+    "regularPrice": 5.49
+  },
+  {
     "title": "Compliments Organic Baby Spinach 312 g",
     "quantity": "312g",
     "currentPrice": 6.99,
     "onSale": true,
-    "regularPrice": 7.49
+    "regularPrice": 7.99
   },
   {
     "title": "Kale Greens 1 Bunch",
@@ -1943,31 +1935,37 @@
     "regularPrice": 3.49
   },
   {
+    "title": "Avalantino Tomatoes Clamshell Vine 454 g",
+    "quantity": "454g",
+    "currentPrice": 4.79,
+    "onSale": true,
+    "regularPrice": 4.99
+  },
+  {
     "title": "Carrots 1 Bunch",
     "currentPrice": 2.99,
     "onSale": true,
     "regularPrice": 3.49
   },
   {
-    "title": "Compliments Carrots 2.27 kg",
-    "quantity": "2.27kg",
-    "currentPrice": 3.99,
+    "title": "Green Leaf Lettuce 1 Count",
+    "currentPrice": 2.29,
     "onSale": true,
-    "regularPrice": 5.99
+    "regularPrice": 2.99
   },
   {
-    "title": "Compliments Russet Potato Poly Bag 4.54 kg",
-    "quantity": "4.54kg",
-    "currentPrice": 4.77,
+    "title": "Compliments Potatoes Red Mini 680 g",
+    "quantity": "680g",
+    "currentPrice": 4.99,
     "onSale": true,
-    "regularPrice": 7.99
+    "regularPrice": 5.49
   },
   {
-    "title": "Compliments Potato Red Poly Bag 4.54 kg",
-    "quantity": "4.54kg",
-    "currentPrice": 4.77,
+    "title": "Compliments Potatoes Mini Medley 680 g",
+    "quantity": "680g",
+    "currentPrice": 4.99,
     "onSale": true,
-    "regularPrice": 7.99
+    "regularPrice": 5.49
   },
   {
     "title": "Organic White Stuffers Mushrooms 454 g",
@@ -1977,18 +1975,23 @@
     "regularPrice": 5.49
   },
   {
-    "title": "Compliments Green Beans 340 g",
-    "quantity": "340g",
-    "currentPrice": 4.49,
+    "title": "Red Radish 1 Bunch",
+    "currentPrice": 2.29,
     "onSale": true,
-    "regularPrice": 4.99
+    "regularPrice": 2.49
   },
   {
-    "title": "Compliments Onions Yellow 2.27 kg",
-    "quantity": "2.27kg",
-    "currentPrice": 3.99,
+    "title": "Compliments Gluten-Free Potatoes White Mini 680 g",
+    "quantity": "680g",
+    "currentPrice": 4.99,
     "onSale": true,
-    "regularPrice": 6.99
+    "regularPrice": 5.49
+  },
+  {
+    "title": "Red Leaf Lettuce 1 Count",
+    "currentPrice": 2.29,
+    "onSale": true,
+    "regularPrice": 2.99
   },
   {
     "title": "Spinach 1 Bunch",
@@ -1997,43 +2000,17 @@
     "regularPrice": 3.49
   },
   {
-    "title": "Compliments  Potato Bag Yellow - Fleshed  4.54 kg",
-    "quantity": "4.54kg",
-    "currentPrice": 4.77,
-    "onSale": true,
-    "regularPrice": 11.99
-  },
-  {
-    "title": "HH Hiiro Tomatoes Cherry Pint 255 g",
-    "quantity": "255g",
-    "currentPrice": 4.49,
-    "onSale": true,
-    "regularPrice": 4.99
-  },
-  {
     "title": "Anise Fennel 1 Count",
     "currentPrice": 3.99,
     "onSale": true,
     "regularPrice": 4.99
   },
   {
-    "title": "Compliments Grape Tomatoes 551 ml",
-    "currentPrice": 3.79,
+    "title": "Honey Garlic Mushroom Caps",
+    "quantity": "0.27kg",
+    "currentPrice": 3.58,
     "onSale": true,
-    "regularPrice": 4.49
-  },
-  {
-    "title": "Compliments Romaine Hearts 510 g",
-    "quantity": "510g",
-    "currentPrice": 4.99,
-    "onSale": true,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "English Cucumber Seedless 1 Count",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
+    "regularPrice": 4.16
   },
   {
     "title": "Mini Cucumbers Seedless 6 Pack",
@@ -2041,6 +2018,12 @@
     "currentPrice": 4.99,
     "onSale": false,
     "regularPrice": 4.99
+  },
+  {
+    "title": "Celery 1 Count",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
   },
   {
     "title": "Carrots Bag 907 g",
@@ -2057,16 +2040,23 @@
     "regularPrice": 2.69
   },
   {
-    "title": "Celery 1 Count",
-    "currentPrice": 3.99,
+    "title": "Grape Tomatoes 1 Pint",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 3.99
+    "regularPrice": 5.99
   },
   {
     "title": "Iceberg Lettuce 1 Count",
     "currentPrice": 3.99,
     "onSale": false,
     "regularPrice": 3.99
+  },
+  {
+    "title": "Romaine Lettuce Hearts 3 Count",
+    "quantity": "624g",
+    "currentPrice": 6.79,
+    "onSale": false,
+    "regularPrice": 6.79
   },
   {
     "title": "Broccoli 1 Count",
@@ -2076,16 +2066,29 @@
   },
   {
     "title": "Cauliflower 1 Count",
-    "currentPrice": 4.99,
+    "currentPrice": 5.49,
     "onSale": false,
-    "regularPrice": 4.99
+    "regularPrice": 5.49
   },
   {
     "title": "Rainbow Peppers Large 3 Count",
     "quantity": "3 per pack",
-    "currentPrice": 7.49,
+    "currentPrice": 7.99,
     "onSale": false,
-    "regularPrice": 7.49
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Compliments Organic Mushrooms Whole White 227 g",
+    "quantity": "227g",
+    "currentPrice": 3.49,
+    "onSale": false,
+    "regularPrice": 3.49
+  },
+  {
+    "title": "Organic Cucumber English 1 EA",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
   },
   {
     "title": "Cucumbers Seedless 3 Count",
@@ -2095,17 +2098,25 @@
     "regularPrice": 6.99
   },
   {
-    "title": "Organic Cucumber English 1 EA",
-    "currentPrice": 3.99,
-    "onSale": false,
-    "regularPrice": 3.99
-  },
-  {
     "title": "Fresh Whole Garlic 5 Pack",
     "quantity": "5 per pack",
     "currentPrice": 1.99,
     "onSale": false,
     "regularPrice": 1.99
+  },
+  {
+    "title": "Yellow Onions 2.27 kg",
+    "quantity": "2.27kg",
+    "currentPrice": 6.99,
+    "onSale": false,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Organic Carrots 908 g",
+    "quantity": "908g",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
   },
   {
     "title": "Organic Cucumbers Mini 6 Count",
@@ -2122,11 +2133,11 @@
     "regularPrice": 2.49
   },
   {
-    "title": "Organic Carrots 908 g",
-    "quantity": "908g",
-    "currentPrice": 3.49,
+    "title": "Yellow Potatoes Local 4.54 kg",
+    "quantity": "4.54kg",
+    "currentPrice": 7.99,
     "onSale": false,
-    "regularPrice": 3.49
+    "regularPrice": 7.99
   },
   {
     "title": "Garlic Mesh Bag 3 Count",
@@ -2143,13 +2154,6 @@
     "regularPrice": 3.99
   },
   {
-    "title": "Yellow Potatoes Local 4.54 kg",
-    "quantity": "4.54kg",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
-  },
-  {
     "title": "Nature Fresh Hiiros Cherry Tomatoes Red on the Vine 340 g",
     "quantity": "340g",
     "currentPrice": 7.79,
@@ -2162,6 +2166,13 @@
     "currentPrice": 6.99,
     "onSale": false,
     "regularPrice": 6.99
+  },
+  {
+    "title": "Parsnips 454 g",
+    "quantity": "454g",
+    "currentPrice": 6.49,
+    "onSale": false,
+    "regularPrice": 6.49
   },
   {
     "title": "Nantes Carrots Local 454 g",
@@ -2178,11 +2189,11 @@
     "regularPrice": 3.99
   },
   {
-    "title": "Parsnips 454 g",
-    "quantity": "454g",
-    "currentPrice": 6.49,
+    "title": "Carrots Bag 2.27 kg",
+    "quantity": "2.27kg",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 6.49
+    "regularPrice": 6.99
   },
   {
     "title": "Organic Carrots Rainbow 907 g",
@@ -2192,32 +2203,35 @@
     "regularPrice": 3.49
   },
   {
-    "title": "Orange Flesh Yams Sweet Potato",
-    "quantity": "0.34kg",
-    "currentPrice": 2.02,
-    "onSale": false,
-    "regularPrice": 2.02
-  },
-  {
     "title": "Organic Celery Hearts 1 Count",
     "currentPrice": 5.49,
     "onSale": false,
     "regularPrice": 5.49
   },
   {
-    "title": "Sunset One Tomatoes Sweet Cherry 1 Pint",
-    "currentPrice": 3.99,
+    "title": "Sweet Onions 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 3.99
+    "regularPrice": 6.99
   },
   {
-    "title": "Green Onions 1 Count",
-    "currentPrice": 1.99,
+    "title": "Organic Romaine Hearts 3 Count",
+    "quantity": "340g",
+    "currentPrice": 7.99,
     "onSale": false,
-    "regularPrice": 1.99
+    "regularPrice": 7.99
   },
   {
-    "title": "Carving Pumpkin 1 Count",
+    "title": "The Little Potato Company Potatoes Blushing Belle 680 g",
+    "quantity": "680g",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Compliments Organic Mushrooms Sliced White 227 g",
+    "quantity": "227g",
     "currentPrice": 3.99,
     "onSale": false,
     "regularPrice": 3.99
@@ -2230,28 +2244,7 @@
     "regularPrice": 5.49
   },
   {
-    "title": "Sunset Organic Tomatoes Grape 340 g",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "Sweet Onions 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "The Little Potato Company Potatoes Blushing Belle 680 g",
-    "quantity": "680g",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
-    "title": "Compliments Organic Mushrooms Sliced White 227 g",
-    "quantity": "227g",
+    "title": "Sunset One Tomatoes Sweet Cherry 1 Pint",
     "currentPrice": 3.99,
     "onSale": false,
     "regularPrice": 3.99
@@ -2271,11 +2264,17 @@
     "regularPrice": 5.49
   },
   {
-    "title": "Romaine Hearts Organic 3 EA",
-    "quantity": "340g",
-    "currentPrice": 7.99,
+    "title": "Peeled Garlic 250 g",
+    "quantity": "250g",
+    "currentPrice": 2.49,
     "onSale": false,
-    "regularPrice": 7.99
+    "regularPrice": 2.49
+  },
+  {
+    "title": "Sunset Organic Tomatoes Grape 340 g",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
   },
   {
     "title": "Organic Broccoli 1 Count",
@@ -2291,18 +2290,11 @@
     "regularPrice": 7.79
   },
   {
-    "title": "Peeled Garlic 250 g",
-    "quantity": "250g",
-    "currentPrice": 2.49,
+    "title": "Broccoli Crowns",
+    "quantity": "0.23kg",
+    "currentPrice": 2.28,
     "onSale": false,
-    "regularPrice": 2.49
-  },
-  {
-    "title": "Red Tomatoes On The Vine 2 Count",
-    "quantity": "0.418kg",
-    "currentPrice": 3.21,
-    "onSale": false,
-    "regularPrice": 3.21
+    "regularPrice": 2.28
   },
   {
     "title": "Onions Red 1.36 kg",
@@ -2312,37 +2304,30 @@
     "regularPrice": 4.99
   },
   {
-    "title": "Broccoli Crowns",
-    "quantity": "0.23kg",
-    "currentPrice": 2.28,
-    "onSale": false,
-    "regularPrice": 2.28
-  },
-  {
-    "title": "Organic Cauliflower Small 1 Count",
+    "title": "Organic Cauliflower 1 Count",
     "currentPrice": 7.99,
     "onSale": false,
     "regularPrice": 7.99
   },
   {
-    "title": "Red Onion 1 Count",
-    "quantity": "0.35kg",
-    "currentPrice": 1.92,
-    "onSale": false,
-    "regularPrice": 1.92
-  },
-  {
-    "title": "Kale Organic Green 1EA",
+    "title": "Tomatoes Medley 1 Pint",
     "currentPrice": 4.99,
     "onSale": false,
     "regularPrice": 4.99
   },
   {
-    "title": "Plum Roma Tomatoes 2 Count",
-    "quantity": "0.3kg",
-    "currentPrice": 1.98,
+    "title": "Red Tomatoes On The Vine 2 Count",
+    "quantity": "0.418kg",
+    "currentPrice": 3.21,
     "onSale": false,
-    "regularPrice": 1.98
+    "regularPrice": 3.21
+  },
+  {
+    "title": "Garlic 115 g",
+    "quantity": "115g",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
   },
   {
     "title": "Beets 908 g",
@@ -2352,18 +2337,6 @@
     "regularPrice": 3.49
   },
   {
-    "title": "Grillhouse Baking Potatoes Russet Potatoes 4 Count",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
-    "title": "Celery Hearts 1 Pack",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
-  },
-  {
     "title": "Organic Yams Sweet Potatoes 1.36 kg",
     "quantity": "1.36kg",
     "currentPrice": 8.8,
@@ -2371,10 +2344,35 @@
     "regularPrice": 8.8
   },
   {
+    "title": "Organic Kale Green 1 Bunch",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Grillhouse Baking Potatoes Russet Potatoes 4 Count",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
+  },
+  {
     "title": "Organic Celery 1 Bunch",
     "currentPrice": 5.49,
     "onSale": false,
     "regularPrice": 5.49
+  },
+  {
+    "title": "The Little Potato Company Potatoes Terrific Trio Variety Pack (3 lb Bag) 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 8.99,
+    "onSale": false,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Celery Hearts 1 Pack",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
   },
   {
     "title": "Compliments Baby Spinach 284 g",
@@ -2390,20 +2388,6 @@
     "regularPrice": 3.99
   },
   {
-    "title": "The Little Potato Company Potatoes Terrific Trio Variety Pack (3 lb Bag) 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 8.99,
-    "onSale": false,
-    "regularPrice": 8.99
-  },
-  {
-    "title": "Garlic 115 g",
-    "quantity": "115g",
-    "currentPrice": 3.99,
-    "onSale": false,
-    "regularPrice": 3.99
-  },
-  {
     "title": "Compliments Organic Mushrooms Shiitake 113 g",
     "quantity": "113g",
     "currentPrice": 5.99,
@@ -2411,11 +2395,11 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Romaine Hearts lettuce 6 un",
-    "quantity": "1.372kg",
-    "currentPrice": 9.99,
+    "title": "Grape Tomatoes Angel Sweet 1 Pint",
+    "quantity": "255g",
+    "currentPrice": 5.49,
     "onSale": false,
-    "regularPrice": 9.99
+    "regularPrice": 5.49
   },
   {
     "title": "Compliments Carrots 907 g",
@@ -2425,17 +2409,24 @@
     "regularPrice": 2.99
   },
   {
+    "title": "Romaine Hearts lettuce 6 un",
+    "quantity": "1.372kg",
+    "currentPrice": 9.99,
+    "onSale": false,
+    "regularPrice": 9.99
+  },
+  {
+    "title": "Sweet Green Bell Peppers Large 2 Count",
+    "quantity": "0.45kg",
+    "currentPrice": 3.96,
+    "onSale": false,
+    "regularPrice": 3.96
+  },
+  {
     "title": "Nature Fresh Farms Organic Hiiros Cherry Tomatoes 1 Pint",
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
-  },
-  {
-    "title": "Zucchini Squash 1 Count",
-    "quantity": "0.3kg",
-    "currentPrice": 1.98,
-    "onSale": false,
-    "regularPrice": 1.98
   },
   {
     "title": "Roasting Potatoes 2.27 kg",
@@ -2445,10 +2436,44 @@
     "regularPrice": 6.99
   },
   {
-    "title": "Organic Tomatoes Angel Sweet 1 Pack",
-    "currentPrice": 5.49,
+    "title": "Brussels Sprouts Approx. 10-20 Count",
+    "quantity": "0.345kg",
+    "currentPrice": 3.8,
     "onSale": false,
-    "regularPrice": 5.49
+    "regularPrice": 3.8
+  },
+  {
+    "title": "Zucchini Squash 1 Count",
+    "quantity": "0.3kg",
+    "currentPrice": 1.98,
+    "onSale": false,
+    "regularPrice": 1.98
+  },
+  {
+    "title": "Romaine Lettuce Organic 1 Count",
+    "currentPrice": 4.49,
+    "onSale": false,
+    "regularPrice": 4.49
+  },
+  {
+    "title": "Compliments Potatoes Mashing Yellow Fleshed 2.27 kg",
+    "quantity": "2.27kg",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Sunset Zimas Tomatoes Orange Grape 1 Pack",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Red Potatoes 4.54 kg",
+    "quantity": "4.54kg",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
   },
   {
     "title": "The Little Potato Company Savoury Herb Microwave Ready Potatoes 454 g",
@@ -2456,12 +2481,6 @@
     "currentPrice": 5.49,
     "onSale": false,
     "regularPrice": 5.49
-  },
-  {
-    "title": "Romaine Lettuce Organic 1 Count",
-    "currentPrice": 4.49,
-    "onSale": false,
-    "regularPrice": 4.49
   },
   {
     "title": "Nature Fresh Farms Cocktail Tomatoes 454 g",
@@ -2478,7 +2497,14 @@
     "regularPrice": 7.99
   },
   {
-    "title": "Organic Lettuce Iceberg 1 Count",
+    "title": "Organic Onion Red 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Organic Iceberg Lettuce 1 Count",
     "currentPrice": 5.49,
     "onSale": false,
     "regularPrice": 5.49
@@ -2491,32 +2517,11 @@
     "regularPrice": 6.05
   },
   {
-    "title": "Organic Onion Red 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
-    "title": "Red Potatoes 4.54 kg",
-    "quantity": "4.54kg",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
-  },
-  {
-    "title": "Compliments Potatoes Mashing Yellow Fleshed 2.27 kg",
+    "title": "Compliments Potatoes Baking Russet 2.27 kg",
     "quantity": "2.27kg",
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
-  },
-  {
-    "title": "The Little Potato Company Ready Potatoes Oven BBQ Garlic Herb 454 g",
-    "quantity": "454g",
-    "currentPrice": 5.49,
-    "onSale": false,
-    "regularPrice": 5.49
   },
   {
     "title": "Yellow Onions Small 1 Count",
@@ -2526,38 +2531,11 @@
     "regularPrice": 1.01
   },
   {
-    "title": "Red Tomatoes On Vines",
-    "quantity": "1.81kg",
-    "currentPrice": 10.99,
-    "onSale": false,
-    "regularPrice": 10.99
-  },
-  {
     "title": "Cocktail Cucumber 255 g",
     "quantity": "225g",
     "currentPrice": 4.99,
     "onSale": false,
     "regularPrice": 4.99
-  },
-  {
-    "title": "Sunset Zimas Tomatoes Orange Grape 1 Pack",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
-  },
-  {
-    "title": "Compliments Potatoes Baking Russet 2.27 kg",
-    "quantity": "2.27kg",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
-    "title": "Hothouse Tomatoes Large 2 Count",
-    "quantity": "0.5kg",
-    "currentPrice": 3.3,
-    "onSale": false,
-    "regularPrice": 3.3
   },
   {
     "title": "Compliments Organic Mushrooms Oyster 85 g",
@@ -2567,18 +2545,38 @@
     "regularPrice": 4.49
   },
   {
+    "title": "Red Tomatoes On Vines",
+    "quantity": "1.81kg",
+    "currentPrice": 10.99,
+    "onSale": false,
+    "regularPrice": 10.99
+  },
+  {
+    "title": "Organic Tomatoes Angel Sweet 1 Pack",
+    "currentPrice": 5.49,
+    "onSale": false,
+    "regularPrice": 5.49
+  },
+  {
+    "title": "The Little Potato Company Ready Potatoes Oven BBQ Garlic Herb 454 g",
+    "quantity": "454g",
+    "currentPrice": 5.49,
+    "onSale": false,
+    "regularPrice": 5.49
+  },
+  {
+    "title": "Hothouse Tomatoes Large 2 Count",
+    "quantity": "0.5kg",
+    "currentPrice": 3.3,
+    "onSale": false,
+    "regularPrice": 3.3
+  },
+  {
     "title": "Cesares Organic Turmeric 85 g",
     "quantity": "85g",
     "currentPrice": 3.49,
     "onSale": false,
     "regularPrice": 3.49
-  },
-  {
-    "title": "Bell Peppers Assorted 908 g",
-    "quantity": "908g",
-    "currentPrice": 8.99,
-    "onSale": false,
-    "regularPrice": 8.99
   },
   {
     "title": "Mann's Stringless Sugar Snap Peas 227 g",
@@ -2588,24 +2586,25 @@
     "regularPrice": 4.99
   },
   {
-    "title": "The Little Potato Company Microwave Ready Potatoes Garlic Parsley 454 g",
-    "quantity": "454g",
-    "currentPrice": 5.49,
-    "onSale": false,
-    "regularPrice": 5.49
-  },
-  {
-    "title": "Romaine Lettuce 1 Bunch",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
-  },
-  {
     "title": "Compliments Roasting Potatoes Red 2.27 kg",
     "quantity": "2.27kg",
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
+  },
+  {
+    "title": "Bell Peppers Assorted 908 g",
+    "quantity": "908g",
+    "currentPrice": 8.99,
+    "onSale": false,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "The Little Potato Company Microwave Ready Potatoes Garlic Parsley 454 g",
+    "quantity": "454g",
+    "currentPrice": 5.49,
+    "onSale": false,
+    "regularPrice": 5.49
   },
   {
     "title": "White Onion 1 Count",
@@ -2622,6 +2621,19 @@
     "regularPrice": 4.99
   },
   {
+    "title": "Compliments Organic Mushrooms King Oyster 170 g",
+    "quantity": "170g",
+    "currentPrice": 8.99,
+    "onSale": false,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Greenhouse Tomatoes Red 4 Count",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
+  },
+  {
     "title": "Wild Wonders Organic Tomatoes 284 g",
     "quantity": "284g",
     "currentPrice": 5.99,
@@ -2629,25 +2641,11 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Compliments Potatoes Yellow Mini 680 g",
-    "quantity": "680g",
-    "currentPrice": 5.49,
+    "title": "Asparagus 1 Bunch",
+    "quantity": "0.47kg",
+    "currentPrice": 11.39,
     "onSale": false,
-    "regularPrice": 5.49
-  },
-  {
-    "title": "Green Jalapeno Peppers",
-    "quantity": "0.09kg",
-    "currentPrice": 0.99,
-    "onSale": false,
-    "regularPrice": 0.99
-  },
-  {
-    "title": "Compliments Organic Mushrooms King Oyster 170 g",
-    "quantity": "170g",
-    "currentPrice": 8.99,
-    "onSale": false,
-    "regularPrice": 8.99
+    "regularPrice": 11.39
   },
   {
     "title": "The Little Potato Company Gluten-Free Oven BBQ Ready Potatoes Onion & Chive 454 g",
@@ -2657,17 +2655,11 @@
     "regularPrice": 5.49
   },
   {
-    "title": "Asparagus 1 Bunch",
-    "quantity": "0.47kg",
-    "currentPrice": 6.21,
+    "title": "Compliments Potatoes White Boiling 2.27 kg",
+    "quantity": "2.27kg",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 6.21
-  },
-  {
-    "title": "Greenhouse Tomatoes Red 4 Count",
-    "currentPrice": 3.99,
-    "onSale": false,
-    "regularPrice": 3.99
+    "regularPrice": 5.99
   },
   {
     "title": "Compliments Organic Mushrooms White Button 227 g",
@@ -2677,38 +2669,10 @@
     "regularPrice": 3.99
   },
   {
-    "title": "Avalantino Tomatoes Clamshell Vine 454 g",
-    "quantity": "454g",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
-  },
-  {
     "title": "Red Peppers Sweet 4 Count",
     "currentPrice": 6.99,
     "onSale": false,
     "regularPrice": 6.99
-  },
-  {
-    "title": "Compliments Potatoes White Boiling 2.27 kg",
-    "quantity": "2.27kg",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
-    "title": "Compliments Yellow Onions 907 g",
-    "quantity": "907g",
-    "currentPrice": 2.69,
-    "onSale": false,
-    "regularPrice": 2.69
-  },
-  {
-    "title": "Ginger Root",
-    "quantity": "0.3kg",
-    "currentPrice": 2.31,
-    "onSale": false,
-    "regularPrice": 2.31
   },
   {
     "title": "Regular Garlic 1 Count",
@@ -2718,31 +2682,25 @@
     "regularPrice": 0.66
   },
   {
+    "title": "Ginger Root",
+    "quantity": "0.3kg",
+    "currentPrice": 2.31,
+    "onSale": false,
+    "regularPrice": 2.31
+  },
+  {
+    "title": "Green Cabbage 1 Count",
+    "quantity": "1.5kg",
+    "currentPrice": 5.93,
+    "onSale": false,
+    "regularPrice": 5.93
+  },
+  {
     "title": "Sunset Kumato Tomatoes 454 g",
     "quantity": "454g",
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
-  },
-  {
-    "title": "Green Cabbage 1 Count",
-    "quantity": "1.5kg",
-    "currentPrice": 4.26,
-    "onSale": false,
-    "regularPrice": 4.26
-  },
-  {
-    "title": "Organic Mushrooms White 10 - 20 Count",
-    "quantity": "0.2kg",
-    "currentPrice": 2.42,
-    "onSale": false,
-    "regularPrice": 2.42
-  },
-  {
-    "title": "Green Leaf Lettuce 1 Count",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
   },
   {
     "title": "Yellow Potatoes 1 Count",
@@ -2752,24 +2710,18 @@
     "regularPrice": 1.36
   },
   {
-    "title": "Compliments Organic Baby Arugula 142 g",
-    "quantity": "142g",
-    "currentPrice": 5.99,
+    "title": "Compliments Yellow Onions 907 g",
+    "quantity": "907g",
+    "currentPrice": 2.69,
     "onSale": false,
-    "regularPrice": 5.99
+    "regularPrice": 2.69
   },
   {
-    "title": "Clamshell Living Butter Lettuce 1 Count",
-    "currentPrice": 5.99,
+    "title": "Organic Mushrooms White 10 - 20 Count",
+    "quantity": "0.2kg",
+    "currentPrice": 2.42,
     "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
-    "title": "Golden Tomatoes Honey Bombs Sweet Honey-Crunch 341 g",
-    "quantity": "341g",
-    "currentPrice": 7.49,
-    "onSale": false,
-    "regularPrice": 7.49
+    "regularPrice": 2.42
   },
   {
     "title": "Sunset Sugar Bombs Tomatoes Grape Vine 341 g",
@@ -2779,17 +2731,24 @@
     "regularPrice": 7.49
   },
   {
-    "title": "Compliments Potatoes Red Mini 680 g",
-    "quantity": "680g",
-    "currentPrice": 5.49,
+    "title": "Golden Tomatoes Honey Bombs Sweet Honey-Crunch 341 g",
+    "quantity": "341g",
+    "currentPrice": 7.49,
     "onSale": false,
-    "regularPrice": 5.49
+    "regularPrice": 7.49
   },
   {
-    "title": "Beefsteak Tomato 2 Pack",
-    "currentPrice": 4.49,
+    "title": "Clamshell Living Butter Lettuce 1 Count",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 4.49
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Compliments Carrots 2.27 kg",
+    "quantity": "2.27kg",
+    "currentPrice": 6.99,
+    "onSale": false,
+    "regularPrice": 6.99
   },
   {
     "title": "Compliments Organic Mushrooms Portabella Caps 170 g",
@@ -2799,18 +2758,10 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Compliments Organic Baby Spinach 142 g",
-    "quantity": "142g",
-    "currentPrice": 5.99,
+    "title": "Beefsteak Tomato 2 Pack",
+    "currentPrice": 4.49,
     "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
-    "title": "Organic Garlic 85 g",
-    "quantity": "85g",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
+    "regularPrice": 4.49
   },
   {
     "title": "Compliments Organic Potatoes Yellow 1.36 kg",
@@ -2820,11 +2771,11 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Sweet Onions 1 Count",
-    "quantity": "0.345kg",
-    "currentPrice": 2.05,
+    "title": "Compliments Organic Baby Arugula 142 g",
+    "quantity": "142g",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 2.05
+    "regularPrice": 5.99
   },
   {
     "title": "Reser's Main St. Bistro Potatoes Roasted Sea Salt & Black Pepper 482 g",
@@ -2834,13 +2785,6 @@
     "regularPrice": 6.99
   },
   {
-    "title": "Compliments Broccolini Tray 170 g",
-    "quantity": "170g",
-    "currentPrice": 5.49,
-    "onSale": false,
-    "regularPrice": 5.49
-  },
-  {
     "title": "Shallots Onions",
     "quantity": "0.17kg",
     "currentPrice": 1.68,
@@ -2848,25 +2792,11 @@
     "regularPrice": 1.68
   },
   {
-    "title": "Wild Wonders Peppers Sweet Twister 340 g",
-    "quantity": "340g",
-    "currentPrice": 6.99,
+    "title": "Sweet Onions 1 Count",
+    "quantity": "0.345kg",
+    "currentPrice": 2.05,
     "onSale": false,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "Butternut Squash 1 Count",
-    "quantity": "1.21kg",
-    "currentPrice": 5.84,
-    "onSale": false,
-    "regularPrice": 5.84
-  },
-  {
-    "title": "Organic Mushrooms Cremini 10 - 20 Count",
-    "quantity": "0.2kg",
-    "currentPrice": 2.42,
-    "onSale": false,
-    "regularPrice": 2.42
+    "regularPrice": 2.05
   },
   {
     "title": "Green Beans",
@@ -2876,44 +2806,32 @@
     "regularPrice": 4.95
   },
   {
-    "title": "Mann's Sugar Snap Peas Stringless 425 g",
-    "quantity": "425g",
-    "currentPrice": 7.99,
+    "title": "Organic Garlic 85 g",
+    "quantity": "85g",
+    "currentPrice": 2.99,
     "onSale": false,
-    "regularPrice": 7.99
+    "regularPrice": 2.99
   },
   {
-    "title": "Spanish Onions Large 1 Count",
-    "quantity": "0.445kg",
-    "currentPrice": 2.44,
+    "title": "Compliments Organic Baby Spinach 142 g",
+    "quantity": "142g",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 2.44
+    "regularPrice": 5.99
   },
   {
-    "title": "Bell Peppers Orange Sweet 2 Count",
-    "quantity": "0.525kg",
-    "currentPrice": 6.35,
+    "title": "Butternut Squash 1 Count",
+    "quantity": "1.21kg",
+    "currentPrice": 6.64,
     "onSale": false,
-    "regularPrice": 6.35
+    "regularPrice": 6.64
   },
   {
-    "title": "Snap Peas 1 Pack 200 g",
-    "quantity": "200g",
-    "currentPrice": 3.99,
+    "title": "Organic Mushrooms Cremini 10 - 20 Count",
+    "quantity": "0.2kg",
+    "currentPrice": 2.42,
     "onSale": false,
-    "regularPrice": 3.99
-  },
-  {
-    "title": "Romano Tomatoes 900 g",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "Field Cucumbers 1 Count",
-    "currentPrice": 1.99,
-    "onSale": false,
-    "regularPrice": 1.99
+    "regularPrice": 2.42
   },
   {
     "title": "Sweet Potato 2.27 kg",
@@ -2923,6 +2841,53 @@
     "regularPrice": 8.99
   },
   {
+    "title": "Compliments Broccolini Tray 170 g",
+    "quantity": "170g",
+    "currentPrice": 5.49,
+    "onSale": false,
+    "regularPrice": 5.49
+  },
+  {
+    "title": "Field Cucumbers 1 Count",
+    "currentPrice": 1.99,
+    "onSale": false,
+    "regularPrice": 1.99
+  },
+  {
+    "title": "Spanish Onions Large 1 Count",
+    "quantity": "0.445kg",
+    "currentPrice": 2.44,
+    "onSale": false,
+    "regularPrice": 2.44
+  },
+  {
+    "title": "Buttercup Squash 1 Count",
+    "quantity": "0.895kg",
+    "currentPrice": 4.32,
+    "onSale": false,
+    "regularPrice": 4.32
+  },
+  {
+    "title": "Romano Tomatoes 900 g",
+    "currentPrice": 6.99,
+    "onSale": false,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Snap Peas 1 Pack 200 g",
+    "quantity": "200g",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Mann's Sugar Snap Peas Stringless 425 g",
+    "quantity": "425g",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
     "title": "Greenhouse Green Bell Pepper 1 Count",
     "quantity": "0.28kg",
     "currentPrice": 1.85,
@@ -2930,23 +2895,11 @@
     "regularPrice": 1.85
   },
   {
-    "title": "Organic Carrots 1 Bunch",
-    "currentPrice": 3.99,
+    "title": "Wild Wonders Peppers Sweet Twister 340 g",
+    "quantity": "340g",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 3.99
-  },
-  {
-    "title": "Stew Pack 5 Lbs",
-    "currentPrice": 8.99,
-    "onSale": false,
-    "regularPrice": 8.99
-  },
-  {
-    "title": "Mann's Peas Sugar Snap 680 g",
-    "quantity": "680g",
-    "currentPrice": 10.99,
-    "onSale": false,
-    "regularPrice": 10.99
+    "regularPrice": 6.99
   },
   {
     "title": "Leeks",
@@ -2956,11 +2909,58 @@
     "regularPrice": 4.24
   },
   {
+    "title": "Stew Pack 5 Lbs",
+    "currentPrice": 8.99,
+    "onSale": false,
+    "regularPrice": 8.99
+  },
+  {
+    "title": "Bell Peppers Orange Sweet 2 Count",
+    "quantity": "0.525kg",
+    "currentPrice": 6.35,
+    "onSale": false,
+    "regularPrice": 6.35
+  },
+  {
+    "title": "Garlic 1 Count",
+    "currentPrice": 1.99,
+    "onSale": false,
+    "regularPrice": 1.99
+  },
+  {
     "title": "The Little Potato Company Roasted Potatoes Red Pepper & Onion 454 g",
     "quantity": "454g",
     "currentPrice": 5.49,
     "onSale": false,
     "regularPrice": 5.49
+  },
+  {
+    "title": "Compliments Russet Potato Poly Bag 4.54 kg",
+    "quantity": "4.54kg",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "New Brunswick Potatoes Russet 4.54 kg",
+    "quantity": "4.54kg",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Mann's Peas Sugar Snap 680 g",
+    "quantity": "680g",
+    "currentPrice": 10.99,
+    "onSale": false,
+    "regularPrice": 10.99
+  },
+  {
+    "title": "Compliments Organic Mushrooms Sliced Portabella 170 g",
+    "quantity": "170g",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
   },
   {
     "title": "Corn Tray 4 Count",
@@ -2970,6 +2970,13 @@
     "regularPrice": 6.49
   },
   {
+    "title": "Red Cabbage 1 Count",
+    "quantity": "0.91kg",
+    "currentPrice": 3.59,
+    "onSale": false,
+    "regularPrice": 3.59
+  },
+  {
     "title": "Beets Bulk",
     "quantity": "0.825kg",
     "currentPrice": 3.08,
@@ -2977,24 +2984,11 @@
     "regularPrice": 3.08
   },
   {
-    "title": "White Potatoes 1 Count",
-    "quantity": "0.27kg",
-    "currentPrice": 1.48,
+    "title": "Compliments Sweet Bell Peppers 3 Pack",
+    "quantity": "3 per pack",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 1.48
-  },
-  {
-    "title": "Garlic 1 Count",
-    "currentPrice": 1.99,
-    "onSale": false,
-    "regularPrice": 1.99
-  },
-  {
-    "title": "New Brunswick Potatoes Russet 4.54 kg",
-    "quantity": "4.54kg",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
+    "regularPrice": 6.99
   },
   {
     "title": "Cucumbers Mini Seedless 1 Pack",
@@ -3006,58 +3000,29 @@
   {
     "title": "Alfalfa Sprouts 100 g",
     "quantity": "100g",
-    "currentPrice": 3.79,
+    "currentPrice": 3.99,
     "onSale": false,
-    "regularPrice": 3.79
+    "regularPrice": 3.99
   },
   {
-    "title": "Red Cabbage 1 Count",
-    "quantity": "0.91kg",
-    "currentPrice": 3.59,
+    "title": "Compliments Potato Red Poly Bag 4.54 kg",
+    "quantity": "4.54kg",
+    "currentPrice": 7.99,
     "onSale": false,
-    "regularPrice": 3.59
+    "regularPrice": 7.99
   },
   {
-    "title": "Compliments Organic Mushrooms Sliced Portabella 170 g",
-    "quantity": "170g",
-    "currentPrice": 5.99,
+    "title": "Organic Carrots 1 Bunch",
+    "currentPrice": 3.99,
     "onSale": false,
-    "regularPrice": 5.99
+    "regularPrice": 3.99
   },
   {
-    "title": "Buttercup Squash 1 Count",
-    "quantity": "0.895kg",
-    "currentPrice": 4.32,
+    "title": "White Potatoes 1 Count",
+    "quantity": "0.27kg",
+    "currentPrice": 1.48,
     "onSale": false,
-    "regularPrice": 4.32
-  },
-  {
-    "title": "Bean Sprouts 340 g",
-    "quantity": "340g",
-    "currentPrice": 2.49,
-    "onSale": false,
-    "regularPrice": 2.49
-  },
-  {
-    "title": "Organic Ginger 113 g",
-    "quantity": "113g",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
-  },
-  {
-    "title": "Mann's Snow Peas 170 g",
-    "quantity": "170g",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
-  },
-  {
-    "title": "Compliments Potatoes Mini Medley 680 g",
-    "quantity": "680g",
-    "currentPrice": 5.49,
-    "onSale": false,
-    "regularPrice": 5.49
+    "regularPrice": 1.48
   },
   {
     "title": "Hothouse Organic Tomatoes Beefsteak 2 Count",
@@ -3067,34 +3032,6 @@
     "regularPrice": 4.46
   },
   {
-    "title": "Bell Peppers Sweet Yellow 2 Count",
-    "quantity": "0.525kg",
-    "currentPrice": 6.35,
-    "onSale": false,
-    "regularPrice": 6.35
-  },
-  {
-    "title": "Spaghetti Squash 1 Count",
-    "quantity": "1.35kg",
-    "currentPrice": 6.52,
-    "onSale": false,
-    "regularPrice": 6.52
-  },
-  {
-    "title": "Red Potatoes 1 Count",
-    "quantity": "0.285kg",
-    "currentPrice": 1.69,
-    "onSale": false,
-    "regularPrice": 1.69
-  },
-  {
-    "title": "Potatoes Yellow 2.27 kg",
-    "quantity": "2.27kg",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
-  },
-  {
     "title": "Compliments Organic Potatoes Russet 1.36 kg",
     "quantity": "1.36kg",
     "currentPrice": 5.99,
@@ -3102,17 +3039,11 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Red Radish 1 Bunch",
-    "currentPrice": 2.49,
+    "title": "Rutabagas 1 Count",
+    "quantity": "0.91kg",
+    "currentPrice": 3.39,
     "onSale": false,
-    "regularPrice": 2.49
-  },
-  {
-    "title": "Tri Color Onions 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
+    "regularPrice": 3.39
   },
   {
     "title": "Sweet Vidalia Onions 1 Count",
@@ -3122,11 +3053,67 @@
     "regularPrice": 2.31
   },
   {
+    "title": "Organic Ginger 113 g",
+    "quantity": "113g",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Mann's Snow Peas 170 g",
+    "quantity": "170g",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Bean Sprouts 340 g",
+    "quantity": "340g",
+    "currentPrice": 2.49,
+    "onSale": false,
+    "regularPrice": 2.49
+  },
+  {
+    "title": "Compliments Green Beans 340 g",
+    "quantity": "340g",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Spaghetti Squash 1 Count",
+    "quantity": "1.35kg",
+    "currentPrice": 7.41,
+    "onSale": false,
+    "regularPrice": 7.41
+  },
+  {
+    "title": "Tri Color Onions 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Potatoes Yellow 2.27 kg",
+    "quantity": "2.27kg",
+    "currentPrice": 6.99,
+    "onSale": false,
+    "regularPrice": 6.99
+  },
+  {
     "title": "Eggplant 1 Count",
     "quantity": "0.625kg",
     "currentPrice": 4.12,
     "onSale": false,
     "regularPrice": 4.12
+  },
+  {
+    "title": "Bell Peppers Sweet Yellow 2 Count",
+    "quantity": "0.525kg",
+    "currentPrice": 6.35,
+    "onSale": false,
+    "regularPrice": 6.35
   },
   {
     "title": "Golden Sweet Potatoes",
@@ -3136,32 +3123,25 @@
     "regularPrice": 1.32
   },
   {
-    "title": "Compliments Gluten-Free Potatoes White Mini 680 g",
-    "quantity": "680g",
-    "currentPrice": 5.49,
+    "title": "Red Potatoes 1 Count",
+    "quantity": "0.285kg",
+    "currentPrice": 1.69,
     "onSale": false,
-    "regularPrice": 5.49
+    "regularPrice": 1.69
   },
   {
-    "title": "Compliments Organic Baby Greens Mixed 142 g",
-    "quantity": "142g",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
-    "title": "BMF Top Seal Cherry Tomato 680 g",
-    "quantity": "680g",
-    "currentPrice": 8.99,
-    "onSale": false,
-    "regularPrice": 8.99
-  },
-  {
-    "title": "Compliments Sweet Bell Peppers 3 Pack",
-    "quantity": "3 per pack",
+    "title": "Compliments Onions Yellow 2.27 kg",
+    "quantity": "2.27kg",
     "currentPrice": 6.99,
     "onSale": false,
     "regularPrice": 6.99
+  },
+  {
+    "title": "Purple Top Turnip",
+    "quantity": "0.38kg",
+    "currentPrice": 2.09,
+    "onSale": false,
+    "regularPrice": 2.09
   },
   {
     "title": "Snow Peas 200 g",
@@ -3171,28 +3151,22 @@
     "regularPrice": 3.99
   },
   {
-    "title": "Organic Roma Tomatoes",
-    "quantity": "0.3kg",
-    "currentPrice": 1.98,
+    "title": "Compliments Organic Baby Greens Mixed 142 g",
+    "quantity": "142g",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 1.98
+    "regularPrice": 5.99
   },
   {
-    "title": "Rutabagas 1 Count",
-    "quantity": "0.91kg",
-    "currentPrice": 2.98,
+    "title": "NatureSweet Tomatoes Glorys 283 g",
+    "quantity": "283g",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 2.98
+    "regularPrice": 5.99
   },
   {
-    "title": "Red Leaf Lettuce 1 Count",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
-  },
-  {
-    "title": "Baby Bok Choy",
-    "quantity": "0.555kg",
+    "title": "Parsnips Bulk 1 Count",
+    "quantity": "0.45kg",
     "currentPrice": 3.66,
     "onSale": false,
     "regularPrice": 3.66
@@ -3205,25 +3179,17 @@
     "regularPrice": 12.99
   },
   {
-    "title": "Compliments Organic Potatoes Red 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 5.99,
+    "title": "Acorn Squash 1 Count",
+    "quantity": "0.775kg",
+    "currentPrice": 4.25,
     "onSale": false,
-    "regularPrice": 5.99
+    "regularPrice": 4.25
   },
   {
-    "title": "Red Potatoes 2.27 kg",
-    "quantity": "2.27kg",
-    "currentPrice": 6.99,
+    "title": "Bakers Potato 1 Count",
+    "currentPrice": 1.19,
     "onSale": false,
-    "regularPrice": 6.99
-  },
-  {
-    "title": "Parsnips Bulk 1 Count",
-    "quantity": "0.45kg",
-    "currentPrice": 3.66,
-    "onSale": false,
-    "regularPrice": 3.66
+    "regularPrice": 1.19
   },
   {
     "title": "Dandy Celery Sticks 454 g",
@@ -3233,23 +3199,46 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Acorn Squash 1 Count",
-    "quantity": "0.775kg",
-    "currentPrice": 3.74,
+    "title": "Compliments  Potato Bag Yellow - Fleshed  4.54 kg",
+    "quantity": "4.54kg",
+    "currentPrice": 7.99,
     "onSale": false,
-    "regularPrice": 3.74
+    "regularPrice": 7.99
   },
   {
-    "title": "Bakers Potato 1 Count",
-    "currentPrice": 1.19,
+    "title": "Red Potatoes 2.27 kg",
+    "quantity": "2.27kg",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 1.19
+    "regularPrice": 6.99
   },
   {
-    "title": "Yellow Corn 1 Count",
-    "currentPrice": 1.19,
+    "title": "Compliments Organic Potatoes Red 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 1.19
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Organic Roma Tomatoes",
+    "quantity": "0.3kg",
+    "currentPrice": 1.98,
+    "onSale": false,
+    "regularPrice": 1.98
+  },
+  {
+    "title": "Baby Bok Choy",
+    "quantity": "0.555kg",
+    "currentPrice": 3.66,
+    "onSale": false,
+    "regularPrice": 3.66
+  },
+  {
+    "title": "BMF Top Seal Cherry Tomato 680 g",
+    "quantity": "680g",
+    "currentPrice": 8.99,
+    "onSale": false,
+    "regularPrice": 8.99
   },
   {
     "title": "Habanero Peppers 50 g",
@@ -3280,46 +3269,11 @@
     "regularPrice": 4.99
   },
   {
-    "title": "Purple Top Turnip",
-    "quantity": "0.38kg",
-    "currentPrice": 2.09,
-    "onSale": false,
-    "regularPrice": 2.09
-  },
-  {
-    "title": "Bok Choy 1 Bunch",
-    "quantity": "0.72kg",
-    "currentPrice": 3.16,
-    "onSale": false,
-    "regularPrice": 3.16
-  },
-  {
-    "title": "Thai Peppers Red 50 g",
-    "quantity": "50g",
-    "currentPrice": 5.49,
-    "onSale": false,
-    "regularPrice": 5.49
-  },
-  {
     "title": "Canada Potatoes Bag 2.27 kg",
     "quantity": "2.27kg",
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
-  },
-  {
-    "title": "NatureSweet Tomatoes Glorys 283 g",
-    "quantity": "283g",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
-    "title": "Broccoli Sprouts 100 g",
-    "quantity": "100g",
-    "currentPrice": 3.79,
-    "onSale": false,
-    "regularPrice": 3.79
   },
   {
     "title": "Walla Walla Onions 1 Count",
@@ -3333,6 +3287,13 @@
     "currentPrice": 3.99,
     "onSale": false,
     "regularPrice": 3.99
+  },
+  {
+    "title": "Thai Peppers Red 50 g",
+    "quantity": "50g",
+    "currentPrice": 5.49,
+    "onSale": false,
+    "regularPrice": 5.49
   },
   {
     "title": "Napa Cabbage 1 Count",
@@ -3349,6 +3310,39 @@
     "regularPrice": 5.99
   },
   {
+    "title": "Broccoli Sprouts 100 g",
+    "quantity": "100g",
+    "currentPrice": 3.79,
+    "onSale": false,
+    "regularPrice": 3.79
+  },
+  {
+    "title": "Onions White Pearl 284 g",
+    "quantity": "284g",
+    "currentPrice": 4.49,
+    "onSale": false,
+    "regularPrice": 4.49
+  },
+  {
+    "title": "Bean Sprouts 227 g",
+    "quantity": "227g",
+    "currentPrice": 1.99,
+    "onSale": false,
+    "regularPrice": 1.99
+  },
+  {
+    "title": "Organic Red Chard 1 Bunch",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Organic Green Onions 1 Bunch",
+    "currentPrice": 2.99,
+    "onSale": false,
+    "regularPrice": 2.99
+  },
+  {
     "title": "Red Bell Peppers 1 Count",
     "quantity": "0.32kg",
     "currentPrice": 3.52,
@@ -3362,38 +3356,11 @@
     "regularPrice": 4.99
   },
   {
-    "title": "Bean Sprouts 227 g",
-    "quantity": "227g",
-    "currentPrice": 1.99,
-    "onSale": false,
-    "regularPrice": 1.99
-  },
-  {
-    "title": "Organic Green Onions 1 Bunch",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
-  },
-  {
-    "title": "Griller Asparagus",
-    "quantity": "0.3kg",
-    "currentPrice": 7.19,
-    "onSale": false,
-    "regularPrice": 7.19
-  },
-  {
-    "title": "Russet Potatoes 2.27 kg",
-    "quantity": "2.27kg",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
     "title": "Compliments Organic Carrots 907 g",
     "quantity": "907g",
-    "currentPrice": 3.49,
+    "currentPrice": 3.99,
     "onSale": false,
-    "regularPrice": 3.49
+    "regularPrice": 3.99
   },
   {
     "title": "Simply Fresh Jalapeno Peppers 225 g",
@@ -3403,14 +3370,42 @@
     "regularPrice": 5.49
   },
   {
-    "title": "Onions White Pearl 284 g",
-    "quantity": "284g",
-    "currentPrice": 4.49,
+    "title": "Griller Asparagus",
+    "quantity": "0.3kg",
+    "currentPrice": 7.19,
     "onSale": false,
-    "regularPrice": 4.49
+    "regularPrice": 7.19
   },
   {
-    "title": "Organic Red Chard 1 Bunch",
+    "title": "Bok Choy 1 Bunch",
+    "quantity": "0.72kg",
+    "currentPrice": 3.16,
+    "onSale": false,
+    "regularPrice": 3.16
+  },
+  {
+    "title": "Early Nugget Potatoes 1 Count",
+    "quantity": "0.06kg",
+    "currentPrice": 0.4,
+    "onSale": false,
+    "regularPrice": 0.4
+  },
+  {
+    "title": "Lo Bok Daikon Radish 1 Count",
+    "quantity": "0.84kg",
+    "currentPrice": 2.76,
+    "onSale": false,
+    "regularPrice": 2.76
+  },
+  {
+    "title": "HH Hiiro Tomatoes Cherry Pint 255 g",
+    "quantity": "255g",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Organic Beets 1 Bunch",
     "currentPrice": 4.99,
     "onSale": false,
     "regularPrice": 4.99
@@ -3423,20 +3418,6 @@
     "regularPrice": 5
   },
   {
-    "title": "Earthbound Farm Organic Broccoli Florets 255 g",
-    "quantity": "255g",
-    "currentPrice": 6.49,
-    "onSale": false,
-    "regularPrice": 6.49
-  },
-  {
-    "title": "Lo Bok Daikon Radish 1 Count",
-    "quantity": "0.84kg",
-    "currentPrice": 2.76,
-    "onSale": false,
-    "regularPrice": 2.76
-  },
-  {
     "title": "Simply Fresh Serrano Peppers 225 g",
     "quantity": "225g",
     "currentPrice": 5.99,
@@ -3444,24 +3425,17 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Organic Beets 1 Bunch",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
-  },
-  {
-    "title": "Compliments Organic Steak-Cut Blend Mushrooms 454 g",
-    "quantity": "454g",
+    "title": "French Green Beans 400 g",
+    "quantity": "400g",
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
   },
   {
-    "title": "Beefsteak Tomatoes 1 Count",
-    "quantity": "0.25kg",
-    "currentPrice": 1.37,
+    "title": "Yellow Corn 1 Count",
+    "currentPrice": 1.19,
     "onSale": false,
-    "regularPrice": 1.37
+    "regularPrice": 1.19
   },
   {
     "title": "Rhubarb 1 Count",
@@ -3478,7 +3452,48 @@
     "regularPrice": 3.99
   },
   {
-    "title": "Compliments Cucumbers Seedless Mini 1 Pack",
+    "title": "Earthbound Farm Organic Broccoli Florets 255 g",
+    "quantity": "255g",
+    "currentPrice": 6.49,
+    "onSale": false,
+    "regularPrice": 6.49
+  },
+  {
+    "title": "Carving Pumpkin 1 Count",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Kabocha Squash 1 Count",
+    "quantity": "1.05kg",
+    "currentPrice": 5.76,
+    "onSale": false,
+    "regularPrice": 5.76
+  },
+  {
+    "title": "Compliments Organic Steak-Cut Blend Mushrooms 454 g",
+    "quantity": "454g",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Beefsteak Tomatoes 1 Count",
+    "quantity": "0.25kg",
+    "currentPrice": 1.37,
+    "onSale": false,
+    "regularPrice": 1.37
+  },
+  {
+    "title": "Savoy Cabbage 1 Count",
+    "quantity": "0.775kg",
+    "currentPrice": 3.06,
+    "onSale": false,
+    "regularPrice": 3.06
+  },
+  {
+    "title": "Compliments Mini Cucumbers Seedless 1 Pack",
     "currentPrice": 4.99,
     "onSale": false,
     "regularPrice": 4.99
@@ -3490,15 +3505,43 @@
     "regularPrice": 4.99
   },
   {
-    "title": "Kabocha Squash 1 Count",
-    "quantity": "1.05kg",
-    "currentPrice": 5.07,
-    "onSale": false,
-    "regularPrice": 5.07
-  },
-  {
     "title": "Organic Mushrooms Blend Steakmate 454 g",
     "quantity": "454g",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "NatureSweet Cherub Tomatoes 283 g",
+    "quantity": "283g",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Vine Lolli Bombs Tomatoes 341 g",
+    "quantity": "341g",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Sweet Corn Tray 5 Count",
+    "quantity": "5 per pack",
+    "currentPrice": 8.49,
+    "onSale": false,
+    "regularPrice": 8.49
+  },
+  {
+    "title": "Potatoes Small White 1 Count",
+    "quantity": "0.21kg",
+    "currentPrice": 1.15,
+    "onSale": false,
+    "regularPrice": 1.15
+  },
+  {
+    "title": "Simply Fresh Tomatillo 340 g",
+    "quantity": "340g",
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
@@ -3518,11 +3561,18 @@
     "regularPrice": 6.99
   },
   {
-    "title": "Savoy Cabbage 1 Count",
-    "quantity": "0.775kg",
-    "currentPrice": 3.06,
+    "title": "Nature Sweet Tomatoes Constellation 467 g",
+    "quantity": "467g",
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 3.06
+    "regularPrice": 9.99
+  },
+  {
+    "title": "Organic Zucchini Squash 1 Count",
+    "quantity": "0.43kg",
+    "currentPrice": 3.78,
+    "onSale": false,
+    "regularPrice": 3.78
   },
   {
     "title": "Earthbound Farm Organic Cauliflower Florets 255 g",
@@ -3539,59 +3589,11 @@
     "regularPrice": 6.99
   },
   {
-    "title": "Sweet Corn Tray 5 Count",
-    "quantity": "5 per pack",
-    "currentPrice": 8.49,
-    "onSale": false,
-    "regularPrice": 8.49
-  },
-  {
-    "title": "Potatoes Small White 1 Count",
-    "quantity": "0.21kg",
-    "currentPrice": 1.15,
-    "onSale": false,
-    "regularPrice": 1.15
-  },
-  {
-    "title": "Portabella Mushrooms",
-    "quantity": "0.28kg",
-    "currentPrice": 3.39,
-    "onSale": false,
-    "regularPrice": 3.39
-  },
-  {
     "title": "Yellow Wax Beans",
     "quantity": "0.35kg",
     "currentPrice": 3.85,
     "onSale": false,
     "regularPrice": 3.85
-  },
-  {
-    "title": "Swiss Green Chard 1 Count",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
-  },
-  {
-    "title": "Simply Fresh Tomatillo 340 g",
-    "quantity": "340g",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
-    "title": "Nature Sweet Tomatoes Constellation 467 g",
-    "quantity": "467g",
-    "currentPrice": 9.99,
-    "onSale": false,
-    "regularPrice": 9.99
-  },
-  {
-    "title": "French Green Beans 400 g",
-    "quantity": "400g",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
   },
   {
     "title": "Organic Peppers Coloured 2 Count",
@@ -3610,23 +3612,9 @@
   {
     "title": "Chinese Eggplant 1 Count",
     "quantity": "0.3kg",
-    "currentPrice": 1.98,
+    "currentPrice": 2.64,
     "onSale": false,
-    "regularPrice": 1.98
-  },
-  {
-    "title": "Organic Zucchini Squash 1 Count",
-    "quantity": "0.43kg",
-    "currentPrice": 3.78,
-    "onSale": false,
-    "regularPrice": 3.78
-  },
-  {
-    "title": "Village Farms Mini San Marzano Tomatoes 680 g",
-    "quantity": "680g",
-    "currentPrice": 4.49,
-    "onSale": false,
-    "regularPrice": 4.49
+    "regularPrice": 2.64
   },
   {
     "title": "Shanghai Bok Choy",
@@ -3636,18 +3624,17 @@
     "regularPrice": 4.88
   },
   {
-    "title": "NatureSweet Cherub Tomatoes 283 g",
-    "quantity": "283g",
-    "currentPrice": 5.99,
+    "title": "Swiss Green Chard 1 Count",
+    "currentPrice": 4.99,
     "onSale": false,
-    "regularPrice": 5.99
+    "regularPrice": 4.99
   },
   {
-    "title": "Early Nugget Potatoes 1 Count",
-    "quantity": "0.06kg",
-    "currentPrice": 0.4,
+    "title": "Yellow Potatoes 2.27 kg",
+    "quantity": "2.27kg",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 0.4
+    "regularPrice": 6.99
   },
   {
     "title": "Yams Purple 1 Count",
@@ -3664,6 +3651,20 @@
     "regularPrice": 2.53
   },
   {
+    "title": "Onions Yellow 1.36 kg",
+    "quantity": "1.362kg",
+    "currentPrice": 2.99,
+    "onSale": false,
+    "regularPrice": 2.99
+  },
+  {
+    "title": "Portabella Mushrooms",
+    "quantity": "0.28kg",
+    "currentPrice": 3.39,
+    "onSale": false,
+    "regularPrice": 3.39
+  },
+  {
     "title": "Organic Mushrooms Portabella 2 Count",
     "quantity": "0.28kg",
     "currentPrice": 4.31,
@@ -3671,8 +3672,7 @@
     "regularPrice": 4.31
   },
   {
-    "title": "Corn Tray 3 Count",
-    "quantity": "3 per pack",
+    "title": "Compliments Grape Tomatoes 551 ml",
     "currentPrice": 4.99,
     "onSale": false,
     "regularPrice": 4.99
@@ -3685,8 +3685,15 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Yellow Potatoes 2.27 kg",
+    "title": "Russet Potatoes 2.27 kg",
     "quantity": "2.27kg",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Paper Bag Potatoes 4.54 kg",
+    "quantity": "4.54kg",
     "currentPrice": 6.99,
     "onSale": false,
     "regularPrice": 6.99
@@ -3704,13 +3711,6 @@
     "currentPrice": 8.38,
     "onSale": false,
     "regularPrice": 8.38
-  },
-  {
-    "title": "Onions Yellow Large 4.54 kg",
-    "quantity": "4.54kg",
-    "currentPrice": 11.99,
-    "onSale": false,
-    "regularPrice": 11.99
   },
   {
     "title": "Anaheim Peppers",
@@ -3733,8 +3733,8 @@
     "regularPrice": 2.29
   },
   {
-    "title": "Onions Yellow 1.36 kg",
-    "quantity": "1.362kg",
+    "title": "Organic Mushrooms White Whole 200 g",
+    "quantity": "200g",
     "currentPrice": 2.99,
     "onSale": false,
     "regularPrice": 2.99
@@ -3774,6 +3774,13 @@
     "regularPrice": 3.99
   },
   {
+    "title": "Village Farms Mini San Marzano Tomatoes 680 g",
+    "quantity": "680g",
+    "currentPrice": 4.49,
+    "onSale": false,
+    "regularPrice": 4.49
+  },
+  {
     "title": "Organic Mushrooms Oyster 100 g",
     "quantity": "100g",
     "currentPrice": 4.49,
@@ -3795,20 +3802,20 @@
     "regularPrice": 5.12
   },
   {
-    "title": "Jumbo Pumpkin 1 Count",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
     "title": "Cauliflower Large 1 Count",
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
   },
   {
-    "title": "Paper Bag Potatoes 4.54 kg",
-    "quantity": "4.54kg",
+    "title": "Compliments Romaine Hearts 510 g",
+    "quantity": "510g",
+    "currentPrice": 6.99,
+    "onSale": false,
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Green Peppers Sweet 4 Count",
     "currentPrice": 6.99,
     "onSale": false,
     "regularPrice": 6.99
@@ -3853,13 +3860,6 @@
     "regularPrice": 3.99
   },
   {
-    "title": "Vine Lolli Bombs Tomatoes 341 g",
-    "quantity": "341g",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
-  },
-  {
     "title": "Organic Asparagus",
     "quantity": "0.46kg",
     "currentPrice": 9.12,
@@ -3874,13 +3874,6 @@
     "regularPrice": 10
   },
   {
-    "title": "Bolthouse Farms Shredded Carrots 284 g",
-    "quantity": "283g",
-    "currentPrice": 2.49,
-    "onSale": true,
-    "regularPrice": 3.29
-  },
-  {
     "title": "Compliments Carrots Baby-Cut 907 g",
     "quantity": "907g",
     "currentPrice": 4.99,
@@ -3888,9 +3881,16 @@
     "regularPrice": 5.99
   },
   {
+    "title": "Celebration Fruit Carousel 1.3 kg",
+    "quantity": "1.3kg",
+    "currentPrice": 12.99,
+    "onSale": true,
+    "regularPrice": 13.99
+  },
+  {
     "title": "Cored Pineapple Whole 475 g",
     "quantity": "475g",
-    "currentPrice": 7.49,
+    "currentPrice": 4.99,
     "onSale": true,
     "regularPrice": 7.49
   },
@@ -3923,6 +3923,13 @@
     "regularPrice": 17
   },
   {
+    "title": "Large Fruit Salad Mixed",
+    "quantity": "1kg",
+    "currentPrice": 14.41,
+    "onSale": true,
+    "regularPrice": 16.95
+  },
+  {
     "title": "Carrots Peeled Mini 454 g",
     "quantity": "454g",
     "currentPrice": 2.99,
@@ -3944,6 +3951,13 @@
     "regularPrice": 3.99
   },
   {
+    "title": "Bolthouse Farms Shredded Carrots 284 g",
+    "quantity": "283g",
+    "currentPrice": 3.29,
+    "onSale": false,
+    "regularPrice": 3.29
+  },
+  {
     "title": "Bolthouse Farms Carrots Premium Petite 340 g",
     "quantity": "340g",
     "currentPrice": 3.29,
@@ -3958,13 +3972,6 @@
     "regularPrice": 2.49
   },
   {
-    "title": "Compliments Organic Carrots Baby-Cut 454 g",
-    "quantity": "454g",
-    "currentPrice": 3.99,
-    "onSale": false,
-    "regularPrice": 3.99
-  },
-  {
     "title": "Celery Sticks",
     "quantity": "0.2kg",
     "currentPrice": 1.85,
@@ -3972,18 +3979,11 @@
     "regularPrice": 1.85
   },
   {
-    "title": "Celebration Fruit Carousel 1.3 kg",
-    "quantity": "1.3kg",
-    "currentPrice": 13.99,
+    "title": "Compliments Organic Carrots Baby-Cut 454 g",
+    "quantity": "454g",
+    "currentPrice": 3.99,
     "onSale": false,
-    "regularPrice": 13.99
-  },
-  {
-    "title": "Pineapple Chunks Medium",
-    "quantity": "0.32kg",
-    "currentPrice": 4.3,
-    "onSale": false,
-    "regularPrice": 4.3
+    "regularPrice": 3.99
   },
   {
     "title": "Watermelon Chunks Seedless Red Medium",
@@ -3991,6 +3991,13 @@
     "currentPrice": 5.64,
     "onSale": false,
     "regularPrice": 5.64
+  },
+  {
+    "title": "Pineapple Chunks Medium",
+    "quantity": "0.32kg",
+    "currentPrice": 4.3,
+    "onSale": false,
+    "regularPrice": 4.3
   },
   {
     "title": "Slices Watermelon",
@@ -4021,18 +4028,18 @@
     "regularPrice": 4.96
   },
   {
-    "title": "Taylor Farms Chopped Kale 454 g",
-    "quantity": "454g",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
-  },
-  {
     "title": "Mann's Broccoli Wokly Family Pack 907 g",
     "quantity": "907g",
     "currentPrice": 9.99,
     "onSale": false,
     "regularPrice": 9.99
+  },
+  {
+    "title": "Taylor Farms Chopped Kale 454 g",
+    "quantity": "454g",
+    "currentPrice": 6.99,
+    "onSale": false,
+    "regularPrice": 6.99
   },
   {
     "title": "Just Sliced Red Apples Sliced 454 g",
@@ -4042,18 +4049,18 @@
     "regularPrice": 7.99
   },
   {
-    "title": "Fresh Cut Broccoli Cauliflower Carrot",
-    "quantity": "0.45kg",
-    "currentPrice": 6.67,
-    "onSale": false,
-    "regularPrice": 6.67
-  },
-  {
     "title": "Vegetable Tray Large 13-Inch 2.2 kg",
     "quantity": "2.2kg",
     "currentPrice": 19.99,
     "onSale": false,
     "regularPrice": 19.99
+  },
+  {
+    "title": "Fresh Cut Broccoli Cauliflower Carrot",
+    "quantity": "0.45kg",
+    "currentPrice": 6.67,
+    "onSale": false,
+    "regularPrice": 6.67
   },
   {
     "title": "Medium Mixed Berries",
@@ -4070,18 +4077,25 @@
     "regularPrice": 8.99
   },
   {
+    "title": "Grab N Go Large Fruit Tray 2.2 kg",
+    "quantity": "2.2kg",
+    "currentPrice": 24.99,
+    "onSale": false,
+    "regularPrice": 24.99
+  },
+  {
+    "title": "Pom Wonderful Fresh Arils Pomegranate 2 x 227 g",
+    "quantity": "2 x 227g",
+    "currentPrice": 12.99,
+    "onSale": false,
+    "regularPrice": 12.99
+  },
+  {
     "title": "Get Fresh Mango Spears 454 g",
     "quantity": "454g",
     "currentPrice": 8.49,
     "onSale": false,
     "regularPrice": 8.49
-  },
-  {
-    "title": "Pineapple Berry Salad Small",
-    "quantity": "0.32kg",
-    "currentPrice": 5.49,
-    "onSale": false,
-    "regularPrice": 5.49
   },
   {
     "title": "Carrot Chips 454 g",
@@ -4091,8 +4105,15 @@
     "regularPrice": 2.99
   },
   {
-    "title": "Pom Wonderful Fresh Arils Pomegranate 2 x 227 g",
-    "quantity": "2 x 227g",
+    "title": "Pineapple Berry Salad Small",
+    "quantity": "0.32kg",
+    "currentPrice": 5.49,
+    "onSale": false,
+    "regularPrice": 5.49
+  },
+  {
+    "title": "Celebration Vegetable Carousel Large 1 kg",
+    "quantity": "1kg",
     "currentPrice": 12.99,
     "onSale": false,
     "regularPrice": 12.99
@@ -4105,53 +4126,11 @@
     "regularPrice": 6.37
   },
   {
-    "title": "Grab N Go Large Fruit Tray 2.2 kg",
-    "quantity": "2.2kg",
-    "currentPrice": 24.99,
-    "onSale": false,
-    "regularPrice": 24.99
-  },
-  {
-    "title": "Orange Slices Large",
-    "quantity": "0.74kg",
-    "currentPrice": 6.1,
-    "onSale": false,
-    "regularPrice": 6.1
-  },
-  {
     "title": "Honeydew Chunks Medium",
     "quantity": "0.5kg",
     "currentPrice": 8.07,
     "onSale": false,
     "regularPrice": 8.07
-  },
-  {
-    "title": "Cantaloupe Chunks Medium",
-    "quantity": "0.5kg",
-    "currentPrice": 9.69,
-    "onSale": false,
-    "regularPrice": 9.69
-  },
-  {
-    "title": "Celebration Vegetable Carousel Large 1 kg",
-    "quantity": "1kg",
-    "currentPrice": 12.99,
-    "onSale": false,
-    "regularPrice": 12.99
-  },
-  {
-    "title": "Onion Diced Spanish",
-    "quantity": "0.255kg",
-    "currentPrice": 3.12,
-    "onSale": false,
-    "regularPrice": 3.12
-  },
-  {
-    "title": "Crunch Mix With Large Dip Regular 450 g",
-    "quantity": "450g",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
   },
   {
     "title": "Halves Griller Roast Brussels Sprouts",
@@ -4161,25 +4140,32 @@
     "regularPrice": 7.3
   },
   {
-    "title": "Strawberry Yogurt Bowl 300 g",
-    "quantity": "300g",
-    "currentPrice": 4.99,
+    "title": "Onion Diced Spanish",
+    "quantity": "0.255kg",
+    "currentPrice": 3.12,
     "onSale": false,
-    "regularPrice": 4.99
+    "regularPrice": 3.12
   },
   {
-    "title": "Watermelon Quarters",
-    "quantity": "1.29kg",
-    "currentPrice": 5.38,
+    "title": "Cantaloupe Chunks Medium",
+    "quantity": "0.5kg",
+    "currentPrice": 9.69,
     "onSale": false,
-    "regularPrice": 5.38
+    "regularPrice": 9.69
   },
   {
-    "title": "Mellon Chunks Mixed Small",
-    "quantity": "0.355kg",
-    "currentPrice": 5.73,
+    "title": "Crunch Mix With Large Dip Regular 450 g",
+    "quantity": "450g",
+    "currentPrice": 6.99,
     "onSale": false,
-    "regularPrice": 5.73
+    "regularPrice": 6.99
+  },
+  {
+    "title": "Orange Slices Large",
+    "quantity": "0.74kg",
+    "currentPrice": 6.1,
+    "onSale": false,
+    "regularPrice": 6.1
   },
   {
     "title": "Bolthouse Farms Carrot Sticks 12 Ounce 340 g",
@@ -4189,18 +4175,39 @@
     "regularPrice": 3.29
   },
   {
-    "title": "Mixed Melon Heaven",
-    "quantity": "0.4kg",
-    "currentPrice": 5.46,
-    "onSale": false,
-    "regularPrice": 5.46
-  },
-  {
     "title": "Cauliflower Florets",
     "quantity": "0.38kg",
     "currentPrice": 5.14,
     "onSale": false,
     "regularPrice": 5.14
+  },
+  {
+    "title": "Watermelon Quarters",
+    "quantity": "1.29kg",
+    "currentPrice": 5.38,
+    "onSale": false,
+    "regularPrice": 5.38
+  },
+  {
+    "title": "Mixed Veggie Sticks Large",
+    "quantity": "0.43kg",
+    "currentPrice": 8.05,
+    "onSale": false,
+    "regularPrice": 8.05
+  },
+  {
+    "title": "Mellon Chunks Mixed Small",
+    "quantity": "0.355kg",
+    "currentPrice": 5.73,
+    "onSale": false,
+    "regularPrice": 5.73
+  },
+  {
+    "title": "Mixed Melon Heaven",
+    "quantity": "0.4kg",
+    "currentPrice": 6.97,
+    "onSale": false,
+    "regularPrice": 6.97
   },
   {
     "title": "Butternut Squash Artisanal Spiral Cuts 340 g",
@@ -4210,6 +4217,20 @@
     "regularPrice": 7.49
   },
   {
+    "title": "Mann's Kohlrabi Noodles 284 g",
+    "quantity": "284g",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Omelette Pizza Mix Large",
+    "quantity": "0.43kg",
+    "currentPrice": 8.05,
+    "onSale": false,
+    "regularPrice": 8.05
+  },
+  {
     "title": "Watermelon Chunks Seedless Red Large",
     "quantity": "0.9kg",
     "currentPrice": 11.29,
@@ -4217,8 +4238,22 @@
     "regularPrice": 11.29
   },
   {
-    "title": "Mann's Kohlrabi Noodles 284 g",
-    "quantity": "284g",
+    "title": "Yogurt Bowl Banana And Strawberry 300 g",
+    "quantity": "300g",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
+  },
+  {
+    "title": "Greek Yogurt Bowl Banana 300 g",
+    "quantity": "300g",
+    "currentPrice": 5.49,
+    "onSale": false,
+    "regularPrice": 5.49
+  },
+  {
+    "title": "Strawberry Yogurt Bowl 300 g",
+    "quantity": "300g",
     "currentPrice": 4.99,
     "onSale": false,
     "regularPrice": 4.99
@@ -4231,20 +4266,6 @@
     "regularPrice": 6.65
   },
   {
-    "title": "Omelette Pizza Mix Large",
-    "quantity": "0.43kg",
-    "currentPrice": 8.05,
-    "onSale": false,
-    "regularPrice": 8.05
-  },
-  {
-    "title": "Yogurt Bowl Banana And Strawberry 300 g",
-    "quantity": "300g",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
-  },
-  {
     "title": "Cantaloupe Chunks",
     "quantity": "0.355kg",
     "currentPrice": 6.88,
@@ -4252,18 +4273,10 @@
     "regularPrice": 6.88
   },
   {
-    "title": "Mixed Veggie Sticks Large",
-    "quantity": "0.43kg",
-    "currentPrice": 8.05,
+    "title": "Fruit Tray Without Dip 13-Inch",
+    "currentPrice": 24.99,
     "onSale": false,
-    "regularPrice": 8.05
-  },
-  {
-    "title": "Greek Yogurt Bowl Banana 300 g",
-    "quantity": "300g",
-    "currentPrice": 5.49,
-    "onSale": false,
-    "regularPrice": 5.49
+    "regularPrice": 24.99
   },
   {
     "title": "Stir Fry Mix Large",
@@ -4271,12 +4284,6 @@
     "currentPrice": 8.8,
     "onSale": false,
     "regularPrice": 8.8
-  },
-  {
-    "title": "Fruit Tray Without Dip 13-Inch",
-    "currentPrice": 24.99,
-    "onSale": false,
-    "regularPrice": 24.99
   },
   {
     "title": "Compliments Organic Baby-Cut Carrots 907 g",
@@ -4306,13 +4313,6 @@
     "regularPrice": 4.99
   },
   {
-    "title": "Cubes Beets Red",
-    "quantity": "0.555kg",
-    "currentPrice": 6.78,
-    "onSale": false,
-    "regularPrice": 6.78
-  },
-  {
     "title": "Halves Cantaloupe 1 EA",
     "currentPrice": 3.49,
     "onSale": false,
@@ -4326,11 +4326,18 @@
     "regularPrice": 5.24
   },
   {
-    "title": "Pepper Medley Griller",
-    "quantity": "0.4kg",
-    "currentPrice": 7.49,
+    "title": "Kissel Kraut Cabbage Head Sour 500 g",
+    "quantity": "500g",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 7.49
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Cubes Beets Red",
+    "quantity": "0.555kg",
+    "currentPrice": 6.78,
+    "onSale": false,
+    "regularPrice": 6.78
   },
   {
     "title": "Mango Spears 340 g",
@@ -4340,18 +4347,11 @@
     "regularPrice": 8.79
   },
   {
-    "title": "Rainbow Veggie Platter 4 kg",
-    "quantity": "4kg",
-    "currentPrice": 47.99,
+    "title": "Pepper Medley Griller",
+    "quantity": "0.4kg",
+    "currentPrice": 7.49,
     "onSale": false,
-    "regularPrice": 47.99
-  },
-  {
-    "title": "Earthbound Farm Organic Vegetable Medley 255 g",
-    "quantity": "255g",
-    "currentPrice": 6.49,
-    "onSale": false,
-    "regularPrice": 6.49
+    "regularPrice": 7.49
   },
   {
     "title": "Taylor Farms Ginger Soy With Noodles Saute Kit 624 g",
@@ -4368,11 +4368,39 @@
     "regularPrice": 9.84
   },
   {
+    "title": "Deli Fruit & Dip Tray Small 8-Inch 750 g",
+    "quantity": "750g",
+    "currentPrice": 10.49,
+    "onSale": false,
+    "regularPrice": 10.49
+  },
+  {
+    "title": "Melon Chunks Mixed Large",
+    "quantity": "0.85kg",
+    "currentPrice": 13.71,
+    "onSale": false,
+    "regularPrice": 13.71
+  },
+  {
     "title": "Tray Fruit Kabob",
     "quantity": "3.1kg",
     "currentPrice": 35.99,
     "onSale": false,
     "regularPrice": 35.99
+  },
+  {
+    "title": "Rainbow Veggie Platter 4 kg",
+    "quantity": "4kg",
+    "currentPrice": 47.99,
+    "onSale": false,
+    "regularPrice": 47.99
+  },
+  {
+    "title": "Fresh Fruit Favourites 4.7 kg",
+    "quantity": "4.7kg",
+    "currentPrice": 53.99,
+    "onSale": false,
+    "regularPrice": 53.99
   },
   {
     "title": "Mini Peeled Carrots 454 g",
@@ -4417,11 +4445,11 @@
     "regularPrice": 5.05
   },
   {
-    "title": "Kissel Kraut Cabbage Head Sour 500 g",
-    "quantity": "500g",
-    "currentPrice": 5.99,
+    "title": "Earthbound Farm Organic Vegetable Medley 255 g",
+    "quantity": "255g",
+    "currentPrice": 6.49,
     "onSale": false,
-    "regularPrice": 5.99
+    "regularPrice": 6.49
   },
   {
     "title": "Taylor Farms With Noodles Teriyaki Saute 658 g",
@@ -4431,32 +4459,11 @@
     "regularPrice": 7.99
   },
   {
-    "title": "Deli Fruit & Dip Tray Small 8-Inch 750 g",
-    "quantity": "750g",
-    "currentPrice": 10.49,
-    "onSale": false,
-    "regularPrice": 10.49
-  },
-  {
     "title": "Deli Counter Vegetable & Dip Tray 8 Inch 750 g",
     "quantity": "750g",
     "currentPrice": 10.49,
     "onSale": false,
     "regularPrice": 10.49
-  },
-  {
-    "title": "Melon Chunks Mixed Large",
-    "quantity": "0.85kg",
-    "currentPrice": 13.71,
-    "onSale": false,
-    "regularPrice": 13.71
-  },
-  {
-    "title": "Large Fruit Salad Mixed",
-    "quantity": "1kg",
-    "currentPrice": 16.95,
-    "onSale": false,
-    "regularPrice": 16.95
   },
   {
     "title": "Large Vegetable Tray 13-Inch",
@@ -4467,13 +4474,6 @@
   {
     "title": "Veggie Might 3.3 kg",
     "quantity": "3.3kg",
-    "currentPrice": 53.99,
-    "onSale": false,
-    "regularPrice": 53.99
-  },
-  {
-    "title": "Fresh Fruit Favourites 4.7 kg",
-    "quantity": "4.7kg",
     "currentPrice": 53.99,
     "onSale": false,
     "regularPrice": 53.99
@@ -4549,10 +4549,22 @@
     "regularPrice": 2.99
   },
   {
+    "title": "Cilantro Coriander 1 Bunch",
+    "currentPrice": 1.49,
+    "onSale": true,
+    "regularPrice": 1.99
+  },
+  {
     "title": "Compliments Italian Parsley 1 Bunch",
     "currentPrice": 2.79,
     "onSale": true,
     "regularPrice": 2.99
+  },
+  {
+    "title": "Parsley Regular 1 Bunch",
+    "currentPrice": 1.79,
+    "onSale": true,
+    "regularPrice": 1.99
   },
   {
     "title": "Compliments Organic Poultry Mix 28 g",
@@ -4562,23 +4574,17 @@
     "regularPrice": 2.99
   },
   {
+    "title": "Italian Parsley 1 Bunch",
+    "currentPrice": 1.79,
+    "onSale": true,
+    "regularPrice": 2.99
+  },
+  {
     "title": "Compliments Savory 20 g",
     "quantity": "20g",
     "currentPrice": 2.79,
     "onSale": true,
     "regularPrice": 2.99
-  },
-  {
-    "title": "Cilantro Coriander 1 Bunch",
-    "currentPrice": 1.99,
-    "onSale": false,
-    "regularPrice": 1.99
-  },
-  {
-    "title": "Parsley Regular 1 Bunch",
-    "currentPrice": 1.99,
-    "onSale": false,
-    "regularPrice": 1.99
   },
   {
     "title": "Compliments Organic Fresh Basil 28 g",
@@ -4608,41 +4614,7 @@
     "regularPrice": 2.99
   },
   {
-    "title": "Italian Parsley 1 Bunch",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
-  },
-  {
     "title": "Compliments Organic Rosemary 28 g",
-    "quantity": "28g",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
-  },
-  {
-    "title": "Compliments Organic Mint 28 g",
-    "quantity": "28g",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
-  },
-  {
-    "title": "Simply Fresh Lemongrass 150 g",
-    "quantity": "150g",
-    "currentPrice": 3.99,
-    "onSale": false,
-    "regularPrice": 3.99
-  },
-  {
-    "title": "Compliments Organic Dill 28 g",
-    "quantity": "28g",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
-  },
-  {
-    "title": "Compliments Organic Chives 28 g",
     "quantity": "28g",
     "currentPrice": 2.99,
     "onSale": false,
@@ -4656,7 +4628,35 @@
     "regularPrice": 2.99
   },
   {
+    "title": "Compliments Organic Chives 28 g",
+    "quantity": "28g",
+    "currentPrice": 2.99,
+    "onSale": false,
+    "regularPrice": 2.99
+  },
+  {
+    "title": "Compliments Organic Mint 28 g",
+    "quantity": "28g",
+    "currentPrice": 2.99,
+    "onSale": false,
+    "regularPrice": 2.99
+  },
+  {
+    "title": "Compliments Organic Dill 28 g",
+    "quantity": "28g",
+    "currentPrice": 2.99,
+    "onSale": false,
+    "regularPrice": 2.99
+  },
+  {
     "title": "Organic Italian Parsley 1 Bunch",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Simply Fresh Lemongrass 150 g",
+    "quantity": "150g",
     "currentPrice": 3.99,
     "onSale": false,
     "regularPrice": 3.99
@@ -4669,14 +4669,14 @@
     "regularPrice": 2.99
   },
   {
-    "title": "Compliments Organic Cilantro 28 g",
+    "title": "Compliments Organic Oregano 28 g",
     "quantity": "28g",
     "currentPrice": 2.99,
     "onSale": false,
     "regularPrice": 2.99
   },
   {
-    "title": "Compliments Organic Oregano 28 g",
+    "title": "Compliments Organic Cilantro 28 g",
     "quantity": "28g",
     "currentPrice": 2.99,
     "onSale": false,
@@ -4709,11 +4709,11 @@
     "regularPrice": 4.99
   },
   {
-    "title": "Organic Cranberries 227 g",
-    "quantity": "340g",
-    "currentPrice": 3.99,
-    "onSale": true,
-    "regularPrice": 4.99
+    "title": "Organic Raspberries 170 g",
+    "quantity": "170g",
+    "currentPrice": 6.99,
+    "onSale": false,
+    "regularPrice": 6.99
   },
   {
     "title": "Organic Blueberries 170 g",
@@ -4721,13 +4721,6 @@
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
-  },
-  {
-    "title": "Organic Raspberries 170 g",
-    "quantity": "170g",
-    "currentPrice": 6.99,
-    "onSale": false,
-    "regularPrice": 6.99
   },
   {
     "title": "Organic Blackberries 170 g",
@@ -4744,18 +4737,18 @@
     "regularPrice": 8.99
   },
   {
-    "title": "Organic Apples Royal Gala Bag 1.36 kg",
-    "quantity": "1.36kg",
-    "currentPrice": 8.99,
-    "onSale": false,
-    "regularPrice": 8.99
-  },
-  {
     "title": "Organic Kiwi 454 g",
     "quantity": "454g",
     "currentPrice": 6.99,
     "onSale": false,
     "regularPrice": 6.99
+  },
+  {
+    "title": "Organic Apples Royal Gala Bag 1.36 kg",
+    "quantity": "1.36kg",
+    "currentPrice": 8.99,
+    "onSale": false,
+    "regularPrice": 8.99
   },
   {
     "title": "Organic Apples Ambrosia",
@@ -4767,9 +4760,9 @@
   {
     "title": "Organic Limes 454 g",
     "quantity": "454g",
-    "currentPrice": 7.99,
+    "currentPrice": 8.99,
     "onSale": false,
-    "regularPrice": 7.99
+    "regularPrice": 8.99
   },
   {
     "title": "Organic Apples Granny Smith 1.36 kg",
@@ -4786,9 +4779,9 @@
   },
   {
     "title": "Organic Hass Avocado 1 Count",
-    "currentPrice": 4.49,
+    "currentPrice": 3.99,
     "onSale": false,
-    "regularPrice": 4.49
+    "regularPrice": 3.99
   },
   {
     "title": "Lil Snapper Organic Apples Gala 1.36 kg",
@@ -4798,32 +4791,45 @@
     "regularPrice": 9.99
   },
   {
+    "title": "Organic Cranberries 227 g",
+    "quantity": "340g",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
+  },
+  {
     "title": "Lil Snapper Organic Apples Granny 1.36 kg",
     "quantity": "1.36kg",
-    "currentPrice": 10.99,
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 10.99
+    "regularPrice": 9.99
   },
   {
     "title": "Lil Snappers Organic Apple Fuji 1.36 kg",
     "quantity": "1.36kg",
-    "currentPrice": 10.99,
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 10.99
+    "regularPrice": 9.99
   },
   {
     "title": "Organic Kiwi Green 454 g",
     "quantity": "454g",
-    "currentPrice": 8.49,
+    "currentPrice": 8.99,
     "onSale": false,
-    "regularPrice": 8.49
+    "regularPrice": 8.99
   },
   {
     "title": "Organic Lemons 907 g",
     "quantity": "907g",
-    "currentPrice": 11.99,
+    "currentPrice": 9.99,
     "onSale": false,
-    "regularPrice": 11.99
+    "regularPrice": 9.99
+  },
+  {
+    "title": "Organic Mango 1 Count",
+    "currentPrice": 3.29,
+    "onSale": false,
+    "regularPrice": 3.29
   },
   {
     "title": "Organic Apples Royal Gala 3 Count",
@@ -4838,12 +4844,6 @@
     "currentPrice": 10.5,
     "onSale": false,
     "regularPrice": 10.5
-  },
-  {
-    "title": "Organic Mango 1 Count",
-    "currentPrice": 3.29,
-    "onSale": false,
-    "regularPrice": 3.29
   },
   {
     "title": "Bagged Organic Avocado 3 Count",
@@ -4888,13 +4888,6 @@
     "regularPrice": 2.3
   },
   {
-    "title": "Organic Apples Ambrosia 3 Count",
-    "quantity": "0.61kg",
-    "currentPrice": 4.69,
-    "onSale": false,
-    "regularPrice": 4.69
-  },
-  {
     "title": "Chinese Organic Mandarins",
     "quantity": "1.82kg",
     "currentPrice": 10.99,
@@ -4902,17 +4895,25 @@
     "regularPrice": 10.99
   },
   {
+    "title": "Organic Apples Ambrosia 3 Count",
+    "quantity": "0.61kg",
+    "currentPrice": 4.69,
+    "onSale": false,
+    "regularPrice": 4.69
+  },
+  {
+    "title": "Organic Apples Pink Lady 3 Count",
+    "quantity": "0.6kg",
+    "currentPrice": 4.61,
+    "onSale": false,
+    "regularPrice": 4.61
+  },
+  {
     "title": "Organic Apples Honey Crisp",
     "quantity": "0.6kg",
     "currentPrice": 5.28,
     "onSale": false,
     "regularPrice": 5.28
-  },
-  {
-    "title": "Organic Watermelon Mini Personal 1 Count",
-    "currentPrice": 7.99,
-    "onSale": false,
-    "regularPrice": 7.99
   },
   {
     "title": "Lil Snappers Organic Pears Bosc 907 g",
@@ -4934,13 +4935,6 @@
     "currentPrice": 2.72,
     "onSale": false,
     "regularPrice": 2.72
-  },
-  {
-    "title": "Organic Apples Pink Lady 3 Count",
-    "quantity": "0.6kg",
-    "currentPrice": 4.61,
-    "onSale": false,
-    "regularPrice": 4.61
   },
   {
     "title": "Organic Apples McIntosh 1 Count",
@@ -4975,6 +4969,12 @@
     "regularPrice": 6.99
   },
   {
+    "title": "Organic Watermelon Mini Personal 1 Count",
+    "currentPrice": 7.99,
+    "onSale": false,
+    "regularPrice": 7.99
+  },
+  {
     "title": "Lil Snappers Organic Pear D'Anjou 907 g",
     "quantity": "907g",
     "currentPrice": 7.99,
@@ -5002,13 +5002,6 @@
     "regularPrice": 8.49
   },
   {
-    "title": "Compliments Organic Mushrooms Whole White 227 g",
-    "quantity": "227g",
-    "currentPrice": 1.5,
-    "onSale": true,
-    "regularPrice": 3.49
-  },
-  {
     "title": "Organic Onions Yellow 1.36 kg",
     "quantity": "1.36kg",
     "currentPrice": 5.49,
@@ -5020,17 +5013,31 @@
     "quantity": "312g",
     "currentPrice": 6.99,
     "onSale": true,
-    "regularPrice": 7.49
+    "regularPrice": 7.99
   },
   {
     "title": "Compliments Organic Baby Greens Mixed 312 g",
     "quantity": "312g",
     "currentPrice": 6.99,
     "onSale": true,
-    "regularPrice": 7.49
+    "regularPrice": 7.99
+  },
+  {
+    "title": "Compliments Organic Mushrooms Whole White 227 g",
+    "quantity": "227g",
+    "currentPrice": 3.49,
+    "onSale": false,
+    "regularPrice": 3.49
   },
   {
     "title": "Organic Cucumber English 1 EA",
+    "currentPrice": 3.99,
+    "onSale": false,
+    "regularPrice": 3.99
+  },
+  {
+    "title": "Organic Carrots 908 g",
+    "quantity": "908g",
     "currentPrice": 3.99,
     "onSale": false,
     "regularPrice": 3.99
@@ -5041,13 +5048,6 @@
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
-  },
-  {
-    "title": "Organic Carrots 908 g",
-    "quantity": "908g",
-    "currentPrice": 3.49,
-    "onSale": false,
-    "regularPrice": 3.49
   },
   {
     "title": "Compliments Organic Mushrooms Cremini Sliced & Washed 227 g",
@@ -5091,10 +5091,11 @@
     "regularPrice": 5.49
   },
   {
-    "title": "Sunset Organic Tomatoes Grape 340 g",
-    "currentPrice": 6.99,
+    "title": "Organic Romaine Hearts 3 Count",
+    "quantity": "340g",
+    "currentPrice": 7.99,
     "onSale": false,
-    "regularPrice": 6.99
+    "regularPrice": 7.99
   },
   {
     "title": "Compliments Organic Mushrooms Sliced White 227 g",
@@ -5104,11 +5105,10 @@
     "regularPrice": 3.99
   },
   {
-    "title": "Romaine Hearts Organic 3 EA",
-    "quantity": "340g",
-    "currentPrice": 7.99,
+    "title": "Sunset Organic Tomatoes Grape 340 g",
+    "currentPrice": 5.99,
     "onSale": false,
-    "regularPrice": 7.99
+    "regularPrice": 5.99
   },
   {
     "title": "Organic Broccoli 1 Count",
@@ -5117,16 +5117,10 @@
     "regularPrice": 6.99
   },
   {
-    "title": "Organic Cauliflower Small 1 Count",
+    "title": "Organic Cauliflower 1 Count",
     "currentPrice": 7.99,
     "onSale": false,
     "regularPrice": 7.99
-  },
-  {
-    "title": "Kale Organic Green 1EA",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
   },
   {
     "title": "Organic Yams Sweet Potatoes 1.36 kg",
@@ -5134,6 +5128,12 @@
     "currentPrice": 8.8,
     "onSale": false,
     "regularPrice": 8.8
+  },
+  {
+    "title": "Organic Kale Green 1 Bunch",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
   },
   {
     "title": "Organic Celery 1 Bunch",
@@ -5156,18 +5156,6 @@
     "regularPrice": 3.99
   },
   {
-    "title": "Organic Tomatoes Angel Sweet 1 Pack",
-    "currentPrice": 5.49,
-    "onSale": false,
-    "regularPrice": 5.49
-  },
-  {
-    "title": "Organic Lettuce Iceberg 1 Count",
-    "currentPrice": 5.49,
-    "onSale": false,
-    "regularPrice": 5.49
-  },
-  {
     "title": "Organic Onion Red 1.36 kg",
     "quantity": "1.36kg",
     "currentPrice": 5.99,
@@ -5175,11 +5163,23 @@
     "regularPrice": 5.99
   },
   {
+    "title": "Organic Iceberg Lettuce 1 Count",
+    "currentPrice": 5.49,
+    "onSale": false,
+    "regularPrice": 5.49
+  },
+  {
     "title": "Compliments Organic Mushrooms Oyster 85 g",
     "quantity": "85g",
     "currentPrice": 4.49,
     "onSale": false,
     "regularPrice": 4.49
+  },
+  {
+    "title": "Organic Tomatoes Angel Sweet 1 Pack",
+    "currentPrice": 5.49,
+    "onSale": false,
+    "regularPrice": 5.49
   },
   {
     "title": "Cesares Organic Turmeric 85 g",
@@ -5217,13 +5217,6 @@
     "regularPrice": 3.99
   },
   {
-    "title": "Compliments Organic Baby Arugula 142 g",
-    "quantity": "142g",
-    "currentPrice": 5.99,
-    "onSale": false,
-    "regularPrice": 5.99
-  },
-  {
     "title": "Compliments Organic Mushrooms Portabella Caps 170 g",
     "quantity": "170g",
     "currentPrice": 5.99,
@@ -5231,8 +5224,15 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Compliments Organic Baby Spinach 142 g",
+    "title": "Compliments Organic Baby Arugula 142 g",
     "quantity": "142g",
+    "currentPrice": 5.99,
+    "onSale": false,
+    "regularPrice": 5.99
+  },
+  {
+    "title": "Compliments Organic Potatoes Yellow 1.36 kg",
+    "quantity": "1.36kg",
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
@@ -5245,8 +5245,8 @@
     "regularPrice": 2.99
   },
   {
-    "title": "Compliments Organic Potatoes Yellow 1.36 kg",
-    "quantity": "1.36kg",
+    "title": "Compliments Organic Baby Spinach 142 g",
+    "quantity": "142g",
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
@@ -5286,11 +5286,11 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Organic Roma Tomatoes",
-    "quantity": "0.3kg",
-    "currentPrice": 1.98,
+    "title": "Natursource Organic Salad Topper 600 g",
+    "quantity": "600g",
+    "currentPrice": 13.99,
     "onSale": false,
-    "regularPrice": 1.98
+    "regularPrice": 13.99
   },
   {
     "title": "Compliments Organic Potatoes Red 1.36 kg",
@@ -5300,11 +5300,17 @@
     "regularPrice": 5.99
   },
   {
-    "title": "Natursource Organic Salad Topper 600 g",
-    "quantity": "600g",
-    "currentPrice": 13.99,
+    "title": "Organic Roma Tomatoes",
+    "quantity": "0.3kg",
+    "currentPrice": 1.98,
     "onSale": false,
-    "regularPrice": 13.99
+    "regularPrice": 1.98
+  },
+  {
+    "title": "Organic Red Chard 1 Bunch",
+    "currentPrice": 4.99,
+    "onSale": false,
+    "regularPrice": 4.99
   },
   {
     "title": "Organic Green Onions 1 Bunch",
@@ -5315,12 +5321,12 @@
   {
     "title": "Compliments Organic Carrots 907 g",
     "quantity": "907g",
-    "currentPrice": 3.49,
+    "currentPrice": 3.99,
     "onSale": false,
-    "regularPrice": 3.49
+    "regularPrice": 3.99
   },
   {
-    "title": "Organic Red Chard 1 Bunch",
+    "title": "Organic Beets 1 Bunch",
     "currentPrice": 4.99,
     "onSale": false,
     "regularPrice": 4.99
@@ -5340,12 +5346,6 @@
     "regularPrice": 6.49
   },
   {
-    "title": "Organic Beets 1 Bunch",
-    "currentPrice": 4.99,
-    "onSale": false,
-    "regularPrice": 4.99
-  },
-  {
     "title": "Organic Mushrooms Blend Steakmate 454 g",
     "quantity": "454g",
     "currentPrice": 5.99,
@@ -5358,6 +5358,13 @@
     "currentPrice": 6.99,
     "onSale": false,
     "regularPrice": 6.99
+  },
+  {
+    "title": "Organic Zucchini Squash 1 Count",
+    "quantity": "0.43kg",
+    "currentPrice": 3.78,
+    "onSale": false,
+    "regularPrice": 3.78
   },
   {
     "title": "Compliments Organic Baby-Cut Carrots 907 g",
@@ -5381,13 +5388,6 @@
     "regularPrice": 6.49
   },
   {
-    "title": "Organic Zucchini Squash 1 Count",
-    "quantity": "0.43kg",
-    "currentPrice": 3.78,
-    "onSale": false,
-    "regularPrice": 3.78
-  },
-  {
     "title": "Organic Mushrooms Portabella 2 Count",
     "quantity": "0.28kg",
     "currentPrice": 4.31,
@@ -5408,6 +5408,13 @@
     "regularPrice": 2.29
   },
   {
+    "title": "Organic Mushrooms White Whole 200 g",
+    "quantity": "200g",
+    "currentPrice": 2.99,
+    "onSale": false,
+    "regularPrice": 2.99
+  },
+  {
     "title": "Organic Mushrooms White Sliced 200 g",
     "quantity": "200g",
     "currentPrice": 3.49,
@@ -5422,25 +5429,11 @@
     "regularPrice": 4.49
   },
   {
-    "title": "Earthbound Farm Organic Vegetable Medley 255 g",
-    "quantity": "255g",
-    "currentPrice": 6.49,
-    "onSale": false,
-    "regularPrice": 6.49
-  },
-  {
     "title": "Organic Mushrooms Pearl Button 200 g",
     "quantity": "200g",
     "currentPrice": 2.49,
     "onSale": false,
     "regularPrice": 2.49
-  },
-  {
-    "title": "Organic Mushrooms White Whole 200 g",
-    "quantity": "200g",
-    "currentPrice": 2.99,
-    "onSale": false,
-    "regularPrice": 2.99
   },
   {
     "title": "Organic Mushrooms Cremini Whole 200 g",
@@ -5504,6 +5497,13 @@
     "currentPrice": 5.99,
     "onSale": false,
     "regularPrice": 5.99
+  },
+  {
+    "title": "Earthbound Farm Organic Vegetable Medley 255 g",
+    "quantity": "255g",
+    "currentPrice": 6.49,
+    "onSale": false,
+    "regularPrice": 6.49
   },
   {
     "title": "Organic Squash Butternut 1 Count",

@@ -168,8 +168,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       // Write results to a file for each category
+      if (!fs.existsSync("data")) {
+        fs.mkdirSync("data");
+      }
+      if (!fs.existsSync("data/ingredients")) {
+        fs.mkdirSync("data/ingredients");
+      }
       fs.writeFileSync(
-        `${category.replace(/\s+/g, "_")}_ingredients.json`,
+        `data/ingredients/${category.replace(/\s+/g, "_")}_ingredients.json`,
         JSON.stringify(allCategoryItems, null, 2)
       );
     }
