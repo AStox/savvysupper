@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   const CHUNK_SIZE = 100;
-  const WAIT_TIME = 5000;
+  const WAIT_TIME = 1000;
   const address = process.env.MILVUS_ENDPOINT as string;
   const token = process.env.MILVUS_TOKEN as string;
   const milvusClient = new MilvusClient({ address, token });
