@@ -41,6 +41,15 @@ const AdminPage = () => {
     setLoading(false);
   };
 
+  const vectorize = async () => {
+    setLoading(true);
+    setResponse("");
+    const response = await fetch("/api/vectorize", { method: "POST" });
+    const data = await response.json();
+    setResponse(JSON.stringify(data, null, 2));
+    setLoading(false);
+  };
+
   return (
     <div className={styles.adminContainer}>
       <button className={styles.button} onClick={createCollection} disabled={loading}>
@@ -54,6 +63,9 @@ const AdminPage = () => {
       </button>
       <button className={styles.button} onClick={ingredientScraper} disabled={loading}>
         Ingredient Scraper
+      </button>
+      <button className={styles.button} onClick={vectorize} disabled={loading}>
+        Vectorize
       </button>
       {loading && <p className={styles.loading}>Loading...</p>}
       <pre className={styles.responseBox}>{response}</pre>

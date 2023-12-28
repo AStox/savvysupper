@@ -39,3 +39,6 @@ next-env.d.ts
 #ProjectContext
 filelist.config
 project_context.txt
+
+#data
+data/
