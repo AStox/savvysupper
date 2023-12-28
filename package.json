@@ -13,6 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@prisma/client": "^5.7.0",
+    "@types/uuid": "^9.0.7",
     "@zilliz/milvus2-sdk-node": "^2.3.5",
     "apollo-server-micro": "^3.13.0",
     "axios": "^1.6.2",
@@ -21,7 +22,8 @@
     "openai": "^4.20.1",
     "puppeteer": "^21.6.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

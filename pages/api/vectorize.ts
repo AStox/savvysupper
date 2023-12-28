@@ -3,6 +3,9 @@ import { Ingredient } from "./ingredientScraper";
 import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
+import { v4 as uuidv4 } from "uuid";
+
+let lastId: number | null = null;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   const data = JSON.parse(
@@ -57,8 +60,11 @@ function ingredientToPlaneText(ingredient: Ingredient) {
 }
 
 function generateUniqueId(): string {
-  const timestamp = Date.now();
-  const random = Math.floor(Math.random() * 1000000);
-  const uniqueId = BigInt(timestamp) * BigInt(1000000) + BigInt(random);
-  return uniqueId.toString();
+  let newId: number;
+  do {
+    newId = Date.now();
+  } while (newId === lastId);
+
+  lastId = newId;
+  return newId.toString();
 }

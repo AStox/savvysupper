@@ -23,10 +23,10 @@ const AdminPage = () => {
     setLoading(false);
   };
 
-  const vectorizeAndStore = async () => {
+  const insertCollection = async () => {
     setLoading(true);
     setResponse("");
-    const response = await fetch("/api/vectorizeAndStore", { method: "POST" });
+    const response = await fetch("/api/insertCollection", { method: "POST" });
     const data = await response.json();
     setResponse(JSON.stringify(data, null, 2));
     setLoading(false);
@@ -58,14 +58,14 @@ const AdminPage = () => {
       <button className={styles.button} onClick={dropCollection} disabled={loading}>
         Drop Collection
       </button>
-      <button className={styles.button} onClick={vectorizeAndStore} disabled={loading}>
-        Vectorize and Store
-      </button>
       <button className={styles.button} onClick={ingredientScraper} disabled={loading}>
         Ingredient Scraper
       </button>
       <button className={styles.button} onClick={vectorize} disabled={loading}>
         Vectorize
+      </button>
+      <button className={styles.button} onClick={insertCollection} disabled={loading}>
+        Insert Vectors Into Collection
       </button>
       {loading && <p className={styles.loading}>Loading...</p>}
       <pre className={styles.responseBox}>{response}</pre>
