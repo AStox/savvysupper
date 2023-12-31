@@ -7,14 +7,18 @@ export class OpenAIChatClient {
     this.openAI = new OpenAI({ apiKey: apiKey });
   }
 
-  async chat(chatHistory: any[]): Promise<any> {
+  async chat(chatHistory: any[], jsonFormat = true): Promise<any> {
     try {
-      const response = await this.openAI.chat.completions.create({
+      const requestOptions = {
         model: "gpt-4-1106-preview",
         messages: chatHistory,
-        temperature: 0.7,
-        response_format: { type: "json_object" },
-      });
+      };
+
+      if (jsonFormat) {
+        requestOptions.response_format = { type: "json_object" };
+      }
+
+      const response = await this.openAI.chat.completions.create(requestOptions);
       return response.choices[0].message.content;
     } catch (error) {
       console.error("Error with OpenAI chat:", error);

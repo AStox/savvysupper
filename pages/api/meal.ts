@@ -1,18 +1,19 @@
 import { OpenAIChatClient } from "./_OpenAIChatClient";
-import meatAndSeafood from "../../Meat_&_Seafood_ingredients.json";
-import fruitAndVeg from "../../Fresh_Fruits_&_Vegetables_ingredients.json";
-import dairyAndEggs from "../../Dairy_&_Eggs_ingredients.json";
-import cheese from "../../Cheese_ingredients.json";
+import BeefAndVeal from "data/ingredients/Beef_&_Veal.json";
+import Chicken from "data/ingredients/Chicken.json";
+import Pork from "data/ingredients/Pork.json";
+import Turkey from "data/ingredients/Turkey.json";
+import Lamb from "data/ingredients/Lamb.json";
+import Fish from "data/ingredients/Fish.json";
+import ExoticMeats from "data/ingredients/Exotic_Meats.json";
+import FishAndSeafood from "data/ingredients/Fish_&_Seafood.json";
+import Bacon from "data/ingredients/Bacon.json";
+import HotDogsAndSausages from "data/ingredients/Hot_Dogs_&_Sausages.json";
 import { exampleRecipes } from "@/example_recipes";
-import { MilvusClient } from "@zilliz/milvus2-sdk-node";
 import type { NextApiRequest, NextApiResponse } from "next";
+import search from "./_searchCollection";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  const MILVUS_HOST = "https://in03-9479dd5ae4f429f.api.gcp-us-west1.zillizcloud.com";
-  const MILVUS_PORT = "19530";
-
-  const milvusClient = new MilvusClient(`${MILVUS_HOST}:${MILVUS_PORT}`);
-
   const apiKey: string | undefined = process.env.OPENAI_API_KEY;
 
   if (!apiKey) {
@@ -50,27 +51,21 @@ RESULTING RECIPE:
       [
         {
           fromRecipe: {title: "sweet potatoes", amount: 0.2, units: "kg"}, 
-          fromStore: {title: "bag of potatoes", amount: 2, units: "kg",  currentPrice: 1.99, regularPrice: 2.99, perRecipeCost: 0.19}
         },
         {
           "fromRecipe": {"title": "chicken breasts", "amount": 4, "units": "items"},
-          "fromStore": {"title": "pack of chicken breasts", "amount": 1, "units": "pack", "currentPrice": 5.99, "regularPrice": 12.99, "perRecipeCost": 5.99}
         },
         {
           "fromRecipe": {"title": "red onion", "amount": 1, "units": "item"},
-          "fromStore": {"title": "red onion", "amount": 1, "units": "item", "currentPrice": 0.99, "regularPrice": 1.99, "perRecipeCost": 0.99}
         },
         {
           "fromRecipe": {"title": "zucchini", "amount": 1, "units": "item"},
-          "fromStore": {"title": "zucchini", "amount": 1, "units": "item", "currentPrice": 0.88, "regularPrice": 1.29, "perRecipeCost": 0.88}
         },
         {
           "fromRecipe": {"title": "head of broccoli", "amount": 1, "units": "item"},
-          "fromStore": {"title": "head of broccoli", "amount": 1, "units": "item", "currentPrice": 1.99, "regularPrice": 1.99, "perRecipeCost": 1.99}
         },
         {
           "fromRecipe": {"title": "cooked brown rice", "amount": 0.5, "units": "cup"},
-          "fromStore": {"title": "bag of brown rice", "amount": 1, "units": "kg", "currentPrice": 1.99, "regularPrice": 1.99, "perRecipeCost": 0.25}
         },
       ],
     unpriced: [
@@ -92,7 +87,18 @@ RESULTING RECIPE:
 
 Protein on Sale:
 ${JSON.stringify(
-  meatAndSeafood
+  [
+    ...BeefAndVeal,
+    ...Chicken,
+    ...Pork,
+    ...Turkey,
+    ...Lamb,
+    ...Fish,
+    ...ExoticMeats,
+    ...FishAndSeafood,
+    ...Bacon,
+    ...HotDogsAndSausages,
+  ]
     .filter((item) => item.onSale)
     .sort((a, b) => b.regularPrice - b.currentPrice - (a.regularPrice - a.currentPrice))
     .slice(0, 10)
@@ -107,87 +113,95 @@ ${JSON.stringify(
     ];
 
     const chatClient = new OpenAIChatClient(apiKey);
-    const firstResponse = JSON.parse(await chatClient.chat(chatHistory));
+    const recipe = JSON.parse(await chatClient.chat(chatHistory));
+    console.log("RECIPE FROM API:", recipe);
     // const firstResponse = chatHistory;
 
     // console.log("FIRST RESPONSE FROM API:", firstResponse);
 
-    chatHistory.push({
-      role: "assistant",
-      content: JSON.stringify(firstResponse),
-    });
-    chatHistory.push({
-      role: "user",
-      content: `Now we will price the ingredients in this recipe. 
-      At the end of this prompt I will show you a list of available ingredients and their prices and you will find a price for each ingredient in the recipe.
-      Only price ingredients that fall into the following categories: meats and seafood, fruits and vegetables, and carbohydrates and starches.
-      If an ingredient can't be found in the list, try to replace it with a similar ingredient from the list.
-      If there are no similar ingredients, then just leave the original ingredient in the recipe.
-      
-      Output the recipe the same as before, but with the prices of each ingredient listed next to it. 
-      If the ingredient is on sale, indicate that by showing the current price and the regular price.
+    // chatHistory.push({
+    //   role: "assistant",
+    //   content: JSON.stringify(firstResponse),
+    // });
+    // chatHistory.push({
+    //   role: "user",
+    //   content: `Now we will price the ingredients in this recipe.
+    //   At the end of this prompt I will show you a list of available ingredients and their prices and you will find a price for each ingredient in the recipe.
+    //   Only price ingredients that fall into the following categories: meats and seafood, fruits and vegetables, and carbohydrates and starches.
+    //   If an ingredient can't be found in the list, try to replace it with a similar ingredient from the list.
+    //   If there are no similar ingredients, then just leave the original ingredient in the recipe.
 
-      Here is the list of available ingredients and their prices:
-        
-        ${JSON.stringify([
-          // ...meatAndSeafood
-          //   .filter((item) => item.onSale)
-          //   .map((item) => ({
-          //     item: item.title,
-          //     currentPrice: item.currentPrice,
-          //     regularPrice: item.regularPrice,
-          //   })),
-          ...fruitAndVeg
-            .filter((item) => item.onSale)
-            .map((item) => ({
-              item: item.title,
-              currentPrice: item.currentPrice,
-              regularPrice: item.regularPrice,
-            })),
-          // ...dairyAndEggs.map((item) => ({
-          //   item: item.title,
-          //   currentPrice: item.currentPrice,
-          //   regularPrice: item.regularPrice,
-          // })),
-          // ...cheese.map((item) => ({
-          //   item: item.title,
-          //   currentPrice: item.currentPrice,
-          //   regularPrice: item.regularPrice,
-          // })),
-        ])}
-        `,
-    });
-    let secondResponse = JSON.parse(await chatClient.chat(chatHistory));
-    secondResponse = {
-      ...secondResponse,
+    //   Output the recipe the same as before, but with the prices of each ingredient listed next to it.
+    //   If the ingredient is on sale, indicate that by showing the current price and the regular price.
+
+    //   Here is the list of available ingredients and their prices:
+
+    //     ${JSON.stringify([
+    //       // ...meatAndSeafood
+    //       //   .filter((item) => item.onSale)
+    //       //   .map((item) => ({
+    //       //     item: item.title,
+    //       //     currentPrice: item.currentPrice,
+    //       //     regularPrice: item.regularPrice,
+    //       //   })),
+    //       ...fruitAndVeg
+    //         .filter((item) => item.onSale)
+    //         .map((item) => ({
+    //           item: item.title,
+    //           currentPrice: item.currentPrice,
+    //           regularPrice: item.regularPrice,
+    //         })),
+    //       // ...dairyAndEggs.map((item) => ({
+    //       //   item: item.title,
+    //       //   currentPrice: item.currentPrice,
+    //       //   regularPrice: item.regularPrice,
+    //       // })),
+    //       // ...cheese.map((item) => ({
+    //       //   item: item.title,
+    //       //   currentPrice: item.currentPrice,
+    //       //   regularPrice: item.regularPrice,
+    //       // })),
+    //     ])}
+    //     `,
+    // });
+    // let secondResponse = JSON.parse(await chatClient.chat(chatHistory));
+
+    let pricedRecipe = await priceIngredients(recipe);
+
+    let pricedAndanalyzedRecipe = {
+      ...pricedRecipe,
       costPerServing:
-        secondResponse.ingredients.priced.reduce(
+        pricedRecipe.ingredients.priced.reduce(
           (acc, item) => acc + item.fromStore.perRecipeCost,
           0
-        ) / secondResponse.serves,
+        ) / pricedRecipe.serves,
       regularPriceCostPerServing:
-        secondResponse.ingredients.priced.reduce(
+        pricedRecipe.ingredients.priced.reduce(
           (acc, item) => acc + item.fromStore.regularPrice,
           0
-        ) / secondResponse.serves,
-      totalCost: secondResponse.ingredients.priced.reduce(
+        ) / pricedRecipe.serves,
+      totalCost: pricedRecipe.ingredients.priced.reduce(
         (acc, item) => acc + item.fromStore.perRecipeCost,
         0
       ),
-      regularPriceTotalCost: secondResponse.ingredients.priced.reduce(
+      regularPriceTotalCost: pricedRecipe.ingredients.priced.reduce(
         (acc, item) => acc + item.fromStore.regularPrice,
         0
       ),
-      discount: secondResponse.ingredients.priced.reduce(
+      discount: pricedRecipe.ingredients.priced.reduce(
         (acc, item) => acc + item.fromStore.regularPrice - item.fromStore.currentPrice,
         0
       ),
       chatHistory,
     };
 
-    console.log("SECOND RESPONSE FROM API:", secondResponse);
+    console.log("PRICED RECIPE:", pricedAndanalyzedRecipe);
 
-    res.status(200).json(secondResponse);
+    const finalizedRecipe = await finalizeRecipe(pricedAndanalyzedRecipe);
+
+    console.log("FINALIZED RECIPE:", finalizedRecipe);
+
+    res.status(200).json(finalizedRecipe);
   } catch (error) {
     if (error instanceof Error) {
       res
@@ -197,4 +211,76 @@ ${JSON.stringify(
       res.status(500).send("An unknown error occurred");
     }
   }
+}
+
+async function priceIngredients(recipe: any) {
+  // for each ingredient in the recipe except the protein, do a vector search for the closest ingredient in the store and include it and its details in the recipe
+  for (let i = 0; i < recipe.ingredients.priced.length; i++) {
+    const ingredient = recipe.ingredients.priced[i];
+    console.log(ingredient);
+    const results = await search(ingredient.fromRecipe.title, 5);
+    const chat = new OpenAIChatClient(process.env.OPENAI_API_KEY as string);
+    const chatHistory = [
+      {
+        role: "system",
+        content: `You are a helpful algorithm designed to choose ingredients from the grocery store for a ${recipe.title} recipe. 
+        Return responses in valid JSON following this example:
+        {
+          title: string;
+          quantity: string;
+          currentPrice: number;
+          regularPrice: number;
+          onSale: boolean;
+          amountToBuy: number;
+        }
+        `,
+      },
+      {
+        role: "user",
+        content: `I am looking for this ingredient or something similar:
+        ${ingredient.fromRecipe.title}
+        Choose the most appropriate ingredient while focusing on cost savings and tell me how many of it I should buy.
+        ${JSON.stringify(
+          results.map((item) => ({
+            title: item.title,
+            onSale: item.onSale,
+            quantity: item.quantity,
+          }))
+        )}`,
+      },
+    ];
+
+    const closestIngredientTitle = JSON.parse(await chat.chat(chatHistory)).title;
+    const closestIngredient = await search(closestIngredientTitle, 1);
+    console.log("closestIngredient", closestIngredient);
+    // const closestIngredient = results[0];
+    recipe.ingredients.priced[i] = {
+      fromRecipe: ingredient.fromRecipe,
+      fromStore: closestIngredient,
+    };
+  }
+  return recipe;
+}
+
+function finalizeRecipe(recipe: any) {
+  const chat = new OpenAIChatClient(process.env.OPENAI_API_KEY as string);
+  const chatHistory = [
+    {
+      role: "system",
+      content: `You are a helpful algorithm designed to develop recipes based on grocery store sale data.`,
+    },
+    {
+      role: "user",
+      content: `You've generated the following recipe with the ingredients labeled "fromRecipe". 
+      Then you chose ingredients from the store and labeled them "fromStore". 
+      Now you need to analyze the recipe and finalize it. This means adjusting any fields but ingredients so that it all flows and makes sense with the new ingredients.
+      Present it in a plane text format.
+
+      The Recipe:
+      ${JSON.stringify(recipe)}
+      `,
+    },
+  ];
+  const finalRecipe = chat.chat(chatHistory, false);
+  return finalRecipe;
 }

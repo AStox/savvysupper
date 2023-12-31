@@ -59,6 +59,15 @@ const AdminPage = () => {
     setLoading(false);
   };
 
+  const generateRecipe = async () => {
+    setLoading(true);
+    setResponse("");
+    const response = await fetch("/api/meal", { method: "POST" });
+    const data = await response.json();
+    setResponse(JSON.stringify(data, null, 2));
+    setLoading(false);
+  };
+
   return (
     <div className={styles.adminContainer}>
       <button className={styles.button} onClick={createCollection} disabled={loading}>
@@ -78,6 +87,9 @@ const AdminPage = () => {
       </button>
       <button className={styles.button} onClick={searchCollection} disabled={loading}>
         Search Collection
+      </button>
+      <button className={styles.button} onClick={generateRecipe} disabled={loading}>
+        Generate Recipe
       </button>
       {loading && <p className={styles.loading}>Loading...</p>}
       <pre className={styles.responseBox}>{response}</pre>

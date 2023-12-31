@@ -11,42 +11,114 @@ export interface Ingredient {
 }
 
 const pages = {
-  "Fresh Fruits & Vegetables": [
-    "Fresh Fruits",
-    "Fresh Vegetables",
-    "Fresh Cut Fruits & Vegetables",
-    "Fresh Herbs",
-    "Fresh Organic Fruits",
-    "Fresh Organic Vegetables",
-  ],
-  "Meat & Seafood": [
-    "Beef & Veal",
-    "Chicken",
-    "Pork",
-    "Turkey",
-    "Lamb",
-    "Fish",
-    "Exotic Meats",
-    "Fish & Seafood",
-    "Bacon",
-    "Hot Dogs & Sausages",
-  ],
-  "Dairy & Eggs": [
-    "Milk",
-    "Cream & Creamers",
-    "Butter & Margarine",
-    "Yogurt",
-    "Sour Cream",
-    "Whipped Cream",
-    "Eggs",
-  ],
-  Cheese: [
-    "Artisan Cheese",
-    "Shredded & Grated Cheese",
-    "Block Cheese",
-    "Cottage Cheese",
-    "Soft & Spreadable Cheese",
-    "Cream Cheese",
+  name: "Root",
+  children: [
+    {
+      name: "Fresh Fruits & Vegetables",
+      children: [
+        "Fresh Fruits",
+        "Fresh Vegetables",
+        "Fresh Cut Fruits & Vegetables",
+        "Fresh Herbs",
+        "Fresh Organic Fruits",
+        "Fresh Organic Vegetables",
+      ],
+    },
+    {
+      name: "Meat & Seafood",
+      children: [
+        "Beef & Veal",
+        "Chicken",
+        "Pork",
+        "Turkey",
+        "Lamb",
+        "Fish",
+        "Exotic Meats",
+        "Fish & Seafood",
+        "Bacon",
+        "Hot Dogs & Sausages",
+      ],
+    },
+    {
+      name: "Dairy & Eggs",
+      children: [
+        "Milk",
+        "Cream & Creamers",
+        "Butter & Margarine",
+        "Yogurt",
+        "Sour Cream",
+        "Whipped Cream",
+        "Eggs",
+      ],
+    },
+    {
+      name: "Cheese",
+      children: [
+        "Artisan Cheese",
+        "Shredded & Grated Cheese",
+        "Block Cheese",
+        "Cottage Cheese",
+        "Soft & Spreadable Cheese",
+        "Cream Cheese",
+      ],
+    },
+    {
+      name: "Pantry",
+      children: [
+        {
+          name: "Pasta, Noodles & Sauce",
+          children: ["Dry Pasta & Noodles", "Fresh Pasta", "Pasta Sauce"],
+        },
+        {
+          name: "Rice, Grains & Legumes",
+          children: [
+            "Dry Rice",
+            "Cornmeal",
+            "Couscous",
+            "Quinoa",
+            "Specialty Grains",
+            "Dry Beans",
+            "Canned Beans",
+            "Dry Lentils",
+            "Canned Lentils",
+            "Dry Peas",
+            "Canned Chickpeas",
+            "Barley",
+          ],
+        },
+        "Condiments",
+        "Spices & Seasoning",
+        "Marinades & Sauces",
+        "Oils, Vinegars & Salad Dressing",
+        {
+          name: "Canned & Pickled",
+          children: [
+            "Canned Baked Beans",
+            "Canned Fruit",
+            "Canned Tomatoes",
+            "Canned Vegetables",
+            "Marinated Vegetables",
+            "Olives",
+            "Pickles",
+          ],
+        },
+        {
+          name: "Soup & Broth",
+          children: ["Broth & Bouillon"],
+        },
+      ],
+    },
+    {
+      name: "International Foods",
+      children: [
+        "Indian & South Asian",
+        "Caribbean",
+        "Chinese & East Asian",
+        "Thai & Southeast Asian",
+        "International Fresh Fruits & Vegetables",
+        "Latin",
+      ],
+    },
   ],
 };
 
@@ -130,55 +202,80 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
   return items;
 }
 
+async function navigateToCategory(page: Page, categoryName: string): Promise<string> {
+  const topLevelCategories = new Set(
+    pages.children.map((cat) => (typeof cat === "string" ? cat : cat.name))
+  );
+
+  if (topLevelCategories.has(categoryName)) {
+    console.log("Navigating to main products page for top-level category...");
+    await page.goto("https://voila.ca/products", { waitUntil: "networkidle2" });
+  }
+
+  console.log(`Finding link for category: ${categoryName}`);
+  const categoryLink = await findLink(page, categoryName);
+  if (!categoryLink) throw new Error(`${categoryName} link not found`);
+
+  console.log(`Navigating to category: ${categoryName} (${categoryLink})`);
+  await page.goto(categoryLink, { waitUntil: "networkidle2" });
+  return categoryLink;
+}
+
+async function processSubcategory(page: Page, categoryPath: string[], subcategoryName: string) {
+  const fileName = `${subcategoryName.replace(/\s+/g, "_")}.json`;
+  const filePath = `data/ingredients/${fileName}`;
+
+  // Check if the file already exists
+  if (fs.existsSync(filePath)) {
+    console.log(`Skipping ${subcategoryName}, file already exists.`);
+    return;
+  }
+
+  // Iterate through each category in the path
+  for (const categoryName of categoryPath) {
+    await navigateToCategory(page, categoryName);
+  }
+
+  // Now process the subcategory
+  const subcategoryLink = await navigateToCategory(page, subcategoryName);
+
+  console.log(`Scraping data from subcategory: ${subcategoryName}`);
+  const items = await scrapeUrl(page, subcategoryLink);
+
+  console.log(`Writing data to file: ${filePath}`);
+  fs.writeFileSync(filePath, JSON.stringify(items, null, 2));
+}
+
+async function processCategories(page: Page, categories, categoryPath = []) {
+  for (const category of categories) {
+    if (typeof category === "string") {
+      await processSubcategory(page, categoryPath, category);
+    } else {
+      await processCategories(page, category.children, [...categoryPath, category.name]);
+    }
+  }
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.log("Starting browser...");
   const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1080 });
 
   try {
-    // Calculate the total number of subcategories to be scraped
-    const totalSubcategories = Object.values(pages).flat().length;
-    let currentSubcategoryNumber = 0;
-
-    for (const category in pages) {
-      // Navigate to the main navigation page before each category
-      await page.goto("https://voila.ca/products?source=navigation", { waitUntil: "networkidle2" });
-
-      const categoryLink = await findLink(page, category);
-      if (!categoryLink) throw new Error(`${category} link not found`);
-      await page.goto(categoryLink, { waitUntil: "networkidle2" });
-
-      let allCategoryItems: Ingredient[] = [];
-
-      for (const subcategory of pages[category]) {
-        currentSubcategoryNumber++;
-        console.log(
-          `Scraping page ${currentSubcategoryNumber}/${totalSubcategories}: ${subcategory} in ${category}`
-        );
-
-        const subcategoryLink = await findLink(page, subcategory);
-        if (!subcategoryLink) throw new Error(`${subcategory} link not found`);
-        await page.goto(subcategoryLink, { waitUntil: "networkidle2" });
-
-        const items = await scrapeUrl(page, subcategoryLink);
-        allCategoryItems = allCategoryItems.concat(items);
-
-        // Navigate back to the main category page before moving to the next subcategory
-        await page.goto(categoryLink, { waitUntil: "networkidle2" });
-      }
-
-      // Write results to a file for each category
-      if (!fs.existsSync("data")) {
-        fs.mkdirSync("data");
-      }
-      if (!fs.existsSync("data/ingredients")) {
-        fs.mkdirSync("data/ingredients");
-      }
-      fs.writeFileSync(
-        `data/ingredients/${category.replace(/\s+/g, "_")}_ingredients.json`,
-        JSON.stringify(allCategoryItems, null, 2)
-      );
+    console.log("Preparing data directories...");
+    if (!fs.existsSync("data")) {
+      fs.mkdirSync("data");
     }
+    if (!fs.existsSync("data/ingredients")) {
+      fs.mkdirSync("data/ingredients");
+    }
+
+    console.log("Navigating to main products page...");
+    await page.goto("https://voila.ca/products", { waitUntil: "networkidle2" });
+
+    console.log("Starting the scraping process...");
+    await processCategories(page, pages.children);
 
     console.log("Scraping completed for all categories");
     res.status(200).json({ message: "Scraping completed for all categories" });
@@ -187,6 +284,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(500).json({ error: "Error during scraping" });
     return;
   } finally {
+    console.log("Closing browser...");
     await browser.close();
   }
 }

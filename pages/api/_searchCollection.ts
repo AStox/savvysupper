@@ -1,7 +1,7 @@
 import { MilvusClient, SearchResultData } from "@zilliz/milvus2-sdk-node";
 import OpenAI from "openai";
 
-export default async function search(query: string): Promise<SearchResultData[]> {
+export default async function search(query: string, limit: number): Promise<SearchResultData[]> {
   const address = process.env.MILVUS_ENDPOINT as string;
   const token = process.env.MILVUS_TOKEN as string;
   const milvusClient = new MilvusClient({ address, token });
@@ -17,8 +17,8 @@ export default async function search(query: string): Promise<SearchResultData[]>
     collection_name: "Ingredients",
     vector: vectorResponse.data[0].embedding,
     output_fields: ["title", "quantity", "currentPrice", "regularPrice", "onSale"],
-    filter: "onSale == true",
-    limit: 5,
+    // filter: "onSale == true",
+    limit,
   });
   return response.results;
 }

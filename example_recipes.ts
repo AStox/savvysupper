@@ -681,3 +681,66 @@ Meanwhile, prepare the vegetables: Use a peeler to shave the carrots lengthwise 
 Transfer pork to a plate and set aside to rest. Add rice wine vinegar and 2 tablespoons of water to the skillet and cook over medium-high, stirring constantly until you have a smooth sauce, adding more water if needed. It should be the consistency of heavy cream. Transfer to a small bowl, stirring in any juices that accumulated from the plate with the pork.
 Distribute rice among 4 bowls. Thinly slice the pork and divide among the bowls. Drizzle the sauce over the pork and rice and garnish each bowl with the carrots, radishes, scallions, snow peas and pickled ginger, if using. Serve immediately.
 `;
+
+const desiredOutput = `
+SAMPLE OF SALE DATA:
+{
+"title": "Chicken Leg Quarters Value Size 3-5 Pieces",
+"quantity": "1.425kg",
+"currentPrice": 12.54,
+"onSale": true,
+"regularPrice": 14.99
+},
+
+RESULTING RECIPE:
+{
+  protein: "Chicken Leg Quarters Value Size 3-5 Pieces",
+  cuisine: "Mexican",
+  title: "Sweet Potato and Chicken Hash",
+  description: "A cozy, hearty meal to warm you on those cold winter nights. lots of protein and veggies to keep you full and healthy."
+  serves: 4,
+  ingredients: {
+    priced:
+      [
+        {
+          fromRecipe: {title: "sweet potatoes", amount: 0.2, units: "kg"}, 
+          fromStore: {title: "bag of potatoes", amount: 2, units: "kg",  currentPrice: 1.99, regularPrice: 2.99, perRecipeCost: 0.19}
+        },
+        {
+          "fromRecipe": {"title": "chicken breasts", "amount": 4, "units": "items"},
+          "fromStore": {"title": "pack of chicken breasts", "amount": 1, "units": "pack", "currentPrice": 5.99, "regularPrice": 12.99, "perRecipeCost": 5.99}
+        },
+        {
+          "fromRecipe": {"title": "red onion", "amount": 1, "units": "item"},
+          "fromStore": {"title": "red onion", "amount": 1, "units": "item", "currentPrice": 0.99, "regularPrice": 1.99, "perRecipeCost": 0.99}
+        },
+        {
+          "fromRecipe": {"title": "zucchini", "amount": 1, "units": "item"},
+          "fromStore": {"title": "zucchini", "amount": 1, "units": "item", "currentPrice": 0.88, "regularPrice": 1.29, "perRecipeCost": 0.88}
+        },
+        {
+          "fromRecipe": {"title": "head of broccoli", "amount": 1, "units": "item"},
+          "fromStore": {"title": "head of broccoli", "amount": 1, "units": "item", "currentPrice": 1.99, "regularPrice": 1.99, "perRecipeCost": 1.99}
+        },
+        {
+          "fromRecipe": {"title": "cooked brown rice", "amount": 0.5, "units": "cup"},
+          "fromStore": {"title": "bag of brown rice", "amount": 1, "units": "kg", "currentPrice": 1.99, "regularPrice": 1.99, "perRecipeCost": 0.25}
+        },
+      ],
+    unpriced: [
+      {title: "olive oil", amount: 1, units: "tablespoon"},
+      {title: "salt", amount: 1, units: "teaspoon"},
+      {title: "black pepper", amount: 1, units: "teaspoon"}
+    ]
+  },
+  instructions: [
+    "Preheat oven to 425°F.",
+    "Chop all vegetables.",
+    "In a large bowl, toss sweet potatoes, zucchini, onion, and broccoli with olive oil, salt, and pepper.",
+    "Spread the vegetables on a baking sheet and roast in the oven for 25 minutes.",
+    "Cook the brown rice as per the instructions on the package.",
+    "Meanwhile, heat a large non-stick skillet over medium-high heat and cook the chicken breasts for 6-8 minutes on each side or until cooked through.",
+    "Once the vegetables are roasted, add the rice and chicken to the bowl and toss to combine.",
+    "Serve immediately and enjoy!"
+  ],
+`;
