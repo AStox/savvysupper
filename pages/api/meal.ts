@@ -102,6 +102,10 @@ ${JSON.stringify(
     .filter((item) => item.onSale)
     .sort((a, b) => b.regularPrice - b.currentPrice - (a.regularPrice - a.currentPrice))
     .slice(0, 10)
+    .map((item) => ({
+      title: item.title,
+      discount: item.regularPrice - item.currentPrice,
+    }))
 )}
     `;
 
@@ -172,7 +176,7 @@ ${JSON.stringify(
       ...pricedRecipe,
       costPerServing:
         pricedRecipe.ingredients.priced.reduce(
-          (acc, item) => acc + item.fromStore.perRecipeCost,
+          (acc, item) => acc + item.fromStore.currentPrice,
           0
         ) / pricedRecipe.serves,
       regularPriceCostPerServing:
@@ -181,7 +185,7 @@ ${JSON.stringify(
           0
         ) / pricedRecipe.serves,
       totalCost: pricedRecipe.ingredients.priced.reduce(
-        (acc, item) => acc + item.fromStore.perRecipeCost,
+        (acc, item) => acc + item.fromStore.currentPrice,
         0
       ),
       regularPriceTotalCost: pricedRecipe.ingredients.priced.reduce(
@@ -199,7 +203,7 @@ ${JSON.stringify(
 
     const finalizedRecipe = await finalizeRecipe(pricedAndanalyzedRecipe);
 
-    console.log("FINALIZED RECIPE:", finalizedRecipe);
+    // console.log("FINALIZED RECIPE:", finalizedRecipe);
 
     res.status(200).json(finalizedRecipe);
   } catch (error) {
@@ -251,9 +255,8 @@ async function priceIngredients(recipe: any) {
     ];
 
     const closestIngredientTitle = JSON.parse(await chat.chat(chatHistory)).title;
-    const closestIngredient = await search(closestIngredientTitle, 1);
+    const closestIngredient = (await search(closestIngredientTitle, 1))[0];
     console.log("closestIngredient", closestIngredient);
-    // const closestIngredient = results[0];
     recipe.ingredients.priced[i] = {
       fromRecipe: ingredient.fromRecipe,
       fromStore: closestIngredient,
@@ -262,7 +265,7 @@ async function priceIngredients(recipe: any) {
   return recipe;
 }
 
-function finalizeRecipe(recipe: any) {
+async function finalizeRecipe(recipe: any) {
   const chat = new OpenAIChatClient(process.env.OPENAI_API_KEY as string);
   const chatHistory = [
     {
@@ -272,15 +275,44 @@ function finalizeRecipe(recipe: any) {
     {
       role: "user",
       content: `You've generated the following recipe with the ingredients labeled "fromRecipe". 
-      Then you chose ingredients from the store and labeled them "fromStore". 
+      Then you tried to match those ingredients with ingredients from the grocery store and labeled them "fromStore", but not all ingredients were a perfect match, and some had to be substituted.
       Now you need to analyze the recipe and finalize it. This means adjusting any fields but ingredients so that it all flows and makes sense with the new ingredients.
-      Present it in a plane text format.
+      present it in the same JSON format.
 
       The Recipe:
       ${JSON.stringify(recipe)}
       `,
     },
   ];
-  const finalRecipe = chat.chat(chatHistory, false);
-  return finalRecipe;
+  const finalRecipe = JSON.parse(await chat.chat(chatHistory));
+  const output = {
+    title: finalRecipe.title,
+    description: finalRecipe.description,
+    serves: finalRecipe.serves,
+    ingredients: [
+      ...finalRecipe.ingredients.priced.map((item: any) => {
+        return {
+          title: item.fromStore.title,
+          quantity: item.fromStore.quantity,
+          currentPrice: item.fromStore.currentPrice,
+          onSale: item.fromStore.onSale,
+          amountToBuy: item.fromStore.amountToBuy,
+        };
+      }),
+      ...finalRecipe.ingredients.unpriced.map((item: any) => ({
+        title: item.title,
+        quantity: `${item.amount} ${item.units}`,
+        currentPrice: 0,
+        onSale: false,
+        amountToBuy: 0,
+      })),
+    ],
+    instructions: finalRecipe.instructions,
+    costPerServing: finalRecipe.costPerServing,
+    regularPriceCostPerServing: finalRecipe.regularPriceCostPerServing,
+    totalCost: finalRecipe.totalCost,
+    regularPriceTotalCost: finalRecipe.regularPriceTotalCost,
+    discount: finalRecipe.discount,
+  };
+  return output;
 }
