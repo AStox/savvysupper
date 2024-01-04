@@ -128,7 +128,7 @@ async function findLink(page: Page, linkText: string): Promise<string | null> {
   const links = await page.$x(linkXPath);
 
   if (links.length > 0) {
-    const href = await page.evaluate((el) => el.getAttribute("href"), links[0]);
+    const href = await page.evaluate((el: any) => el.getAttribute("href"), links[0]);
     return href ? `https://voila.ca${href}` : null;
   }
 
@@ -165,8 +165,8 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
 
         const regularPrice = onSale
           ? prices.length > 1
-            ? parseFloat(prices[1].replace("$", ""))
-            : parseFloat(prices[0].replace("$", ""))
+            ? parseFloat((prices[1] || "").replace("$", ""))
+            : parseFloat((prices[0] || "").replace("$", ""))
           : currentPrice;
 
         return { title, quantity, currentPrice, onSale, regularPrice };
@@ -246,7 +246,7 @@ async function processSubcategory(page: Page, categoryPath: string[], subcategor
   fs.writeFileSync(filePath, JSON.stringify(items, null, 2));
 }
 
-async function processCategories(page: Page, categories, categoryPath = []) {
+async function processCategories(page: Page, categories: any, categoryPath: string[] = []) {
   for (const category of categories) {
     if (typeof category === "string") {
       await processSubcategory(page, categoryPath, category);
