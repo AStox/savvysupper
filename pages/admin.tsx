@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styles from "./admin.module.css";
+import { generateRecipe } from "@/utils/meal";
+import { fetchSearchResults } from "@/utils/search";
 
 const AdminPage = () => {
   const [response, setResponse] = useState("");
@@ -53,18 +55,16 @@ const AdminPage = () => {
   const searchCollection = async () => {
     setLoading(true);
     setResponse("");
-    const response = await fetch("/api/searchCollection", { method: "POST" });
-    const data = await response.json();
+    const data = await fetchSearchResults("cilantro", 5);
     setResponse(JSON.stringify(data, null, 2));
     setLoading(false);
   };
 
-  const generateRecipe = async () => {
+  const genRecipe = async () => {
     setLoading(true);
     setResponse("");
-    const response = await fetch("/api/meal", { method: "POST" });
-    const data = await response.json();
-    setResponse(JSON.stringify(data, null, 2));
+    const recipe = JSON.stringify(await generateRecipe());
+    setResponse(recipe);
     setLoading(false);
   };
 
@@ -88,7 +88,7 @@ const AdminPage = () => {
       <button className={styles.button} onClick={searchCollection} disabled={loading}>
         Search Collection
       </button>
-      <button className={styles.button} onClick={generateRecipe} disabled={loading}>
+      <button className={styles.button} onClick={genRecipe} disabled={loading}>
         Generate Recipe
       </button>
       {loading && <p className={styles.loading}>Loading...</p>}
