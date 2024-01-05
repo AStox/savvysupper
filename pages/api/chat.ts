@@ -3,6 +3,8 @@ import OpenAI from "openai";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
+    res.setHeader("Content-Type", "text/event-stream");
+    res.setHeader("Cache-Control", "no-cache");
     const apiKey = process.env.OPENAI_API_KEY as string;
     if (!apiKey) {
       res.status(500).json({ error: "Server configuration error: Missing API key" });
@@ -16,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const requestOptions: any = {
         model: "gpt-4-1106-preview",
         messages: chatHistory,
+        stream: true,
       };
 
       if (jsonFormat) {

@@ -1,11 +1,12 @@
 export async function fetchSearchResults(query: string, limit: number) {
   try {
-    const response = await fetch(`/api/search?query=${encodeURIComponent(query)}&limit=${limit}`);
+    const response = await fetch(
+      `/api/searchCollection?query=${encodeURIComponent(query)}&limit=${limit}`
+    );
     if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+      console.log("RESPONSE NOT OK:", response);
     }
     const data = await response.json();
-    console.log("SEARCH RESULTS:", data);
     return data;
   } catch (error) {
     console.error("Error fetching search results:", error);

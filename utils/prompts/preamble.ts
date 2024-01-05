@@ -1,13 +1,13 @@
-import BeefAndVeal from "../../data/ingredients/Beef_&_Veal.json";
-import Chicken from "../../data/ingredients/Chicken.json";
-import Pork from "../../data/ingredients/Pork.json";
-import Turkey from "../../data/ingredients/Turkey.json";
-import Lamb from "../../data/ingredients/Lamb.json";
-import Fish from "../../data/ingredients/Fish.json";
-import ExoticMeats from "../../data/ingredients/Exotic_Meats.json";
-import FishAndSeafood from "../../data/ingredients/Fish_&_Seafood.json";
-import Bacon from "../../data/ingredients/Bacon.json";
-import HotDogsAndSausages from "../../data/ingredients/Hot_Dogs_&_Sausages.json";
+// import BeefAndVeal from "../../data/ingredients/Beef_&_Veal.json";
+// import Chicken from "../../data/ingredients/Chicken.json";
+// import Pork from "../../data/ingredients/Pork.json";
+// import Turkey from "../../data/ingredients/Turkey.json";
+// import Lamb from "../../data/ingredients/Lamb.json";
+// import Fish from "../../data/ingredients/Fish.json";
+// import ExoticMeats from "../../data/ingredients/Exotic_Meats.json";
+// import FishAndSeafood from "../../data/ingredients/Fish_&_Seafood.json";
+// import Bacon from "../../data/ingredients/Bacon.json";
+// import HotDogsAndSausages from "../../data/ingredients/Hot_Dogs_&_Sausages.json";
 
 export const preamble = `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
   The way you will do this is by choosing a protein source from the sale data a generating a realistic recipe using that protein.
@@ -73,27 +73,27 @@ RESULTING RECIPE:
     "Once the vegetables are roasted, add the rice and chicken to the bowl and toss to combine.",
     "Serve immediately and enjoy!"
   ],
-
-Protein on Sale:
-${JSON.stringify(
-  [
-    ...BeefAndVeal,
-    ...Chicken,
-    ...Pork,
-    ...Turkey,
-    ...Lamb,
-    ...Fish,
-    ...ExoticMeats,
-    ...FishAndSeafood,
-    ...Bacon,
-    ...HotDogsAndSausages,
-  ]
-    .filter((item) => item.onSale)
-    .sort((a, b) => b.regularPrice - b.currentPrice - (a.regularPrice - a.currentPrice))
-    .slice(0, 10)
-    .map((item) => ({
-      title: item.title,
-      discount: item.regularPrice - item.currentPrice,
-    }))
-)}
-    `;
+`;
+// Protein on Sale:
+// ${JSON.stringify(
+//   [
+//     ...BeefAndVeal,
+//     ...Chicken,
+//     ...Pork,
+//     ...Turkey,
+//     ...Lamb,
+//     ...Fish,
+//     ...ExoticMeats,
+//     ...FishAndSeafood,
+//     ...Bacon,
+//     ...HotDogsAndSausages,
+//   ]
+//     .filter((item) => item.onSale)
+//     .sort((a, b) => b.regularPrice - b.currentPrice - (a.regularPrice - a.currentPrice))
+//     .slice(0, 10)
+//     .map((item) => ({
+//       title: item.title,
+//       discount: item.regularPrice - item.currentPrice,
+//     }))
+// )}
+// `;
