@@ -12,10 +12,8 @@ generator client {
 
 model Ingredient {
     id        String     @default(cuid()) @id
-    name     String
-    image     String
-    amount     String
-    unit     String
+    title     String
+    quantity  String
     currentPrice Float
     regularPrice Float
     onSale Boolean

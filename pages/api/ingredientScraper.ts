@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer, { Page } from "puppeteer";
+import prisma from "../../lib/prisma";
 import fs from "fs";
 
 export interface Ingredient {
@@ -168,7 +169,6 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
             ? parseFloat((prices[1] || "").replace("$", ""))
             : parseFloat((prices[0] || "").replace("$", ""))
           : currentPrice;
-
         return { title, quantity, currentPrice, onSale, regularPrice };
       })
     );
@@ -180,6 +180,7 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
           addedTitles.add(item.title);
         }
       }
+      if (!item.quantity) item.quantity = "1 ea";
     });
     console.log("scraping page... found", items.length, "items so far");
 
@@ -242,8 +243,12 @@ async function processSubcategory(page: Page, categoryPath: string[], subcategor
   console.log(`Scraping data from subcategory: ${subcategoryName}`);
   const items = await scrapeUrl(page, subcategoryLink);
 
-  console.log(`Writing data to file: ${filePath}`);
-  fs.writeFileSync(filePath, JSON.stringify(items, null, 2));
+  // console.log(`Writing data to file: ${filePath}`);
+  // fs.writeFileSync(filePath, JSON.stringify(items, null, 2));
+
+  await prisma.ingredient.createMany({
+    data: items,
+  });
 }
 
 async function processCategories(page: Page, categories: any, categoryPath: string[] = []) {
