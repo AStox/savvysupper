@@ -17,6 +17,7 @@ model Ingredient {
     currentPrice Float
     regularPrice Float
     onSale Boolean
+    dateAdded DateTime @default(now())
     recipes Recipe[]
 
     embedding Unsupported("vector(1536)")?

@@ -9,6 +9,8 @@ export interface Ingredient {
   currentPrice: number;
   regularPrice: number;
   onSale: boolean;
+  dateAdded?: Date;
+  embedding?: number[];
 }
 
 const pages = {
@@ -148,12 +150,11 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
   while (!reachedBottom && items.length < maxItems) {
     await page.waitForSelector('h3[data-test="fop-title"]');
 
-    const newItems = await page.$$eval('div[data-test="fop-body"]', (elements) =>
+    const newItems: Ingredient[] = await page.$$eval('div[data-test="fop-body"]', (elements) =>
       elements.map((el) => {
-        const title = el.querySelector('h3[data-test="fop-title"]')?.textContent?.trim();
-        const quantity = el
-          .querySelector(".weight__SingleTextLine-sc-1sjeki5-0")
-          ?.textContent?.trim();
+        const title = el.querySelector('h3[data-test="fop-title"]')?.textContent?.trim() || "";
+        const quantity =
+          el.querySelector(".weight__SingleTextLine-sc-1sjeki5-0")?.textContent?.trim() || "1 ea";
         const currentPrice = parseFloat(
           el.querySelector('span[data-test="fop-price"]')?.textContent?.replace("$", "").trim() ||
             "0"
@@ -173,14 +174,18 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
       })
     );
 
-    newItems.forEach((item) => {
+    newItems.forEach((item: Ingredient) => {
       if (item.title && item.currentPrice > 0) {
         if (!addedTitles.has(item.title)) {
           items.push(item as Ingredient);
           addedTitles.add(item.title);
         }
       }
-      if (!item.quantity) item.quantity = "1 ea";
+      const offset = -5; // EST is UTC-5
+      const currentDate = new Date();
+      currentDate.setHours(currentDate.getHours() + offset);
+
+      item = { ...item, dateAdded: currentDate };
     });
     console.log("scraping page... found", items.length, "items so far");
 
@@ -222,11 +227,45 @@ async function navigateToCategory(page: Page, categoryName: string): Promise<str
   return categoryLink;
 }
 
+function isWithinLastWeek(date: Date): boolean {
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+  return date > oneWeekAgo;
+}
+
+async function shouldScrapeSubcategory(subcategoryName: string): Promise<boolean> {
+  const recentItem = await prisma.ingredient.findFirst({
+    where: {
+      title: subcategoryName,
+    },
+    orderBy: {
+      dateAdded: "desc",
+    },
+  });
+
+  if (recentItem && recentItem.dateAdded) {
+    return !isWithinLastWeek(recentItem.dateAdded);
+  }
+
+  return true; // If no recent item, proceed with scraping
+}
+
 async function processSubcategory(page: Page, categoryPath: string[], subcategoryName: string) {
+  const scrapeNeeded = await shouldScrapeSubcategory(subcategoryName);
+  if (!scrapeNeeded) {
+    console.log(`Skipping ${subcategoryName}, data is up-to-date.`);
+    return;
+  }
   const fileName = `${subcategoryName.replace(/\s+/g, "_")}.json`;
   const filePath = `data/ingredients/${fileName}`;
 
   // Check if the file already exists
+  await prisma.ingredient.findFirst({
+    where: {
+      title: subcategoryName,
+    },
+  });
   if (fs.existsSync(filePath)) {
     console.log(`Skipping ${subcategoryName}, file already exists.`);
     return;
@@ -263,19 +302,21 @@ async function processCategories(page: Page, categories: any, categoryPath: stri
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log("Starting browser...");
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1080 });
 
-  try {
-    console.log("Preparing data directories...");
-    if (!fs.existsSync("data")) {
-      fs.mkdirSync("data");
+  // request interception to disable images and CSS
+  await page.setRequestInterception(true);
+  page.on("request", (request) => {
+    if (request.resourceType() === "image" || request.resourceType() === "stylesheet") {
+      request.abort();
+    } else {
+      request.continue();
     }
-    if (!fs.existsSync("data/ingredients")) {
-      fs.mkdirSync("data/ingredients");
-    }
+  });
 
+  try {
     console.log("Navigating to main products page...");
     await page.goto("https://voila.ca/products", { waitUntil: "networkidle2" });
 
