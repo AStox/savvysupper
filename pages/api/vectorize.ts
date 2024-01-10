@@ -1,44 +1,28 @@
 import OpenAI from "openai";
 import { Ingredient } from "./ingredientScraper";
-import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
-import path from "path";
-import { v4 as uuidv4 } from "uuid";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 let lastId: number | null = null;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  const ingredientsFolderPath = "data/ingredients";
-  const vectorsFolderPath = "data/vectors";
+  const ingredients = await prisma.ingredient.findMany();
+  const response = await vectorizeData(ingredients);
 
-  const ingredientFiles = fs.readdirSync(ingredientsFolderPath);
+  if (response.data.length !== ingredients.length) {
+    res.status(500).json(response);
+    return;
+  }
 
-  for (const ingredientFile of ingredientFiles) {
-    const ingredientFilePath = path.join(ingredientsFolderPath, ingredientFile);
-    const data = JSON.parse(fs.readFileSync(ingredientFilePath, "utf8"));
-
-    const response = await vectorizeData(data);
-
-    if (response.data.length !== data.length) {
-      res.status(500).json(response);
-      return;
-    }
-
-    const vectorizedData = data.map((ingredient: Ingredient, index: number) => {
-      return {
-        ...ingredient,
-        vector: response.data[index].embedding,
-        id: generateUniqueId(),
-      };
-    });
-
-    const originalFileName = path.basename(ingredientFilePath);
-    const outputFilePath = path.join(vectorsFolderPath, originalFileName);
-
-    if (!fs.existsSync(vectorsFolderPath)) {
-      fs.mkdirSync(vectorsFolderPath);
-    }
-    fs.writeFileSync(outputFilePath, JSON.stringify(vectorizedData));
+  for (let i = 0; i < ingredients.length; i++) {
+    await prisma.$executeRaw`
+        UPDATE ingredients
+        SET embedding = ${response.data[i].embedding}::vector
+        WHERE id = ${ingredients[i].id}
+    `;
+    console.log(`Updated ingredient ${i} of ${ingredients.length}: ${ingredients[i].title}`);
   }
 
   res.status(200).json({ message: "All ingredients vectorized" });
@@ -55,14 +39,4 @@ async function vectorizeData(data: any) {
   console.log(response);
 
   return response;
-}
-
-function generateUniqueId(): string {
-  let newId: number;
-  do {
-    newId = Date.now();
-  } while (newId === lastId);
-
-  lastId = newId;
-  return newId.toString();
 }

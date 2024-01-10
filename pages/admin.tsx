@@ -55,7 +55,7 @@ const AdminPage = () => {
   const searchCollection = async () => {
     setLoading(true);
     setResponse("");
-    const data = await fetchSearchResults("cilantro", 5);
+    const data = await fetchSearchResults("red pepper", 5);
     setResponse(JSON.stringify(data, null, 2));
     setLoading(false);
   };

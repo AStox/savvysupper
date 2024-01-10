@@ -1,11 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { MilvusClient, SearchResultData } from "@zilliz/milvus2-sdk-node";
+import { Ingredient, PrismaClient } from "@prisma/client";
 import OpenAI from "openai";
 
-async function searchMilvus(query: string, limit: number): Promise<SearchResultData[]> {
-  const address = process.env.MILVUS_ENDPOINT as string;
-  const token = process.env.MILVUS_TOKEN as string;
-  const milvusClient = new MilvusClient({ address, token });
+async function similaritySearch(
+  query: string,
+  limit: number
+): Promise<(Ingredient & { similarity: number })[]> {
+  console.log("QUERY:", query);
+  const prisma = new PrismaClient();
 
   const apiKey: string | undefined = process.env.OPENAI_API_KEY;
   const openAI = new OpenAI({ apiKey: apiKey });
@@ -14,21 +16,29 @@ async function searchMilvus(query: string, limit: number): Promise<SearchResultD
     input: query,
   });
 
-  const response = await milvusClient.search({
-    collection_name: "Ingredients",
-    vector: vectorResponse.data[0].embedding,
-    output_fields: ["title", "quantity", "currentPrice", "regularPrice", "onSale"],
-    limit,
-  });
-  return response.results;
+  const embedding = vectorResponse.data[0].embedding;
+  const vectorQuery = `[${embedding.join(",")}]`;
+  const ingredients: (Ingredient & { similarity: number })[] = await prisma.$queryRaw`
+      SELECT
+        "title",
+        "quantity",
+        "currentPrice",
+        "regularPrice",
+        "onSale",
+        1 - (embedding <=> ${vectorQuery}::vector) as similarity
+      FROM ingredients
+      where 1 - (embedding <=> ${vectorQuery}::vector) > .5
+      ORDER BY  similarity DESC
+      LIMIT 8;
+    `;
+  return ingredients;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { query, limit } = req.query;
 
   try {
-    const results = await searchMilvus(query as string, parseInt(limit as string));
-    console.log("SEARCH RESULTS:", results);
+    const results = await similaritySearch(query as string, parseInt(limit as string));
     res.status(200).json(results);
   } catch (error) {
     res.status(500).json({ message: (error as any).message });

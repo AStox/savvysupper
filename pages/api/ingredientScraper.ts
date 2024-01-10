@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer, { Page } from "puppeteer";
 import prisma from "../../lib/prisma";
-import fs from "fs";
 
 export interface Ingredient {
   title: string;
@@ -190,7 +189,6 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
     console.log("scraping page... found", items.length, "items so far");
 
     await page.evaluate(() => window.scrollBy(0, window.innerHeight));
-    await page.waitForTimeout(1000);
     console.log("scrolling...");
 
     reachedBottom = await page.evaluate(() => {
@@ -234,43 +232,39 @@ function isWithinLastWeek(date: Date): boolean {
   return date > oneWeekAgo;
 }
 
-async function shouldScrapeSubcategory(subcategoryName: string): Promise<boolean> {
+async function scrapeFirstItemInSubcategory(
+  page: Page,
+  url: string
+): Promise<{ title: string } | null> {
+  await page.goto(url, { waitUntil: "networkidle2" });
+  await page.waitForSelector('h3[data-test="fop-title"]');
+
+  const firstItem = await page.$eval('div[data-test="fop-body"]', (element) => {
+    const title = element.querySelector('h3[data-test="fop-title"]')?.textContent?.trim();
+    return title ? { title } : null;
+  });
+
+  return firstItem;
+}
+
+async function shouldScrapeSubcategory(title: string): Promise<boolean> {
   const recentItem = await prisma.ingredient.findFirst({
     where: {
-      title: subcategoryName,
+      title,
     },
     orderBy: {
       dateAdded: "desc",
     },
   });
-
+  console.log(recentItem);
   if (recentItem && recentItem.dateAdded) {
     return !isWithinLastWeek(recentItem.dateAdded);
   }
 
-  return true; // If no recent item, proceed with scraping
+  return true;
 }
 
 async function processSubcategory(page: Page, categoryPath: string[], subcategoryName: string) {
-  const scrapeNeeded = await shouldScrapeSubcategory(subcategoryName);
-  if (!scrapeNeeded) {
-    console.log(`Skipping ${subcategoryName}, data is up-to-date.`);
-    return;
-  }
-  const fileName = `${subcategoryName.replace(/\s+/g, "_")}.json`;
-  const filePath = `data/ingredients/${fileName}`;
-
-  // Check if the file already exists
-  await prisma.ingredient.findFirst({
-    where: {
-      title: subcategoryName,
-    },
-  });
-  if (fs.existsSync(filePath)) {
-    console.log(`Skipping ${subcategoryName}, file already exists.`);
-    return;
-  }
-
   // Iterate through each category in the path
   for (const categoryName of categoryPath) {
     await navigateToCategory(page, categoryName);
@@ -279,11 +273,21 @@ async function processSubcategory(page: Page, categoryPath: string[], subcategor
   // Now process the subcategory
   const subcategoryLink = await navigateToCategory(page, subcategoryName);
 
+  // const firstItem = await scrapeFirstItemInSubcategory(page, subcategoryLink);
+
+  // if (!firstItem || !firstItem.title) {
+  //   console.log(`Could not scrape the first item in ${subcategoryName}, skipping...`);
+  //   return;
+  // }
+
+  // const scrapeNeeded = await shouldScrapeSubcategory(firstItem.title);
+  // if (!scrapeNeeded) {
+  //   console.log(`Skipping ${subcategoryName}, data for '${firstItem.title}' is up-to-date.`);
+  //   return;
+  // }
+
   console.log(`Scraping data from subcategory: ${subcategoryName}`);
   const items = await scrapeUrl(page, subcategoryLink);
-
-  // console.log(`Writing data to file: ${filePath}`);
-  // fs.writeFileSync(filePath, JSON.stringify(items, null, 2));
 
   await prisma.ingredient.createMany({
     data: items,
@@ -302,7 +306,7 @@ async function processCategories(page: Page, categories: any, categoryPath: stri
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log("Starting browser...");
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1080 });
 
