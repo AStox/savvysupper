@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer, { Page } from "puppeteer";
-import prisma from "../../lib/prisma";
+import prisma from "@/lib/prisma";
 
 export interface Ingredient {
   title: string;
@@ -35,7 +35,6 @@ const pages = {
         "Turkey",
         "Lamb",
         "Fish",
-        "Exotic Meats",
         "Fish & Seafood",
         "Bacon",
         "Hot Dogs & Sausages",

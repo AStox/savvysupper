@@ -1,9 +1,7 @@
 import OpenAI from "openai";
 import { Ingredient } from "./ingredientScraper";
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 let lastId: number | null = null;
 

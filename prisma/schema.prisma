@@ -11,33 +11,43 @@ generator client {
 }
 
 model Ingredient {
-    id        String     @default(cuid()) @id
-    title     String
-    quantity  String
+    id          String             @default(cuid()) @id
+    title       String
+    quantity    String
     currentPrice Float
     regularPrice Float
-    onSale Boolean
-    dateAdded DateTime @default(now())
-    recipes Recipe[]
+    onSale      Boolean
+    dateAdded   DateTime           @default(now())
+    RecipeIngredient RecipeIngredient[]
 
-    embedding Unsupported("vector(1536)")?
+    embedding   Unsupported("vector(1536)")?
 
     @@map("ingredients")
 }
 
 model Recipe {
-    id        String     @default(cuid()) @id
-    title     String
-    image     String?
-    ingredients Ingredient[]
-    instructions String[]
-    vegetarian Boolean @default(false)
-    vegan Boolean @default(false)
-    glutenFree Boolean @default(false)
-    dairyFree Boolean @default(false)
-    healthy Boolean @default(false)
-    cheap Boolean @default(false)
-    preparationMinutes Int?
-    cookingMinutes Int?
-    pricePerServing Float?
+    id            String             @default(cuid()) @id
+    title         String
+    image         String?
+    cuisine       String
+    description   String
+    serves        Int
+    prepTime      Int?
+    cookTime      Int?
+    ingredients   Json?
+    shoppingList  RecipeIngredient[]
+    instructions  Json?
+    totalCost     Float?
+    regularPrice  Float?
+}
+
+model RecipeIngredient {
+    ingredientId String
+    recipeId     String
+    amountToBuy  Int
+
+    ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+    recipe       Recipe     @relation(fields: [recipeId], references: [id])
+
+    @@id([ingredientId, recipeId])
 }

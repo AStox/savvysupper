@@ -1,7 +1,7 @@
-export async function fetchSearchResults(query: string, limit: number) {
+export async function fetchSearchResults(query: string, limit: number, onSale: boolean) {
   try {
     const response = await fetch(
-      `/api/searchCollection?query=${encodeURIComponent(query)}&limit=${limit}`
+      `/api/searchCollection?query=${encodeURIComponent(query)}&limit=${limit}&onSale=${onSale}`
     );
     if (!response.ok) {
       console.log("RESPONSE NOT OK:", response);

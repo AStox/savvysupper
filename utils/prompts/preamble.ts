@@ -9,24 +9,18 @@
 // import Bacon from "../../data/ingredients/Bacon.json";
 // import HotDogsAndSausages from "../../data/ingredients/Hot_Dogs_&_Sausages.json";
 
-export const preamble = `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
+import { Ingredient } from "@prisma/client";
+import { fetchSearchResults } from "../search";
+
+export const generatePreamble =
+  async () => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
   The way you will do this is by choosing a protein source from the sale data a generating a realistic recipe using that protein.
-  Recipes should be full meals. That means recipes should include a protein, a starch, and a vegetable.
-  The recipes you generate are inspired by great celebrity chefs like Jamie Oliver, Gordon Ramsay, and Bobby Flay.
-  Your recipes are delicious, diverse, healthy, and draw from multiple cultures and cuisines. Think outside the box!
-  Don't make American cuisine every time. Try to make recipes from all over the world.
-  Always return recipes in valid JSON following this example:
+  Recipes should include a protein, a starch, and a vegetable.
+  Your recipes are delicious, diverse, healthy, and draw from multiple cultures and cuisines.
+  Make recipes from all over the world.
+  Return recipes in JSON following this example:
 
 SAMPLE OF SALE DATA:
-{
-"title": "Chicken Leg Quarters Value Size 3-5 Pieces",
-"quantity": "1.425kg",
-"currentPrice": 12.54,
-"onSale": true,
-"regularPrice": 14.99
-},
-
-RESULTING RECIPE:
 {
   protein: "Chicken Leg Quarters Value Size 3-5 Pieces",
   cuisine: "Mexican",
@@ -73,8 +67,25 @@ RESULTING RECIPE:
     "Once the vegetables are roasted, add the rice and chicken to the bowl and toss to combine.",
     "Serve immediately and enjoy!"
   ],
+
+Protein on Sale:
+${[
+  ...(await fetchSearchResults("Beef", 10, true)),
+  ...(await fetchSearchResults("Veal", 10, true)),
+  ...(await fetchSearchResults("Chicken", 10, true)),
+  ...(await fetchSearchResults("Pork", 10, true)),
+  ...(await fetchSearchResults("Turkey", 10, true)),
+  ...(await fetchSearchResults("Lamb", 10, true)),
+  ...(await fetchSearchResults("Fish", 10, true)),
+  ...(await fetchSearchResults("Seafood", 10, true)),
+  ...(await fetchSearchResults("Bacon", 10, true)),
+  ...(await fetchSearchResults("Sausages", 10, true)),
+]
+  .sort((a, b) => b.regularPrice - b.currentPrice - (a.regularPrice - a.currentPrice))
+  .map((item: Ingredient) => item.title)
+  .slice(0, 10)
+  .join("\n")}
 `;
-// Protein on Sale:
 // ${JSON.stringify(
 //   [
 //     ...BeefAndVeal,

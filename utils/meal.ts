@@ -1,6 +1,7 @@
-import { preamble } from "../utils/prompts/preamble";
+import { generatePreamble } from "../utils/prompts/preamble";
 import { fetchChatResponse } from "../utils/chat";
 import { fetchSearchResults } from "../utils/search";
+import prisma from "@/lib/prisma";
 
 export interface Recipe {
   cuisine: string;
@@ -31,23 +32,25 @@ export interface Recipe {
       units: string;
     }[];
   };
-  instructions: string;
-  costPerServing: number;
-  regularPriceCostPerServing: number;
+  instructions: string[];
   totalCost: number;
-  regularPriceTotalCost: number;
-  discount: number;
+  regularPrice: number;
 }
 
 export async function generateRecipe(): Promise<Recipe> {
   const recipe = await generateInitialRecipe();
   const pricedRecipe = await priceIngredients(recipe);
-  const recipeWithCosts = calculateCosts(pricedRecipe);
+  console.log("PRICED RECIPE:", pricedRecipe);
+  const r = calculateCosts(pricedRecipe);
   // const finalizedRecipe = await finalizeRecipe(pricedRecipe);
-  return recipeWithCosts;
+  const response = await fetch(`/api/saveRecipe?query=${encodeURIComponent(JSON.stringify(r))}`);
+  console.log("RESPONSE FROM API:", response);
+  return response;
 }
 
 async function generateInitialRecipe(): Promise<Recipe> {
+  const preamble = await generatePreamble();
+  console.log("PREAMBLE", preamble);
   let chatHistory = [
     {
       role: "system",
@@ -63,27 +66,15 @@ async function generateInitialRecipe(): Promise<Recipe> {
 function calculateCosts(pricedRecipe: Recipe) {
   let recipeWithCosts = {
     ...pricedRecipe,
-    costPerServing:
-      pricedRecipe.ingredients.priced.reduce((acc, item) => acc + item.fromStore.currentPrice, 0) /
-      pricedRecipe.serves,
-    regularPriceCostPerServing:
-      pricedRecipe.ingredients.priced.reduce((acc, item) => acc + item.fromStore.regularPrice, 0) /
-      pricedRecipe.serves,
     totalCost: pricedRecipe.ingredients.priced.reduce(
       (acc, item) => acc + item.fromStore.currentPrice,
       0
     ),
-    regularPriceTotalCost: pricedRecipe.ingredients.priced.reduce(
+    regularPrice: pricedRecipe.ingredients.priced.reduce(
       (acc, item) => acc + item.fromStore.regularPrice,
       0
     ),
-    discount: pricedRecipe.ingredients.priced.reduce(
-      (acc, item) => acc + item.fromStore.regularPrice - item.fromStore.currentPrice,
-      0
-    ),
   };
-
-  console.log("RECIPE WITH COSTS:", recipeWithCosts);
   return recipeWithCosts;
 }
 
@@ -123,12 +114,13 @@ async function priceIngredients(recipe: Recipe) {
       },
     ];
 
-    const closestIngredientTitle = JSON.parse(await fetchChatResponse(chatHistory)).title;
+    const fromChat = JSON.parse(await fetchChatResponse(chatHistory));
+    const closestIngredientTitle = fromChat.title;
     const closestIngredient = (await fetchSearchResults(closestIngredientTitle, 1))[0];
     console.log("closestIngredient", closestIngredient);
     recipe.ingredients.priced[i] = {
       fromRecipe: ingredient.fromRecipe,
-      fromStore: closestIngredient as any,
+      fromStore: { ...closestIngredient, amountToBuy: fromChat.amountToBuy } as any,
     };
   }
   return recipe;

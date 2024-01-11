@@ -6,6 +6,9 @@ import { fetchSearchResults } from "@/utils/search";
 const AdminPage = () => {
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [limit, setLimit] = useState(10);
+  const [onSale, setOnSale] = useState(false);
 
   const createCollection = async () => {
     setLoading(true);
@@ -55,7 +58,7 @@ const AdminPage = () => {
   const searchCollection = async () => {
     setLoading(true);
     setResponse("");
-    const data = await fetchSearchResults("red pepper", 5);
+    const data = await fetchSearchResults(searchQuery, limit, onSale);
     setResponse(JSON.stringify(data, null, 2));
     setLoading(false);
   };
@@ -85,9 +88,37 @@ const AdminPage = () => {
       <button className={styles.button} onClick={insertCollection} disabled={loading}>
         Insert Vectors Into Collection
       </button>
-      <button className={styles.button} onClick={searchCollection} disabled={loading}>
-        Search Collection
-      </button>
+      <div className={styles.searchGroup}>
+        <input
+          type="text"
+          className={styles.searchInput}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Enter search query"
+          disabled={loading}
+        />
+        <input
+          type="number"
+          className={styles.searchLimit}
+          value={limit}
+          onChange={(e) => setLimit(Number(e.target.value))}
+          min="1"
+          placeholder="Limit"
+          disabled={loading}
+        />
+        <label className={styles.onSaleCheckbox}>
+          <input
+            type="checkbox"
+            checked={onSale}
+            onChange={(e) => setOnSale(e.target.checked)}
+            disabled={loading}
+          />
+          On Sale
+        </label>
+        <button className={styles.searchButton} onClick={searchCollection} disabled={loading}>
+          Search
+        </button>
+      </div>
       <button className={styles.button} onClick={genRecipe} disabled={loading}>
         Generate Recipe
       </button>

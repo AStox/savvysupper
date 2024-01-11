@@ -1,14 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Ingredient, PrismaClient } from "@prisma/client";
+import { Ingredient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import OpenAI from "openai";
 
 async function similaritySearch(
   query: string,
-  limit: number
+  limit: number,
+  onSale: boolean
 ): Promise<(Ingredient & { similarity: number })[]> {
-  console.log("QUERY:", query);
-  const prisma = new PrismaClient();
-
   const apiKey: string | undefined = process.env.OPENAI_API_KEY;
   const openAI = new OpenAI({ apiKey: apiKey });
   const vectorResponse = await openAI.embeddings.create({
@@ -18,8 +17,27 @@ async function similaritySearch(
 
   const embedding = vectorResponse.data[0].embedding;
   const vectorQuery = `[${embedding.join(",")}]`;
-  const ingredients: (Ingredient & { similarity: number })[] = await prisma.$queryRaw`
+  let ingredients: (Ingredient & { similarity: number })[];
+  if (onSale) {
+    ingredients = await prisma.$queryRaw`
       SELECT
+        "id",
+        "title",
+        "quantity",
+        "currentPrice",
+        "regularPrice",
+        "onSale",
+        1 - (embedding <=> ${vectorQuery}::vector) as similarity
+      FROM ingredients
+      where 1 - (embedding <=> ${vectorQuery}::vector) > .5
+      AND "onSale" = true
+      ORDER BY  similarity DESC
+      LIMIT ${limit};
+    `;
+  } else {
+    ingredients = await prisma.$queryRaw`
+      SELECT
+        "id",
         "title",
         "quantity",
         "currentPrice",
@@ -29,16 +47,21 @@ async function similaritySearch(
       FROM ingredients
       where 1 - (embedding <=> ${vectorQuery}::vector) > .5
       ORDER BY  similarity DESC
-      LIMIT 8;
+      LIMIT ${limit};
     `;
+  }
   return ingredients;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { query, limit } = req.query;
+  const { query, limit, onSale } = req.query;
 
   try {
-    const results = await similaritySearch(query as string, parseInt(limit as string));
+    const results = await similaritySearch(
+      query as string,
+      parseInt(limit as string),
+      onSale === "true"
+    );
     res.status(200).json(results);
   } catch (error) {
     res.status(500).json({ message: (error as any).message });
