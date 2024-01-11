@@ -2,6 +2,7 @@ import { generatePreamble } from "../utils/prompts/preamble";
 import { fetchChatResponse } from "../utils/chat";
 import { fetchSearchResults } from "../utils/search";
 import prisma from "@/lib/prisma";
+import { Ingredient } from "@prisma/client";
 
 export interface Recipe {
   cuisine: string;
@@ -12,19 +13,9 @@ export interface Recipe {
   cookTime: number;
   ingredients: {
     priced: {
-      fromRecipe: {
-        title: string;
-        amount: number;
-        units: string;
-      };
-      fromStore: {
-        title: string;
-        quantity: string;
-        currentPrice: number;
-        regularPrice: number;
-        onSale: boolean;
-        amountToBuy: number;
-      };
+      title: string;
+      amount: number;
+      units: string;
     }[];
     unpriced: {
       title: string;
@@ -32,6 +23,14 @@ export interface Recipe {
       units: string;
     }[];
   };
+  shoppingList: {
+    title: string;
+    quantity: string;
+    currentPrice: number;
+    regularPrice: number;
+    onSale: boolean;
+    amountToBuy: number;
+  }[];
   instructions: string[];
   totalCost: number;
   regularPrice: number;
@@ -66,24 +65,19 @@ async function generateInitialRecipe(): Promise<Recipe> {
 function calculateCosts(pricedRecipe: Recipe) {
   let recipeWithCosts = {
     ...pricedRecipe,
-    totalCost: pricedRecipe.ingredients.priced.reduce(
-      (acc, item) => acc + item.fromStore.currentPrice,
-      0
-    ),
-    regularPrice: pricedRecipe.ingredients.priced.reduce(
-      (acc, item) => acc + item.fromStore.regularPrice,
-      0
-    ),
+    totalCost: pricedRecipe.shoppingList.reduce((acc, item) => acc + item.currentPrice, 0),
+    regularPrice: pricedRecipe.shoppingList.reduce((acc, item) => acc + item.regularPrice, 0),
   };
   return recipeWithCosts;
 }
 
 async function priceIngredients(recipe: Recipe) {
   // for each ingredient in the recipe except the protein, do a vector search for the closest ingredient in the store and include it and its details in the recipe
+  recipe.shoppingList = [];
   for (let i = 0; i < recipe.ingredients.priced.length; i++) {
     const ingredient = recipe.ingredients.priced[i];
     console.log(ingredient);
-    const results = await fetchSearchResults(ingredient.fromRecipe.title, 5);
+    const results = await fetchSearchResults(ingredient.title, 10, false);
     const chatHistory = [
       {
         role: "system",
@@ -102,7 +96,7 @@ async function priceIngredients(recipe: Recipe) {
       {
         role: "user",
         content: `I am looking for this ingredient or something similar:
-        ${ingredient.fromRecipe.title}
+        ${ingredient.title}
         Choose the most appropriate ingredient while focusing on cost savings and tell me how many of it I should buy.
         ${JSON.stringify(
           results.map((item: any) => ({
@@ -116,12 +110,9 @@ async function priceIngredients(recipe: Recipe) {
 
     const fromChat = JSON.parse(await fetchChatResponse(chatHistory));
     const closestIngredientTitle = fromChat.title;
-    const closestIngredient = (await fetchSearchResults(closestIngredientTitle, 1))[0];
+    const closestIngredient = (await fetchSearchResults(closestIngredientTitle, 1, false))[0];
     console.log("closestIngredient", closestIngredient);
-    recipe.ingredients.priced[i] = {
-      fromRecipe: ingredient.fromRecipe,
-      fromStore: { ...closestIngredient, amountToBuy: fromChat.amountToBuy } as any,
-    };
+    recipe.shoppingList[i] = { ...closestIngredient, amountToBuy: fromChat.amountToBuy } as any;
   }
   return recipe;
 }
@@ -145,37 +136,5 @@ async function finalizeRecipe(recipe: Recipe) {
     },
   ];
   const finalRecipe = JSON.parse(await fetchChatResponse(chatHistory));
-  const output = {
-    title: finalRecipe.title,
-    cuisine: finalRecipe.cuisine,
-    description: finalRecipe.description,
-    serves: finalRecipe.serves,
-    prepTime: finalRecipe.prepTime,
-    cookTime: finalRecipe.cookTime,
-    ingredients: [
-      ...finalRecipe.ingredients.priced.map((item: any) => {
-        return {
-          title: item.fromStore.title,
-          quantity: item.fromStore.quantity,
-          currentPrice: item.fromStore.currentPrice,
-          onSale: item.fromStore.onSale,
-          amountToBuy: item.fromStore.amountToBuy,
-        };
-      }),
-      ...finalRecipe.ingredients.unpriced.map((item: any) => ({
-        title: item.title,
-        quantity: `${item.amount} ${item.units}`,
-        currentPrice: 0,
-        onSale: false,
-        amountToBuy: 0,
-      })),
-    ],
-    instructions: finalRecipe.instructions,
-    costPerServing: finalRecipe.costPerServing,
-    regularPriceCostPerServing: finalRecipe.regularPriceCostPerServing,
-    totalCost: finalRecipe.totalCost,
-    regularPriceTotalCost: finalRecipe.regularPriceTotalCost,
-    discount: finalRecipe.discount,
-  };
-  return output;
+  return finalRecipe;
 }

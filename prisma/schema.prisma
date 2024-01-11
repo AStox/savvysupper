@@ -35,6 +35,7 @@ model Recipe {
     prepTime      Int?
     cookTime      Int?
     ingredients   Json?
+    unpricedIngredients Json?
     shoppingList  RecipeIngredient[]
     instructions  Json?
     totalCost     Float?

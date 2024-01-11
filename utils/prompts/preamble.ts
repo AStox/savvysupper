@@ -30,31 +30,18 @@ SAMPLE OF SALE DATA:
   prepTime: 15,
   cookTime: 30,
   ingredients: {
-    priced:
-      [
-        {
-          fromRecipe: {title: "sweet potatoes", amount: 0.2, units: "kg"}, 
-        },
-        {
-          "fromRecipe": {"title": "chicken breasts", "amount": 4, "units": "items"},
-        },
-        {
-          "fromRecipe": {"title": "red onion", "amount": 1, "units": "item"},
-        },
-        {
-          "fromRecipe": {"title": "zucchini", "amount": 1, "units": "item"},
-        },
-        {
-          "fromRecipe": {"title": "head of broccoli", "amount": 1, "units": "item"},
-        },
-        {
-          "fromRecipe": {"title": "cooked brown rice", "amount": 0.5, "units": "cup"},
-        },
+    priced: [
+        {title: "sweet potatoes", amount: 0.2, units: "kg"}, 
+        {"title": "chicken breasts", "amount": 4, "units": "items"},
+        {"title": "red onion", "amount": 1, "units": "item"},
+        {"title": "zucchini", "amount": 1, "units": "item"},
+        {"title": "head of broccoli", "amount": 1, "units": "item"},
+        {"title": "cooked brown rice", "amount": 0.5, "units": "cup"},
       ],
     unpriced: [
-      {title: "olive oil", amount: 1, units: "tablespoon"},
-      {title: "salt", amount: 1, units: "teaspoon"},
-      {title: "black pepper", amount: 1, units: "teaspoon"}
+        {title: "olive oil", amount: 1, units: "tablespoon"},
+        {title: "salt", amount: 1, units: "teaspoon"},
+        {title: "black pepper", amount: 1, units: "teaspoon"}
     ]
   },
   instructions: [
@@ -81,9 +68,10 @@ ${[
   ...(await fetchSearchResults("Bacon", 10, true)),
   ...(await fetchSearchResults("Sausages", 10, true)),
 ]
+  .filter((item, index, array) => array.findIndex((i) => i.title === item.title) === index) // Remove duplicates
   .sort((a, b) => b.regularPrice - b.currentPrice - (a.regularPrice - a.currentPrice))
-  .map((item: Ingredient) => item.title)
   .slice(0, 10)
+  .map((item) => item.title)
   .join("\n")}
 `;
 // ${JSON.stringify(

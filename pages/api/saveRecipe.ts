@@ -17,20 +17,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         serves: r.serves,
         prepTime: r.prepTime,
         cookTime: r.cookTime,
-        ingredients: {
+        shoppingList: {
           create: [
-            ...r.ingredients.priced.map((item: any) => {
+            ...r.shoppingList.map((item: any) => {
               return {
-                amountToBuy: item.fromStore.amountToBuy,
+                amountToBuy: item.amountToBuy,
                 ingredient: {
                   connect: {
-                    id: item.fromStore.id,
+                    id: item.id,
                   },
                 },
               };
             }),
           ],
         },
+        ingredients: r.ingredients.priced,
         unpricedIngredients: r.ingredients.unpriced,
         instructions: r.instructions,
         totalCost: r.totalCost,
