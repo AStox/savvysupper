@@ -91,3 +91,11 @@
 .onSaleCheckbox input[type="checkbox"] {
   margin-right: 5px;
 }
+
+.generatedImage {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+  border: 1px solid #ccc; /* Optional: adds a border around the image */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+}

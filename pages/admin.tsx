@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./admin.module.css";
 import { generateRecipe } from "@/utils/meal";
 import { fetchSearchResults } from "@/utils/search";
+import { generateImage } from "@/utils/image";
 
 const AdminPage = () => {
   const [response, setResponse] = useState("");
@@ -9,6 +10,8 @@ const AdminPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [limit, setLimit] = useState(10);
   const [onSale, setOnSale] = useState(false);
+  const [imagePrompt, setImagePrompt] = useState("");
+  const [imageSrc, setImageSrc] = useState("");
 
   const createCollection = async () => {
     setLoading(true);
@@ -63,11 +66,23 @@ const AdminPage = () => {
     setLoading(false);
   };
 
+  const genImage = async () => {
+    setLoading(true);
+    setResponse("");
+    setImageSrc("");
+    const response = await generateImage(imagePrompt);
+    const data = await response;
+    setImageSrc(data.url);
+    setResponse(JSON.stringify(data, null, 2));
+    setLoading(false);
+  };
+
   const genRecipe = async () => {
     setLoading(true);
     setResponse("");
-    const recipe = JSON.stringify(await generateRecipe());
-    setResponse(recipe);
+    const recipe = await generateRecipe();
+    setImageSrc(recipe.image);
+    setResponse(JSON.stringify(recipe, null, 2));
     setLoading(false);
   };
 
@@ -119,10 +134,24 @@ const AdminPage = () => {
           Search
         </button>
       </div>
+      <div className={styles.searchGroup}>
+        <input
+          type="text"
+          className={styles.searchInput}
+          value={imagePrompt}
+          onChange={(e) => setImagePrompt(e.target.value)}
+          placeholder="Enter image prompt"
+          disabled={loading}
+        />
+        <button className={styles.searchButton} onClick={genImage} disabled={loading}>
+          Generate Image
+        </button>
+      </div>
       <button className={styles.button} onClick={genRecipe} disabled={loading}>
         Generate Recipe
       </button>
       {loading && <p className={styles.loading}>Loading...</p>}
+      {imageSrc && <img src={imageSrc} alt="Generated" className={styles.generatedImage} />}
       <pre className={styles.responseBox}>{response}</pre>
     </div>
   );

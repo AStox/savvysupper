@@ -3,6 +3,7 @@ import { fetchChatResponse } from "../utils/chat";
 import { fetchSearchResults } from "../utils/search";
 import prisma from "@/lib/prisma";
 import { Ingredient } from "@prisma/client";
+import { generateImage } from "./image";
 
 export interface Recipe {
   cuisine: string;
@@ -36,15 +37,16 @@ export interface Recipe {
   regularPrice: number;
 }
 
-export async function generateRecipe(): Promise<Recipe> {
+export async function generateRecipe() {
   const recipe = await generateInitialRecipe();
   const pricedRecipe = await priceIngredients(recipe);
-  console.log("PRICED RECIPE:", pricedRecipe);
-  const r = calculateCosts(pricedRecipe);
-  // const finalizedRecipe = await finalizeRecipe(pricedRecipe);
-  const response = await fetch(`/api/saveRecipe?query=${encodeURIComponent(JSON.stringify(r))}`);
-  console.log("RESPONSE FROM API:", response);
-  return response;
+  const recipeWithCosts = calculateCosts(pricedRecipe);
+  const finalizedRecipe = await finalizeRecipe(recipeWithCosts);
+  const recipeWithImage = await generateImageForRecipe(finalizedRecipe);
+
+  // save recipe to database
+  await fetch(`/api/saveRecipe?query=${encodeURIComponent(JSON.stringify(recipeWithImage))}`);
+  return recipeWithImage;
 }
 
 async function generateInitialRecipe(): Promise<Recipe> {
@@ -125,9 +127,8 @@ async function finalizeRecipe(recipe: Recipe) {
     },
     {
       role: "user",
-      content: `You've generated the following recipe with the ingredients labeled "fromRecipe". 
-      Then you tried to match those ingredients with ingredients from the grocery store and labeled them "fromStore", but not all ingredients were a perfect match, and some had to be substituted.
-      Now you need to analyze the recipe and finalize it. This means adjusting any fields but ingredients so that it all flows and makes sense with the new ingredients.
+      content: `You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
+      Take a look at the shopping list and adjust the title, description, and instructions to match the shopping list.
       present it in the same JSON format.
 
       The Recipe:
@@ -137,4 +138,20 @@ async function finalizeRecipe(recipe: Recipe) {
   ];
   const finalRecipe = JSON.parse(await fetchChatResponse(chatHistory));
   return finalRecipe;
+}
+
+async function generateImageForRecipe(recipe: Recipe) {
+  const image = (
+    await generateImage(`
+    A high quality photo of the following recipe, on a blue grey concrete table, in a minimalist style.
+      ${JSON.stringify({
+        title: recipe.title,
+        description: recipe.description,
+        ingredients: recipe.ingredients.priced.map((item) => item.title),
+        instructions: recipe.instructions,
+      })}
+    `)
+  ).url;
+  const recipeWithImage = { ...recipe, image };
+  return recipeWithImage;
 }

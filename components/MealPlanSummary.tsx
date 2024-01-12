@@ -12,11 +12,11 @@ const WeeklySummaryCard: React.FC<WeeklySummaryProps> = ({ totalCost, totalSavin
       <div className="p-4">
         <div className="mb-2">
           <span className="text-gray-700 font-semibold">Total Cost: </span>
-          <span className="font-bold text-gray-700">${totalCost?.toFixed(2)}</span>
+          {/* <span className="font-bold text-gray-700">${totalCost?.toFixed(2)}</span> */}
         </div>
         <div>
           <span className="text-gray-700 font-semibold">Total Savings: </span>
-          <span className="font-bold text-gray-700">${totalSavings?.toFixed(2)}</span>
+          {/* <span className="font-bold text-gray-700">${totalSavings?.toFixed(2)}</span> */}
         </div>
       </div>
     </div>
