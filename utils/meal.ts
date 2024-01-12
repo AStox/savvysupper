@@ -37,21 +37,29 @@ export interface Recipe {
   regularPrice: number;
 }
 
-export async function generateRecipe() {
+export async function generateRecipe(progressCallback: (status: string, progress: number) => void) {
+  progressCallback("Generating recipe", 0);
   const recipe = await generateInitialRecipe();
+  console.log("RECIPE", recipe);
+  progressCallback("Finding ingredients", 0.3);
   const pricedRecipe = await priceIngredients(recipe);
   const recipeWithCosts = calculateCosts(pricedRecipe);
+  console.log("RECIPE WITH COSTS", recipeWithCosts);
+  progressCallback("Finalizing recipe", 0.4);
   const finalizedRecipe = await finalizeRecipe(recipeWithCosts);
+  console.log("FINALIZED RECIPE", finalizedRecipe);
+  progressCallback("Generating image", 0.7);
   const recipeWithImage = await generateImageForRecipe(finalizedRecipe);
 
   // save recipe to database
+  progressCallback("Saving recipe", 0.9);
   await fetch(`/api/saveRecipe?query=${encodeURIComponent(JSON.stringify(recipeWithImage))}`);
+  progressCallback("Finished", 1);
   return recipeWithImage;
 }
 
 async function generateInitialRecipe(): Promise<Recipe> {
   const preamble = await generatePreamble();
-  console.log("PREAMBLE", preamble);
   let chatHistory = [
     {
       role: "system",
@@ -60,7 +68,6 @@ async function generateInitialRecipe(): Promise<Recipe> {
   ];
 
   const recipe = JSON.parse(await fetchChatResponse(chatHistory));
-  console.log("RECIPE FROM API:", recipe);
   return recipe;
 }
 
@@ -78,7 +85,6 @@ async function priceIngredients(recipe: Recipe) {
   recipe.shoppingList = [];
   for (let i = 0; i < recipe.ingredients.priced.length; i++) {
     const ingredient = recipe.ingredients.priced[i];
-    console.log(ingredient);
     const results = await fetchSearchResults(ingredient.title, 10, false);
     const chatHistory = [
       {
@@ -113,7 +119,6 @@ async function priceIngredients(recipe: Recipe) {
     const fromChat = JSON.parse(await fetchChatResponse(chatHistory));
     const closestIngredientTitle = fromChat.title;
     const closestIngredient = (await fetchSearchResults(closestIngredientTitle, 1, false))[0];
-    console.log("closestIngredient", closestIngredient);
     recipe.shoppingList[i] = { ...closestIngredient, amountToBuy: fromChat.amountToBuy } as any;
   }
   return recipe;
@@ -128,7 +133,7 @@ async function finalizeRecipe(recipe: Recipe) {
     {
       role: "user",
       content: `You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
-      Take a look at the shopping list and adjust the title, description, and instructions to match the shopping list.
+      Take a look at the shopping list and adjust the title, description, and instructions to match the shopping list. Do not change the ingredients list, or shopping list.
       present it in the same JSON format.
 
       The Recipe:
@@ -147,7 +152,7 @@ async function generateImageForRecipe(recipe: Recipe) {
       ${JSON.stringify({
         title: recipe.title,
         description: recipe.description,
-        ingredients: recipe.ingredients.priced.map((item) => item.title),
+        ingredients: recipe.shoppingList.map((item) => item.title),
         instructions: recipe.instructions,
       })}
     `)

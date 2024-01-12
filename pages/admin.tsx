@@ -80,7 +80,9 @@ const AdminPage = () => {
   const genRecipe = async () => {
     setLoading(true);
     setResponse("");
-    const recipe = await generateRecipe();
+    const recipe = await generateRecipe((status, progress) =>
+      setResponse(status + " " + progress * 100 + "%")
+    );
     setImageSrc(recipe.image);
     setResponse(JSON.stringify(recipe, null, 2));
     setLoading(false);
