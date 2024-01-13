@@ -141,8 +141,8 @@ async function finalizeRecipe(
     {
       role: "user",
       content: `You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
-      Adjust the title, description, and instructions to match the shopping list. Do not change the ingredients list, or shopping list.
-      The title should be short and avoid usingbrand names or too many adjectives to describe things the dish.
+      Adjust the title, description, and instructions to match the shopping list. Do not include brand names anywhere.
+      The title should be short and avoid using brand names or too many adjectives to describe things the dish.
       The title should make the dish sound appetizing and unique.
       present it in the following JSON format:
       
