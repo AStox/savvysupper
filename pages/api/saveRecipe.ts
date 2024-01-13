@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const response = await prisma.recipe.create({
       data: {
         title: r.title,
-        image: null,
+        image: r.image,
         cuisine: r.cuisine,
         description: r.description,
         serves: r.serves,

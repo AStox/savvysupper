@@ -3,28 +3,29 @@ import { faRedo } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import React from "react";
 import { Ingredient } from "@/pages/api/ingredientScraper";
+import { Recipe } from "@/utils/meal";
 
-export interface Meal {
-  id: string;
-  title: string;
-  image: string;
-  ingredients: Ingredient[];
-  instructions: string[];
-  vegetarian: boolean;
-  vegan: boolean;
-  glutenFree: boolean;
-  dairyFree: boolean;
-  healthy: boolean;
-  cheap: boolean;
-  preparationMinutes: number;
-  cookingMinutes: number;
-  pricePerServing: number;
-}
+// export interface Meal {
+//   id: string;
+//   title: string;
+//   image: string;
+//   ingredients: Ingredient[];
+//   instructions: string[];
+//   vegetarian: boolean;
+//   vegan: boolean;
+//   glutenFree: boolean;
+//   dairyFree: boolean;
+//   healthy: boolean;
+//   cheap: boolean;
+//   preparationMinutes: number;
+//   cookingMinutes: number;
+//   pricePerServing: number;
+// }
 
 interface MealCardProps {
-  meal: Meal;
+  meal: Recipe;
   onReroll: () => void;
-  onSelect: (meal: Meal) => void;
+  onSelect: (meal: Recipe) => void;
 }
 
 const MealCard: React.FC<MealCardProps> = ({ meal, onReroll, onSelect }) => {

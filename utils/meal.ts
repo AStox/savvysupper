@@ -9,6 +9,7 @@ export interface Recipe {
   cuisine: string;
   title: string;
   description: string;
+  image: string;
   serves: number;
   prepTime: number;
   cookTime: number;
@@ -41,18 +42,20 @@ export async function generateRecipe(progressCallback: (status: string, progress
   progressCallback("Generating recipe", 0);
   const recipe = await generateInitialRecipe();
   console.log("RECIPE", recipe);
-  progressCallback("Finding ingredients", 0.3);
+  progressCallback("Finding ingredients", 0.4);
   const pricedRecipe = await priceIngredients(recipe);
   const recipeWithCosts = calculateCosts(pricedRecipe);
   console.log("RECIPE WITH COSTS", recipeWithCosts);
-  progressCallback("Finalizing recipe", 0.4);
-  const finalizedRecipe = await finalizeRecipe(recipeWithCosts);
+  progressCallback("Finalizing recipe", 0.7);
+  const finalizedRecipeFields = await finalizeRecipe(recipeWithCosts);
+  const finalizedRecipe = { ...recipeWithCosts, ...finalizedRecipeFields };
   console.log("FINALIZED RECIPE", finalizedRecipe);
-  progressCallback("Generating image", 0.7);
+  progressCallback("Generating image", 0.85);
   const recipeWithImage = await generateImageForRecipe(finalizedRecipe);
 
   // save recipe to database
-  progressCallback("Saving recipe", 0.9);
+  progressCallback("Saving recipe", 0.95);
+  console.log("SAVING RECIPE", recipeWithImage);
   await fetch(`/api/saveRecipe?query=${encodeURIComponent(JSON.stringify(recipeWithImage))}`);
   progressCallback("Finished", 1);
   return recipeWithImage;
@@ -124,7 +127,9 @@ async function priceIngredients(recipe: Recipe) {
   return recipe;
 }
 
-async function finalizeRecipe(recipe: Recipe) {
+async function finalizeRecipe(
+  recipe: Recipe
+): Promise<{ title: string; description: string; instructions: string[] }> {
   const chatHistory = [
     {
       role: "system",
@@ -133,8 +138,14 @@ async function finalizeRecipe(recipe: Recipe) {
     {
       role: "user",
       content: `You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
-      Take a look at the shopping list and adjust the title, description, and instructions to match the shopping list. Do not change the ingredients list, or shopping list.
-      present it in the same JSON format.
+      Adjust the title, description, and instructions to match the shopping list. Do not change the ingredients list, or shopping list.
+      present it in the following JSON format:
+      
+      {
+        title: string;
+        description: string;
+        instructions: string[];
+      }
 
       The Recipe:
       ${JSON.stringify(recipe)}
@@ -148,7 +159,7 @@ async function finalizeRecipe(recipe: Recipe) {
 async function generateImageForRecipe(recipe: Recipe) {
   const image = (
     await generateImage(`
-    A high quality photo of the following recipe, on a blue grey concrete table, in a minimalist style.
+    A studio quality, top-down photo of the following recipe, on a rustic wooden table. Used in a catalog of meal kits, each one looking similar to the last.
       ${JSON.stringify({
         title: recipe.title,
         description: recipe.description,
@@ -157,6 +168,7 @@ async function generateImageForRecipe(recipe: Recipe) {
       })}
     `)
   ).url;
-  const recipeWithImage = { ...recipe, image };
-  return recipeWithImage;
+  recipe.image = image;
+  console.log("RECIPE WITH IMAGE: ", recipe);
+  return recipe;
 }
