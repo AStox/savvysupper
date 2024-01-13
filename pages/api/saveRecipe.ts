@@ -3,9 +3,8 @@ import { Recipe } from "@/utils/meal";
 import prisma from "@/lib/prisma";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { query, limit } = req.query;
+  const { query } = req.query;
   const r: Recipe = JSON.parse(query as string);
-  console.log("TRYING TO SAVE THIS RECIPE:", r);
 
   try {
     const response = await prisma.recipe.create({

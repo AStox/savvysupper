@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { Meal } from "./MealCard";
+import { Recipe } from "@/utils/meal";
+import { Ingredient } from "@prisma/client";
 
 interface RecipeModalProps {
-  meal: Meal;
+  meal: Recipe;
   onClose: () => void;
 }
 
@@ -24,7 +25,12 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ meal, onClose }) => {
           <div className="text-left w-full">
             <h3 className="text-lg font-semibold text-gray-700">Ingredients</h3>
             <ul className="list-disc pl-5">
-              {meal.ingredients.map((ingredient, index) => (
+              {meal.ingredients.priced.map((ingredient, index) => (
+                <li key={index} className="text-gray-600">
+                  {ingredient.title}{" "}
+                </li>
+              ))}
+              {meal.ingredients.unpriced.map((ingredient, index) => (
                 <li key={index} className="text-gray-600">
                   {ingredient.title}{" "}
                 </li>

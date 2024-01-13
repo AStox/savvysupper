@@ -1,9 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Meal } from "./MealCard";
+import { Recipe } from "@/utils/meal";
+import prisma from "@/lib/prisma";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 const AppStateContext = createContext<{
-  meals: Meal[];
-  setMeals: React.Dispatch<React.SetStateAction<Meal[]>>;
+  meals: Recipe[];
+  setMeals: React.Dispatch<React.SetStateAction<Recipe[]>>;
   chatHistory: { role: string; content: string }[];
   setChatHistory: React.Dispatch<React.SetStateAction<{ role: string; content: string }[]>>;
   numberOfMeals: number;
@@ -28,10 +29,20 @@ interface AppStateProviderProps {
 }
 
 export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) => {
-  const [meals, setMeals] = useState([] as Meal[]);
+  const [meals, setMeals] = useState([] as Recipe[]);
   const [numberOfMeals, setNumberOfMeals] = useState(1);
   const [chatHistory, setChatHistory] = useState(defaultChatHistory);
   const [generating, setGenerating] = useState(false);
+
+  useEffect(() => {
+    const fetchMeals = async () => {
+      const recipes = await fetch("/api/getRecipes").then((res) => res.json());
+      console.log("recipes", recipes);
+      setMeals(recipes);
+    };
+
+    fetchMeals();
+  }, []);
 
   return (
     <AppStateContext.Provider

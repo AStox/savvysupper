@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Meal } from "./MealCard";
 import { getMeal } from "../utils/api";
 import { defaultChatHistory, useAppState } from "./AppStateContext";
 import { generateRecipe } from "@/utils/meal";
+import prisma from "../lib/prisma";
+import { Recipe } from "@/utils/meal";
 
 type props = {
-  setMeals: (meals: Meal[]) => void;
+  setMeals: (meals: Recipe[]) => void;
 };
 
 const SecondaryTopBar: React.FC = (props) => {
@@ -24,11 +25,13 @@ const SecondaryTopBar: React.FC = (props) => {
   const [groceryStore, setGroceryStore] = useState("metro");
   const [response, setResponse] = useState("");
 
-  const [generateTries, setGenerateTries] = useState(0);
-
   const handleGenerate = async () => {
     setGenerating(true);
-    await generateRecipe((status, progress) => setResponse(status + " " + progress * 100 + "%"));
+    const recipe = await generateRecipe((status, progress) =>
+      setResponse(status + " " + progress * 100 + "%")
+    );
+
+    setMeals([...meals, recipe]);
     setGenerating(false);
   };
 

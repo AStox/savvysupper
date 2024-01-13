@@ -6,6 +6,7 @@ import { Ingredient } from "@prisma/client";
 import { generateImage } from "./image";
 
 export interface Recipe {
+  id: string;
   cuisine: string;
   title: string;
   description: string;
@@ -38,7 +39,9 @@ export interface Recipe {
   regularPrice: number;
 }
 
-export async function generateRecipe(progressCallback: (status: string, progress: number) => void) {
+export async function generateRecipe(
+  progressCallback: (status: string, progress: number) => void
+): Promise<Recipe> {
   progressCallback("Generating recipe", 0);
   const recipe = await generateInitialRecipe();
   console.log("RECIPE", recipe);
@@ -139,6 +142,8 @@ async function finalizeRecipe(
       role: "user",
       content: `You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
       Adjust the title, description, and instructions to match the shopping list. Do not change the ingredients list, or shopping list.
+      The title should be short and avoid usingbrand names or too many adjectives to describe things the dish.
+      The title should make the dish sound appetizing and unique.
       present it in the following JSON format:
       
       {
@@ -159,7 +164,7 @@ async function finalizeRecipe(
 async function generateImageForRecipe(recipe: Recipe) {
   const image = (
     await generateImage(`
-    A studio quality, top-down photo of the following recipe, on a rustic wooden table. Used in a catalog of meal kits, each one looking similar to the last.
+    A studio quality photo of the following recipe:
       ${JSON.stringify({
         title: recipe.title,
         description: recipe.description,

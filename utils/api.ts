@@ -1,12 +1,12 @@
 import { defaultChatHistory } from "../components/AppStateContext";
-import { Meal } from "../components/MealCard";
+import { Recipe } from "./meal";
 
 async function getMeal(
   first: boolean,
   chatHistory: { role: string; content: string }[],
   setChatHistory: React.Dispatch<React.SetStateAction<{ role: string; content: string }[]>>,
-  setMeals: React.Dispatch<React.SetStateAction<Meal[]>>
-): Promise<Meal | null> {
+  setMeals: React.Dispatch<React.SetStateAction<Recipe[]>>
+): Promise<Recipe | null> {
   setChatHistory([]);
   try {
     const baseUrl =
