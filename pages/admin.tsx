@@ -3,6 +3,7 @@ import styles from "./admin.module.css";
 import { generateRecipe } from "@/utils/meal";
 import { fetchSearchResults } from "@/utils/search";
 import { generateImage } from "@/utils/image";
+import { downloadAndSaveImage } from "@/utils/downloadAndSaveImage";
 
 const AdminPage = () => {
   const [response, setResponse] = useState("");
@@ -88,6 +89,19 @@ const AdminPage = () => {
     setLoading(false);
   };
 
+  const testDownloadAndSaveImage = async () => {
+    setLoading(true);
+    setResponse("");
+    const response = await downloadAndSaveImage(
+      "https://images.unsplash.com/photo-1682686581413-0a0ec9bb35bb?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "test.jpg"
+    );
+    const data = await response;
+    setResponse(JSON.stringify(data, null, 2));
+    setImageSrc(data);
+    setLoading(false);
+  };
+
   return (
     <div className={styles.adminContainer}>
       <button className={styles.button} onClick={createCollection} disabled={loading}>
@@ -151,6 +165,9 @@ const AdminPage = () => {
       </div>
       <button className={styles.button} onClick={genRecipe} disabled={loading}>
         Generate Recipe
+      </button>
+      <button className={styles.button} onClick={testDownloadAndSaveImage} disabled={loading}>
+        Test Download and Save Image
       </button>
       {loading && <p className={styles.loading}>Loading...</p>}
       {imageSrc && <img src={imageSrc} alt="Generated" className={styles.generatedImage} />}

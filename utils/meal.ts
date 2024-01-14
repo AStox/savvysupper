@@ -4,6 +4,7 @@ import { fetchSearchResults } from "../utils/search";
 import prisma from "@/lib/prisma";
 import { Ingredient } from "@prisma/client";
 import { generateImage } from "./image";
+import { downloadAndSaveImage } from "./downloadAndSaveImage";
 
 export interface Recipe {
   id: string;
@@ -183,7 +184,7 @@ async function finalizeRecipe(
 }
 
 async function generateImageForRecipe(recipe: Recipe) {
-  const image = (
+  const openAIImageURL = (
     await generateImage(`
     A studio quality photo of the following recipe:
       ${JSON.stringify({
@@ -194,7 +195,12 @@ async function generateImageForRecipe(recipe: Recipe) {
       })}
     `)
   ).url;
-  recipe.image = image;
+  // replace title with a filename safe title
+  const blobUrl = await downloadAndSaveImage(
+    openAIImageURL,
+    `${recipe.title.replace(/\s/g, "_")}.png`
+  );
+  recipe.image = blobUrl;
   console.log("RECIPE WITH IMAGE: ", recipe);
   return recipe;
 }

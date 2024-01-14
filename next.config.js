@@ -5,12 +5,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "oaidalleapiprodscus.blob.core.windows.net",
+        hostname: "wp9rbcwtay9eualn.public.blob.vercel-storage.com",
         port: "",
-        pathname: "/private/org-ZB2fmnoPFrBug3fjsENTta6g/user-mtQComgMEorV9nPBfCYAWYIF/**",
       },
     ],
-    domains: ["oaidalleapiprodscus.blob.core.windows.net"],
   },
 };
 
