@@ -10,6 +10,7 @@ const nextConfig = {
         pathname: "/private/org-ZB2fmnoPFrBug3fjsENTta6g/user-mtQComgMEorV9nPBfCYAWYIF/**",
       },
     ],
+    domains: ["oaidalleapiprodscus.blob.core.windows.net"],
   },
 };
 

@@ -77,6 +77,27 @@ async function generateInitialRecipe(): Promise<Recipe> {
   return recipe;
 }
 
+async function generateRecipeName(): Promise<{
+  cuisine: string;
+  title: string;
+  description: string;
+  image: string;
+  serves: number;
+  prepTime: number;
+  cookTime: number;
+}> {
+  const preamble = await generatePreamble();
+  let chatHistory = [
+    {
+      role: "system",
+      content: preamble,
+    },
+  ];
+
+  const recipe = JSON.parse(await fetchChatResponse(chatHistory));
+  return recipe;
+}
+
 function calculateCosts(pricedRecipe: Recipe) {
   let recipeWithCosts = {
     ...pricedRecipe,
