@@ -27,7 +27,7 @@ export async function downloadAndSaveImage(imageUrl: string, filename: string) {
   // Upload the image to Vercel Blob
   const blob = await put(filename, imageBuffer, {
     access: "public",
-    contentType: response.headers.get("content-type"),
+    contentType: response.headers.get("content-type") as string,
   });
 
   return blob.url;
