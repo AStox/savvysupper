@@ -12,49 +12,26 @@
 import { Ingredient } from "@prisma/client";
 import { fetchSearchResults } from "../search";
 
-export const generatePreamble =
-  async () => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
-  The way you will do this is by choosing a protein source from the sale data a generating a realistic recipe using that protein.
-  Recipes should include a protein, a starch, and a vegetable.
+export const generateRecipeIdeaPreamble = async (
+  cuisine?: string,
+  dietaryRestrictions?: string[],
+  ingredients?: Ingredient[]
+) => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
+  The way you will do this is by choosing a protein source from the sale data and generating a realistic recipe using it.
+  Recipes should be healthy, balanced meals.
   Your recipes are delicious, diverse, healthy, and draw from multiple cultures and cuisines.
-  Make recipes from all over the world.
+  ${cuisine ? `Your recipe must be ${cuisine}.` : "Make recipes from all over the world."}
+  ${dietaryRestrictions ? `Your recipe must be ${dietaryRestrictions.join(", ")}.` : ""}
+
   Return recipes in JSON following this example:
-
-SAMPLE OF SALE DATA:
-{
-  protein: "Chicken Leg Quarters Value Size 3-5 Pieces",
-  cuisine: "Mexican",
-  title: "Sweet Potato and Chicken Hash",
-  description: "A cozy, hearty meal to warm you on those cold winter nights. lots of protein and veggies to keep you full and healthy."
-  serves: 4,
-  prepTime: 15,
-  cookTime: 30,
-  ingredients: {
-    priced: [
-        {title: "sweet potatoes", amount: 0.2, units: "kg"}, 
-        {"title": "chicken breasts", "amount": 4, "units": "items"},
-        {"title": "red onion", "amount": 1, "units": "item"},
-        {"title": "zucchini", "amount": 1, "units": "item"},
-        {"title": "head of broccoli", "amount": 1, "units": "item"},
-        {"title": "cooked brown rice", "amount": 0.5, "units": "cup"},
-      ],
-    unpriced: [
-        {title: "olive oil", amount: 1, units: "tablespoon"},
-        {title: "salt", amount: 1, units: "teaspoon"},
-        {title: "black pepper", amount: 1, units: "teaspoon"}
-    ]
-  },
-  instructions: [
-    "Preheat oven to 425°F.",
-    "Chop all vegetables.",
-    "In a large bowl, toss sweet potatoes, zucchini, onion, and broccoli with olive oil, salt, and pepper.",
-    "Spread the vegetables on a baking sheet and roast in the oven for 25 minutes.",
-    "Cook the brown rice as per the instructions on the package.",
-    "Meanwhile, heat a large non-stick skillet over medium-high heat and cook the chicken breasts for 6-8 minutes on each side or until cooked through.",
-    "Once the vegetables are roasted, add the rice and chicken to the bowl and toss to combine.",
-    "Serve immediately and enjoy!"
-  ],
-
+  {
+    protein: "Chicken Leg Quarters Value Size 3-5 Pieces",
+    ${cuisine ? "" : `cuisine: "Mexican",`}
+    title: "Sweet Potato and Chicken Hash",
+    description: "A cozy, hearty meal to warm you on those cold winter nights. lots of protein and veggies to keep you full and healthy."
+    serves: 4,
+  }
+ 
 Protein on Sale:
 ${[
   ...(await fetchSearchResults("Beef", 10, true)),
@@ -74,25 +51,68 @@ ${[
   .map((item) => item.title)
   .join("\n")}
 `;
-// ${JSON.stringify(
-//   [
-//     ...BeefAndVeal,
-//     ...Chicken,
-//     ...Pork,
-//     ...Turkey,
-//     ...Lamb,
-//     ...Fish,
-//     ...ExoticMeats,
-//     ...FishAndSeafood,
-//     ...Bacon,
-//     ...HotDogsAndSausages,
-//   ]
-//     .filter((item) => item.onSale)
-//     .sort((a, b) => b.regularPrice - b.currentPrice - (a.regularPrice - a.currentPrice))
-//     .slice(0, 10)
-//     .map((item) => ({
-//       title: item.title,
-//       discount: item.regularPrice - item.currentPrice,
-//     }))
-// )}
-// `;
+
+export const generateRecipeIngredientsPreamble = async (recipeIdea: {
+  title: string;
+  protein: string;
+  description: string;
+  serves: number;
+}) => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
+given the following recipe idea, choose the ingredients and return them following this example JSON:
+{
+  ingredients: {
+    priced: [
+      {title: "sweet potatoes", amount: 0.2, units: "kg"},
+      {"title": "chicken breasts", "amount": 4, "units": "items"},
+      {"title": "red onion", "amount": 1, "units": "item"},
+      {"title": "zucchini", "amount": 1, "units": "item"},
+      {"title": "head of broccoli", "amount": 1, "units": "item"},
+      {"title": "cooked brown rice", "amount": 0.5, "units": "cup"},
+    ],
+    unpriced: [
+      {title: "olive oil", amount: 1, units: "tablespoon"},
+      {title: "salt", amount: 1, units: "teaspoon"},
+      {title: "black pepper", amount: 1, units: "teaspoon"}
+    ]
+  },
+}
+
+  Unpriced ingredients should be common pantry items like cooking oils, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices like cinnamon, cumin, etc
+
+  Recipe:
+  ${recipeIdea.title}
+  ${recipeIdea.description}
+  Serves: ${recipeIdea.serves}
+`;
+
+export const generateRecipeInstructionsPreamble = async (recipeIdea: {
+  title: string;
+  protein: string;
+  description: string;
+  serves: number;
+  ingredients: any;
+}) => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
+given the following recipe, come up with the instructions and return them following this example JSON:
+{
+  instructions: [
+    "Preheat oven to 425°F.",
+    "Chop all vegetables.",
+    "In a large bowl, toss sweet potatoes, zucchini, onion, and broccoli with olive oil, salt, and pepper.",
+    "Spread the vegetables on a baking sheet and roast in the oven for 25 minutes.",
+    "Cook the brown rice as per the instructions on the package.",
+    "Meanwhile, heat a large non-stick skillet over medium-high heat and cook the chicken breasts for 6-8 minutes on each side or until cooked through.",
+    "Once the vegetables are roasted, add the rice and chicken to the bowl and toss to combine.",
+    "Serve immediately and enjoy!"
+  ],
+  prepTime: 15,
+  cookTime: 30,
+}
+
+  Recipe:
+  ${recipeIdea.title}
+  ${recipeIdea.description}
+  Serves: ${recipeIdea.serves}
+  Ingredients: ${recipeIdea.ingredients.priced
+    .map((item: any) => item.title)
+    .join(", ")}, ${recipeIdea.ingredients.unpriced.map((item: any) => item.title).join(", ")}
+`;

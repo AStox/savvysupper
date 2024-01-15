@@ -1,4 +1,8 @@
-import { generatePreamble } from "../utils/prompts/preamble";
+import {
+  generateRecipeIdeaPreamble,
+  generateRecipeIngredientsPreamble,
+  generateRecipeInstructionsPreamble,
+} from "../utils/prompts/preamble";
 import { fetchChatResponse } from "../utils/chat";
 import { fetchSearchResults } from "../utils/search";
 import prisma from "@/lib/prisma";
@@ -40,21 +44,53 @@ export interface Recipe {
   regularPrice: number;
 }
 
+// // User chooses
+// cuisine: string;
+
+// // first pass
+// title: string;
+// description: string;
+// serves: number;
+// prepTime: number;
+// cookTime: number;
+
+// ingredients: {
+//   priced: {
+//     title: string;
+//     amount: number;
+//     units: string;
+//   }[];
+//   unpriced: {
+//     title: string;
+//     amount: number;
+//     units: string;
+//   }[];
+// };
+
+// instructions: string[];
+
 export async function generateRecipe(
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
-  progressCallback("Generating recipe", 0);
-  const recipe = await generateInitialRecipe();
+  let cuisine = undefined;
+  progressCallback("Thinking of a Recipe", 0);
+  const recipeIdea = await generateRecipeIdea(cuisine);
+  console.log("RECIPE IDEA", recipeIdea);
+  progressCallback("Choosing Ingredients", 0.1);
+  const recipeIngredients = await generateRecipeIngredients(recipeIdea);
+  console.log("RECIPE INGREDIENTS", recipeIngredients);
+  progressCallback("Writing Instructions", 0.3);
+  const recipe = (await generateRecipeInstructions(recipeIngredients)) as Recipe;
   console.log("RECIPE", recipe);
-  progressCallback("Finding ingredients", 0.4);
+  progressCallback("Making a Shopping List", 0.5);
   const pricedRecipe = await priceIngredients(recipe);
   const recipeWithCosts = calculateCosts(pricedRecipe);
   console.log("RECIPE WITH COSTS", recipeWithCosts);
-  progressCallback("Finalizing recipe", 0.7);
+  progressCallback("Doing a Taste Test", 0.7);
   const finalizedRecipeFields = await finalizeRecipe(recipeWithCosts);
   const finalizedRecipe = { ...recipeWithCosts, ...finalizedRecipeFields };
   console.log("FINALIZED RECIPE", finalizedRecipe);
-  progressCallback("Generating image", 0.85);
+  progressCallback("Taking a Picture", 0.85);
   const recipeWithImage = await generateImageForRecipe(finalizedRecipe);
 
   // save recipe to database
@@ -65,38 +101,91 @@ export async function generateRecipe(
   return recipeWithImage;
 }
 
-async function generateInitialRecipe(): Promise<Recipe> {
-  const preamble = await generatePreamble();
+async function generateRecipeIdea(
+  cuisine?: string,
+  dietaryRestrictions?: string[]
+): Promise<{
+  title: string;
+  protein: string;
+  description: string;
+  serves: number;
+  cuisine: string;
+}> {
+  const preamble = await generateRecipeIdeaPreamble();
   let chatHistory = [
     {
-      role: "system",
+      role: "user",
       content: preamble,
     },
   ];
 
-  const recipe = JSON.parse(await fetchChatResponse(chatHistory));
-  return recipe;
+  const response = JSON.parse(await fetchChatResponse(chatHistory));
+  const recipeIdea = {
+    title: response.title,
+    protein: response.protein,
+    description: response.description,
+    serves: response.serves,
+    cuisine: cuisine || response.cuisine,
+  } as any;
+  if (cuisine) {
+    recipeIdea.cuisine = cuisine;
+  }
+  return recipeIdea;
 }
 
-async function generateRecipeName(): Promise<{
-  cuisine: string;
+async function generateRecipeIngredients(recipeIdea: {
   title: string;
+  cuisine: string;
+  protein: string;
   description: string;
-  image: string;
   serves: number;
-  prepTime: number;
-  cookTime: number;
-}> {
-  const preamble = await generatePreamble();
+}): Promise<any> {
+  const preamble = await generateRecipeIngredientsPreamble(recipeIdea);
   let chatHistory = [
     {
-      role: "system",
+      role: "user",
       content: preamble,
     },
   ];
 
-  const recipe = JSON.parse(await fetchChatResponse(chatHistory));
-  return recipe;
+  const response = JSON.parse(await fetchChatResponse(chatHistory));
+  return {
+    title: recipeIdea.title,
+    cuisine: recipeIdea.cuisine,
+    protein: recipeIdea.protein,
+    description: recipeIdea.description,
+    serves: recipeIdea.serves,
+    ingredients: response.ingredients,
+  };
+}
+
+async function generateRecipeInstructions(recipeIdea: {
+  title: string;
+  cuisine: string;
+  protein: string;
+  description: string;
+  serves: number;
+  ingredients: any;
+}): Promise<Partial<Recipe>> {
+  const preamble = await generateRecipeInstructionsPreamble(recipeIdea);
+  let chatHistory = [
+    {
+      role: "user",
+      content: preamble,
+    },
+  ];
+
+  const response = JSON.parse(await fetchChatResponse(chatHistory));
+  return {
+    title: recipeIdea.title,
+    cuisine: recipeIdea.cuisine,
+    description: recipeIdea.description,
+    serves: recipeIdea.serves,
+    ingredients: recipeIdea.ingredients,
+    instructions: response.instructions,
+    prepTime: response.prepTime,
+    cookTime: response.cookTime,
+  };
 }
 
 function calculateCosts(pricedRecipe: Recipe) {
@@ -109,7 +198,6 @@ function calculateCosts(pricedRecipe: Recipe) {
 }
 
 async function priceIngredients(recipe: Recipe) {
-  // for each ingredient in the recipe except the protein, do a vector search for the closest ingredient in the store and include it and its details in the recipe
   recipe.shoppingList = [];
   for (let i = 0; i < recipe.ingredients.priced.length; i++) {
     const ingredient = recipe.ingredients.priced[i];
