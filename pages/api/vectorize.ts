@@ -6,32 +6,47 @@ import prisma from "@/lib/prisma";
 let lastId: number | null = null;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  const ingredients = await prisma.ingredient.findMany();
-  const response = await vectorizeData(ingredients);
+  // find all ingredients with no embedding
+  const ingredients =
+    (await prisma.$queryRaw`SELECT * FROM "ingredients" WHERE "embedding" IS NULL`) as Ingredient[];
 
-  if (response.data.length !== ingredients.length) {
-    res.status(500).json(response);
-    return;
-  }
+  const batchSize = 1000;
+  const totalBatches = Math.ceil(ingredients.length / batchSize);
 
-  for (let i = 0; i < ingredients.length; i++) {
-    await prisma.$executeRaw`
+  for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
+    const start = batchIndex * batchSize;
+    const end = Math.min(start + batchSize, ingredients.length);
+    const batchIngredients = ingredients.slice(start, end);
+
+    const response = await vectorizeData(batchIngredients);
+
+    if (response.data.length !== batchIngredients.length) {
+      res.status(500).json(response);
+      return;
+    }
+
+    for (let i = 0; i < batchIngredients.length; i++) {
+      await prisma.$executeRaw`
         UPDATE ingredients
         SET embedding = ${response.data[i].embedding}::vector
-        WHERE id = ${ingredients[i].id}
-    `;
-    console.log(`Updated ingredient ${i} of ${ingredients.length}: ${ingredients[i].title}`);
+        WHERE id = ${batchIngredients[i].id}
+      `;
+      console.log(
+        `Updated ingredient ${start + i + 1} of ${ingredients.length}: ${batchIngredients[i].title}`
+      );
+    }
   }
 
   res.status(200).json({ message: "All ingredients vectorized" });
 }
 
-async function vectorizeData(data: any) {
+async function vectorizeData(data: Ingredient[]) {
   const apiKey: string | undefined = process.env.OPENAI_API_KEY;
   const openAI = new OpenAI({ apiKey: apiKey });
+  const titles = data.map((ingredient) => ingredient.title);
   const response = await openAI.embeddings.create({
     model: "text-embedding-ada-002",
-    input: data.map((item: Ingredient) => item.title),
+    input: titles,
   });
 
   console.log(response);
