@@ -324,7 +324,7 @@ async function finalizeRecipe(
 async function generateImageForRecipe(recipe: Recipe) {
   const openAIImageURL = (
     await generateImage(`
-    A studio quality photo of the following recipe:
+    A studio quality photo of the following recipe plated and ready to serve in a nice, cosy setting:
       ${JSON.stringify({
         title: recipe.title,
         description: recipe.description,
