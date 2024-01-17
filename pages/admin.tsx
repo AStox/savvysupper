@@ -123,20 +123,11 @@ const AdminPage = () => {
 
   return (
     <div className={styles.adminContainer}>
-      <button className={styles.button} onClick={createCollection} disabled={loading}>
-        Create Collection
-      </button>
-      <button className={styles.button} onClick={dropCollection} disabled={loading}>
-        Drop Collection
-      </button>
       <button className={styles.button} onClick={ingredientScraper} disabled={loading}>
         Ingredient Scraper
       </button>
       <button className={styles.button} onClick={vectorize} disabled={loading}>
         Vectorize
-      </button>
-      <button className={styles.button} onClick={insertCollection} disabled={loading}>
-        Insert Vectors Into Collection
       </button>
       <div className={styles.searchGroup}>
         <input
