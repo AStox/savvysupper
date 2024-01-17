@@ -73,13 +73,15 @@ export async function generateRecipe(
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
   let cuisine = undefined;
-  progressCallback("Thinking of a Recipe", 0);
-  const recipeIdea = await generateRecipeIdea(cuisine);
+  progressCallback("Looking at Whats on Sale", 0);
+  const proteinsOnSale = await getProteins();
+  progressCallback("Thinking of a Recipe", 0.1);
+  const recipeIdea = await generateRecipeIdea(proteinsOnSale, cuisine);
   console.log("RECIPE IDEA", recipeIdea);
-  progressCallback("Choosing Ingredients", 0.1);
+  progressCallback("Choosing Ingredients", 0.2);
   const recipeIngredients = await generateRecipeIngredients(recipeIdea);
   console.log("RECIPE INGREDIENTS", recipeIngredients);
-  progressCallback("Writing Instructions", 0.3);
+  progressCallback("Writing Instructions", 0.35);
   const recipe = (await generateRecipeInstructions(recipeIngredients)) as Recipe;
   console.log("RECIPE", recipe);
   progressCallback("Making a Shopping List", 0.5);
@@ -101,7 +103,23 @@ export async function generateRecipe(
   return recipeWithImage;
 }
 
+async function getProteins(): Promise<Ingredient[]> {
+  return [
+    ...(await fetchSearchResults("Beef", 10, true)),
+    ...(await fetchSearchResults("Veal", 10, true)),
+    ...(await fetchSearchResults("Chicken", 10, true)),
+    ...(await fetchSearchResults("Pork", 10, true)),
+    ...(await fetchSearchResults("Turkey", 10, true)),
+    ...(await fetchSearchResults("Lamb", 10, true)),
+    ...(await fetchSearchResults("Fish", 10, true)),
+    ...(await fetchSearchResults("Seafood", 10, true)),
+    ...(await fetchSearchResults("Bacon", 10, true)),
+    ...(await fetchSearchResults("Sausages", 10, true)),
+  ];
+}
+
 async function generateRecipeIdea(
+  proteinsOnSale: Ingredient[],
   cuisine?: string,
   dietaryRestrictions?: string[]
 ): Promise<{
@@ -111,7 +129,7 @@ async function generateRecipeIdea(
   serves: number;
   cuisine: string;
 }> {
-  const preamble = await generateRecipeIdeaPreamble();
+  const preamble = await generateRecipeIdeaPreamble(proteinsOnSale, cuisine);
   let chatHistory = [
     {
       role: "user",
@@ -201,11 +219,16 @@ async function priceIngredients(recipe: Recipe) {
   recipe.shoppingList = [];
   for (let i = 0; i < recipe.ingredients.priced.length; i++) {
     const ingredient = recipe.ingredients.priced[i];
-    const results = await fetchSearchResults(ingredient.title, 10, false);
-    const chatHistory = [
-      {
-        role: "system",
-        content: `You are a helpful algorithm designed to choose ingredients from the grocery store for a ${recipe.title} recipe. 
+
+    const findClosestIngredient = async (
+      ingredient: { title: string; amount: number; units: string },
+      tryAgain: boolean
+    ) => {
+      const results = await fetchSearchResults(ingredient.title, 10, false);
+      const chatHistory = [
+        {
+          role: "system",
+          content: `You are a helpful algorithm designed to choose ingredients from the grocery store for a ${recipe.title} recipe. 
         Return responses in valid JSON following this example:
         {
           title: string;
@@ -216,23 +239,50 @@ async function priceIngredients(recipe: Recipe) {
           amountToBuy: number;
         }
         `,
-      },
-      {
-        role: "user",
-        content: `I am looking for this ingredient or something similar:
-        ${ingredient.title}
-        Choose the most appropriate ingredient while focusing on cost savings and tell me how many of it I should buy.
+        },
+        {
+          role: "user",
+          content: `I am looking for ${ingredient.amount}${ingredient.units} of ${
+            ingredient.title
+          } for this recipe: ${recipe.title}.
+        While focusing on cost savings, tell me which of the following grocery items I should buy and how many of it I should buy:
         ${JSON.stringify(
           results.map((item: any) => ({
             title: item.title,
-            onSale: item.onSale,
+            price: item.currentPrice,
             quantity: item.quantity,
           }))
-        )}`,
-      },
-    ];
+        )}
+        
+        ${
+          tryAgain
+            ? `If the item I'm looking for is not in the list, tell me a substitute I should look for instead. Return it in the following format:
+        {
+          newTitle: string; 
+          newQuantity: string;
+        }`
+            : ``
+        }
+        `,
+        },
+      ];
 
-    const fromChat = JSON.parse(await fetchChatResponse(chatHistory));
+      const response = JSON.parse(await fetchChatResponse(chatHistory));
+      return response;
+    };
+    let fromChat = await findClosestIngredient(ingredient, true);
+    if (fromChat.newTitle) {
+      console.log("TRYING AGAIN WITH NEW TITLE", fromChat.newTitle);
+      fromChat = await findClosestIngredient(
+        {
+          title: fromChat.newTitle,
+          amount: ingredient.amount,
+          units: ingredient.units,
+        },
+        false
+      );
+    }
+
     const closestIngredientTitle = fromChat.title;
     const closestIngredient = (await fetchSearchResults(closestIngredientTitle, 1, false))[0];
     recipe.shoppingList[i] = { ...closestIngredient, amountToBuy: fromChat.amountToBuy } as any;

@@ -12,6 +12,6 @@ export async function fetchChatResponse(chatHistory: any) {
   }
 
   const data = await response.json();
-  console.log("RESPONSE FROM API:", data);
+  console.log("Chat Response:", data);
   return data.content;
 }

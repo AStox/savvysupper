@@ -13,6 +13,7 @@ import { Ingredient } from "@prisma/client";
 import { fetchSearchResults } from "../search";
 
 export const generateRecipeIdeaPreamble = async (
+  proteinsOnSale: Ingredient[],
   cuisine?: string,
   dietaryRestrictions?: string[],
   ingredients?: Ingredient[]
@@ -33,18 +34,7 @@ export const generateRecipeIdeaPreamble = async (
   }
  
 Protein on Sale:
-${[
-  ...(await fetchSearchResults("Beef", 10, true)),
-  ...(await fetchSearchResults("Veal", 10, true)),
-  ...(await fetchSearchResults("Chicken", 10, true)),
-  ...(await fetchSearchResults("Pork", 10, true)),
-  ...(await fetchSearchResults("Turkey", 10, true)),
-  ...(await fetchSearchResults("Lamb", 10, true)),
-  ...(await fetchSearchResults("Fish", 10, true)),
-  ...(await fetchSearchResults("Seafood", 10, true)),
-  ...(await fetchSearchResults("Bacon", 10, true)),
-  ...(await fetchSearchResults("Sausages", 10, true)),
-]
+${proteinsOnSale
   .filter((item, index, array) => array.findIndex((i) => i.title === item.title) === index) // Remove duplicates
   .sort((a, b) => b.regularPrice - b.currentPrice - (a.regularPrice - a.currentPrice))
   .slice(0, 10)
@@ -77,7 +67,9 @@ given the following recipe idea, choose the ingredients and return them followin
   },
 }
 
-  Unpriced ingredients should be common pantry items like cooking oils, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices like cinnamon, cumin, etc
+  Unpriced ingredients should be common pantry items like cooking oils, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary, etc.
+  Unpriced ingredients should not include things like fresh herbs.
+  Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
 
   Recipe:
   ${recipeIdea.title}
