@@ -44,30 +44,29 @@ export interface Recipe {
   regularPrice: number;
 }
 
-// // User chooses
-// cuisine: string;
+export enum DietaryRestrictions {
+  Vegetarian = "Vegetarian",
+  Vegan = "Vegan",
+  GlutenFree = "Gluten Free",
+  Keto = "Keto",
+}
 
-// // first pass
-// title: string;
-// description: string;
-// serves: number;
-// prepTime: number;
-// cookTime: number;
-
-// ingredients: {
-//   priced: {
-//     title: string;
-//     amount: number;
-//     units: string;
-//   }[];
-//   unpriced: {
-//     title: string;
-//     amount: number;
-//     units: string;
-//   }[];
-// };
-
-// instructions: string[];
+export enum Cuisines {
+  Mexican = "Mexican",
+  Italian = "Italian",
+  Chinese = "Chinese",
+  Indian = "Indian",
+  Japanese = "Japanese",
+  Greek = "Greek",
+  French = "French",
+  Thai = "Thai",
+  Spanish = "Spanish",
+  Mediterranean = "Mediterranean",
+  American = "American",
+  Moroccan = "Moroccan",
+  Cajun = "Cajun",
+  MiddleEastern = "Middle Eastern",
+}
 
 export async function generateRecipe(
   progressCallback: (status: string, progress: number) => void
