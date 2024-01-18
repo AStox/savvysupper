@@ -17,14 +17,17 @@ export const generateRecipeIdeaPreamble = async (
   cuisine?: string,
   dietaryRestrictions?: string[],
   ingredients?: Ingredient[]
-) => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
-  The way you will do this is by choosing a protein source from the sale data and generating a realistic recipe using it.
+) => `You are a helpful algorithm designed to take in grocery store sale data and output a delicioius recipe.
   Recipes should be healthy, balanced meals.
   Your recipes are delicious, diverse, healthy, and draw from multiple cultures and cuisines.
   ${cuisine ? `Your recipe must be ${cuisine}.` : "Make recipes from all over the world."}
-  ${dietaryRestrictions ? `Your recipe must be ${dietaryRestrictions.join(", ")}.` : ""}
+  ${
+    !!dietaryRestrictions && dietaryRestrictions.length > 0
+      ? `Your recipe must be ${dietaryRestrictions.join(", ")}.`
+      : ""
+  }
 
-  Return recipes in JSON following this example:
+  Return one recipe in JSON following this example:
   {
     protein: "Chicken Leg Quarters Value Size 3-5 Pieces",
     ${cuisine ? "" : `cuisine: "Mexican",`}
@@ -32,14 +35,8 @@ export const generateRecipeIdeaPreamble = async (
     description: "A cozy, hearty meal to warm you on those cold winter nights. lots of protein and veggies to keep you full and healthy."
     serves: 4,
   }
- 
-Protein on Sale:
-${proteinsOnSale
-  .filter((item, index, array) => array.findIndex((i) => i.title === item.title) === index) // Remove duplicates
-  .sort((a, b) => b.regularPrice - b.currentPrice - (a.regularPrice - a.currentPrice))
-  .slice(0, 10)
-  .map((item) => item.title)
-  .join("\n")}
+
+  proteins on sale: ${proteinsOnSale.map((protein) => protein.title).join(", ")}
 `;
 
 export const generateRecipeIngredientsPreamble = async (recipeIdea: {

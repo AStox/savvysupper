@@ -73,10 +73,11 @@ export async function generateRecipe(
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
   let cuisine = undefined;
+  let dietaryRestrictions = [""];
   progressCallback("Looking at Whats on Sale", 0);
   const proteinsOnSale = await getProteins();
   progressCallback("Thinking of a Recipe", 0.1);
-  const recipeIdea = await generateRecipeIdea(proteinsOnSale, cuisine);
+  const recipeIdea = await generateRecipeIdea(proteinsOnSale, cuisine, dietaryRestrictions);
   console.log("RECIPE IDEA", recipeIdea);
   progressCallback("Choosing Ingredients", 0.2);
   const recipeIngredients = await generateRecipeIngredients(recipeIdea);
@@ -105,16 +106,16 @@ export async function generateRecipe(
 
 async function getProteins(): Promise<Ingredient[]> {
   return [
-    ...(await fetchSearchResults("Beef", 10, true)),
-    ...(await fetchSearchResults("Veal", 10, true)),
-    ...(await fetchSearchResults("Chicken", 10, true)),
-    ...(await fetchSearchResults("Pork", 10, true)),
-    ...(await fetchSearchResults("Turkey", 10, true)),
-    ...(await fetchSearchResults("Lamb", 10, true)),
-    ...(await fetchSearchResults("Fish", 10, true)),
-    ...(await fetchSearchResults("Seafood", 10, true)),
-    ...(await fetchSearchResults("Bacon", 10, true)),
-    ...(await fetchSearchResults("Sausages", 10, true)),
+    ...(await fetchSearchResults("Beef", 3, true)),
+    ...(await fetchSearchResults("Veal", 3, true)),
+    ...(await fetchSearchResults("Chicken", 3, true)),
+    ...(await fetchSearchResults("Pork", 3, true)),
+    ...(await fetchSearchResults("Turkey", 3, true)),
+    ...(await fetchSearchResults("Lamb", 3, true)),
+    ...(await fetchSearchResults("Fish", 3, true)),
+    ...(await fetchSearchResults("Seafood", 3, true)),
+    ...(await fetchSearchResults("Bacon", 3, true)),
+    ...(await fetchSearchResults("Sausages", 3, true)),
   ];
 }
 
@@ -129,7 +130,7 @@ async function generateRecipeIdea(
   serves: number;
   cuisine: string;
 }> {
-  const preamble = await generateRecipeIdeaPreamble(proteinsOnSale, cuisine);
+  const preamble = await generateRecipeIdeaPreamble(proteinsOnSale, cuisine, dietaryRestrictions);
   let chatHistory = [
     {
       role: "user",
@@ -219,6 +220,7 @@ async function priceIngredients(recipe: Recipe) {
   recipe.shoppingList = [];
   for (let i = 0; i < recipe.ingredients.priced.length; i++) {
     const ingredient = recipe.ingredients.priced[i];
+    console.log("Looking for Ingredient:", ingredient.title);
 
     const findClosestIngredient = async (
       ingredient: { title: string; amount: number; units: string },
