@@ -188,6 +188,7 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
     console.log("scraping page... found", items.length, "items so far");
 
     await page.evaluate(() => window.scrollBy(0, window.innerHeight));
+    await page.waitForTimeout(1000);
     console.log("scrolling...");
 
     reachedBottom = await page.evaluate(() => {
@@ -310,14 +311,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   await page.setViewport({ width: 1920, height: 1080 });
 
   // request interception to disable images and CSS
-  await page.setRequestInterception(true);
-  page.on("request", (request) => {
-    if (request.resourceType() === "image" || request.resourceType() === "stylesheet") {
-      request.abort();
-    } else {
-      request.continue();
-    }
-  });
+  // await page.setRequestInterception(true);
+  // page.on("request", (request) => {
+  //   if (request.resourceType() === "image" || request.resourceType() === "stylesheet") {
+  //     request.abort();
+  //   } else {
+  //     request.continue();
+  //   }
+  // });
 
   try {
     console.log("Navigating to main products page...");
