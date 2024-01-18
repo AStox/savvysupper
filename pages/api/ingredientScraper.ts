@@ -150,7 +150,12 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
 
     const newItems: Ingredient[] = await page.$$eval('div[data-test="fop-body"]', (elements) =>
       elements.map((el) => {
-        const title = el.querySelector('h3[data-test="fop-title"]')?.textContent?.trim() || "";
+        const title =
+          el
+            .querySelector('h3[data-test="fop-title"]')
+            ?.textContent?.trim()
+            .replace(/^(.*?)\s+\d+(\.\d+)?\s+\w+.*$/, "$1") || "";
+
         const quantity =
           el.querySelector(".weight__SingleTextLine-sc-1sjeki5-0")?.textContent?.trim() || "1 ea";
         const currentPrice = parseFloat(

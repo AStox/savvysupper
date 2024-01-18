@@ -42,11 +42,13 @@ export interface Recipe {
   instructions: string[];
   totalCost: number;
   regularPrice: number;
+  dietaryRestrictions: string[];
 }
 
 export enum DietaryRestrictions {
   Vegetarian = "Vegetarian",
   Vegan = "Vegan",
+  DairyFree = "Dairy Free",
   GlutenFree = "Gluten Free",
   Keto = "Keto",
 }
@@ -71,15 +73,16 @@ export enum Cuisines {
 export async function generateRecipe(
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
-  let cuisine = undefined;
-  let dietaryRestrictions = [""];
+  let cuisine = Cuisines.Italian;
+  let dietaryRestrictions = [DietaryRestrictions.GlutenFree];
   progressCallback("Looking at Whats on Sale", 0);
   const proteinsOnSale = await getProteins();
   progressCallback("Thinking of a Recipe", 0.1);
   const recipeIdea = await generateRecipeIdea(proteinsOnSale, cuisine, dietaryRestrictions);
+  (recipeIdea as any).dietaryRestrictions = dietaryRestrictions;
   console.log("RECIPE IDEA", recipeIdea);
   progressCallback("Choosing Ingredients", 0.2);
-  const recipeIngredients = await generateRecipeIngredients(recipeIdea);
+  const recipeIngredients = await generateRecipeIngredients(recipeIdea as any);
   console.log("RECIPE INGREDIENTS", recipeIngredients);
   progressCallback("Writing Instructions", 0.35);
   const recipe = (await generateRecipeInstructions(recipeIngredients)) as Recipe;
@@ -157,6 +160,7 @@ async function generateRecipeIngredients(recipeIdea: {
   protein: string;
   description: string;
   serves: number;
+  dietaryRestrictions: string[];
 }): Promise<any> {
   const preamble = await generateRecipeIngredientsPreamble(recipeIdea);
   let chatHistory = [
@@ -174,6 +178,7 @@ async function generateRecipeIngredients(recipeIdea: {
     description: recipeIdea.description,
     serves: recipeIdea.serves,
     ingredients: response.ingredients,
+    dietaryRestrictions: recipeIdea.dietaryRestrictions,
   };
 }
 
@@ -184,6 +189,7 @@ async function generateRecipeInstructions(recipeIdea: {
   description: string;
   serves: number;
   ingredients: any;
+  dietaryRestrictions: string[];
 }): Promise<Partial<Recipe>> {
   const preamble = await generateRecipeInstructionsPreamble(recipeIdea);
   let chatHistory = [
@@ -203,6 +209,7 @@ async function generateRecipeInstructions(recipeIdea: {
     instructions: response.instructions,
     prepTime: response.prepTime,
     cookTime: response.cookTime,
+    dietaryRestrictions: recipeIdea.dietaryRestrictions,
   };
 }
 
@@ -230,23 +237,26 @@ async function priceIngredients(recipe: Recipe) {
         {
           role: "system",
           content: `You are a helpful algorithm designed to choose ingredients from the grocery store for a ${recipe.title} recipe. 
-        Return responses in valid JSON following this example:
-        {
-          title: string;
-          quantity: string;
-          currentPrice: number;
-          regularPrice: number;
-          onSale: boolean;
-          amountToBuy: number;
-        }
-        `,
+          Return responses in valid JSON following this example:
+          {
+            title: string;
+            quantity: string;
+            currentPrice: number;
+            regularPrice: number;
+            onSale: boolean;
+            amountToBuy: number;
+          }`,
         },
         {
           role: "user",
           content: `I am looking for ${ingredient.amount}${ingredient.units} of ${
             ingredient.title
-          } for this recipe: ${recipe.title}.
-        While focusing on cost savings, tell me which of the following grocery items I should buy and how many of it I should buy:
+          } for this recipe: ${recipe.title}. Ingredients must be ${recipe.dietaryRestrictions.join(
+            ", "
+          )}.
+        While focusing on cost savings, tell me which of the following grocery items I should buy and how many of it I should buy.
+        Amounts don't need to be exact, but should be close. If the recipe calls for 500g of chicken, 400g is fine. Don't buy two of the chicken in this case.
+        But if the recipe calls for 500g of chicken, 250g is not enough. Buy more than one of the chicken in this case.
         ${JSON.stringify(
           results.map((item: any) => ({
             title: item.title,
@@ -302,7 +312,8 @@ async function finalizeRecipe(
     {
       role: "user",
       content: `You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
-      Adjust the title, description, and instructions to match the shopping list. Do not include brand names anywhere.
+      It's also possible that the dietary restrictions labels missing or incorrect.
+      Adjust the title, description, dietary restrctions, cuisine, and instructions to match the shopping list. Do not include brand names anywhere.
       The title should be short and avoid using brand names or too many adjectives to describe things the dish.
       The title should make the dish sound appetizing and unique.
       present it in the following JSON format:
@@ -311,10 +322,18 @@ async function finalizeRecipe(
         title: string;
         description: string;
         instructions: string[];
+        dietaryRestrictions: string[];
+        cuisine: string;
       }
 
       The Recipe:
       ${JSON.stringify(recipe)}
+
+      Possible Dietary Restrictions:
+      ${Object.values(DietaryRestrictions).join(", ")}
+
+      Possible Cuisines:
+      ${Object.values(Cuisines).join(", ")}
       `,
     },
   ];

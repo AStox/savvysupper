@@ -35,6 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         instructions: r.instructions,
         totalCost: r.totalCost,
         regularPrice: r.regularPrice,
+        dietaryRestrictions: r.dietaryRestrictions,
       },
     });
     console.log("RESPONSE FROM PRISMA:", response);

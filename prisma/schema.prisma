@@ -32,14 +32,15 @@ model Recipe {
     cuisine       String
     description   String
     serves        Int
-    prepTime      Int?
-    cookTime      Int?
-    ingredients   Json?
-    unpricedIngredients Json?
+    prepTime      Int
+    cookTime      Int
+    ingredients   Json
+    unpricedIngredients Json
     shoppingList  RecipeIngredient[]
-    instructions  Json?
-    totalCost     Float?
-    regularPrice  Float?
+    instructions  Json
+    totalCost     Float
+    regularPrice  Float
+    dietaryRestrictions Json
 }
 
 model RecipeIngredient {

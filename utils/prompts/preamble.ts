@@ -11,6 +11,7 @@
 
 import { Ingredient } from "@prisma/client";
 import { fetchSearchResults } from "../search";
+import { Recipe } from "../meal";
 
 export const generateRecipeIdeaPreamble = async (
   proteinsOnSale: Ingredient[],
@@ -39,12 +40,9 @@ export const generateRecipeIdeaPreamble = async (
   proteins on sale: ${proteinsOnSale.map((protein) => protein.title).join(", ")}
 `;
 
-export const generateRecipeIngredientsPreamble = async (recipeIdea: {
-  title: string;
-  protein: string;
-  description: string;
-  serves: number;
-}) => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
+export const generateRecipeIngredientsPreamble = async (
+  recipeIdea: Partial<Recipe>
+) => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
 given the following recipe idea, choose the ingredients and return them following this example JSON:
 {
   ingredients: {
@@ -65,7 +63,7 @@ given the following recipe idea, choose the ingredients and return them followin
 }
 
   Unpriced ingredients should be common pantry items like cooking oils, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary, etc.
-  Unpriced ingredients should not include things like fresh herbs.
+  Unpriced ingredients should not include things like fresh herbs, like fresh basil, fresh rosemary, fresh thyme, etc.
   Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
 
   Recipe:
@@ -74,13 +72,9 @@ given the following recipe idea, choose the ingredients and return them followin
   Serves: ${recipeIdea.serves}
 `;
 
-export const generateRecipeInstructionsPreamble = async (recipeIdea: {
-  title: string;
-  protein: string;
-  description: string;
-  serves: number;
-  ingredients: any;
-}) => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
+export const generateRecipeInstructionsPreamble = async (
+  recipeIdea: Partial<Recipe>
+) => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
 given the following recipe, come up with the instructions and return them following this example JSON:
 {
   instructions: [
@@ -101,7 +95,7 @@ given the following recipe, come up with the instructions and return them follow
   ${recipeIdea.title}
   ${recipeIdea.description}
   Serves: ${recipeIdea.serves}
-  Ingredients: ${recipeIdea.ingredients.priced
+  Ingredients: ${recipeIdea.ingredients?.priced
     .map((item: any) => item.title)
-    .join(", ")}, ${recipeIdea.ingredients.unpriced.map((item: any) => item.title).join(", ")}
+    .join(", ")}, ${recipeIdea.ingredients?.unpriced.map((item: any) => item.title).join(", ")}
 `;

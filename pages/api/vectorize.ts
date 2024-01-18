@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await prisma.$executeRaw`
         UPDATE ingredients
         SET embedding = ${response.data[i].embedding}::vector
-        WHERE id = ${batchIngredients[i].id}
+        WHERE id = ${(batchIngredients[i] as any).id}
       `;
       console.log(
         `Updated ingredient ${start + i + 1} of ${ingredients.length}: ${batchIngredients[i].title}`
