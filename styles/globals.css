@@ -17,7 +17,7 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: #333;
   /* background-image: url("/background.webp"); */
   background-position: center -10%;
   background-size: cover;

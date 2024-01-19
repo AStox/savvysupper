@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { getMeal } from "../utils/api";
 import { defaultChatHistory, useAppState } from "./AppStateContext";
-import { generateRecipe } from "@/utils/meal";
+import { DietaryRestrictions, generateRecipe } from "@/utils/meal";
 import prisma from "../lib/prisma";
 import { Recipe } from "@/utils/meal";
 
@@ -11,27 +11,38 @@ type props = {
 };
 
 const SecondaryTopBar: React.FC = (props) => {
-  const {
-    meals,
-    setMeals,
-    chatHistory,
-    setChatHistory,
-    numberOfMeals,
-    setNumberOfMeals,
-    generating,
-    setGenerating,
-  } = useAppState();
+  const { meals, setMeals, chatHistory, setChatHistory, generating, setGenerating } = useAppState();
 
-  const [groceryStore, setGroceryStore] = useState("metro");
   const [response, setResponse] = useState("");
+  const [dietaryRestrictions, setDietaryRestrictions] = useState<DietaryRestrictions[]>([]);
+  const [mealCount, setMealCount] = useState(7);
 
   const handleGenerate = async () => {
     setGenerating(true);
-    const recipe = await generateRecipe((status, progress) =>
+    const recipe = await generateRecipe(dietaryRestrictions, (status, progress) =>
       setResponse(status + " " + progress * 100 + "%")
     );
 
     setMeals([...meals, recipe]);
+    setGenerating(false);
+  };
+
+  const toggleDietaryRestriction = (restriction: DietaryRestrictions) => {
+    setDietaryRestrictions((current) =>
+      current.includes(restriction)
+        ? current.filter((r) => r !== restriction)
+        : [...current, restriction]
+    );
+  };
+
+  const handleMealPlan = async () => {
+    setGenerating(true);
+    // choose [mealcount] recipes from prisma
+    const recipes = await fetch("/api/mealPlan", {
+      method: "POST",
+      body: JSON.stringify({ mealCount, dietaryRestrictions }),
+    }).then((res) => res.json());
+    setMeals(recipes);
     setGenerating(false);
   };
 
@@ -44,8 +55,8 @@ const SecondaryTopBar: React.FC = (props) => {
           </label>
           <select
             id="number-of-meals"
-            value={numberOfMeals}
-            onChange={(e) => setNumberOfMeals(parseInt(e.target.value))}
+            value={mealCount}
+            onChange={(e) => setMealCount(parseInt(e.target.value))}
             className="w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           >
             {[...Array(7)].map((_, i) => (
@@ -55,39 +66,31 @@ const SecondaryTopBar: React.FC = (props) => {
             ))}
           </select>
         </div>
-        <div className="flex-grow mr-4">
-          <label htmlFor="grocery-store" className="block text-gray-700 font-bold mb-2">
-            Grocery Store
-          </label>
-          <select
-            id="grocery-store"
-            value={groceryStore}
-            onChange={(e) => setGroceryStore(e.target.value)}
-            className="w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          >
-            <option value="metro">Metro</option>
-            <option value="loblaws" disabled>
-              Loblaws
-            </option>
-            <option value="no_frills" disabled>
-              No Frills
-            </option>
-            <option value="walmart" disabled>
-              Walmart
-            </option>
-            <option value="farmboy" disabled>
-              Farmboy
-            </option>
-          </select>
+        <div className="flex-grow m-4">
+          <div className="border-2 border-gray-300 p-4 rounded-md">
+            <div className="text-gray-700 font-bold mb-4">Dietary Restrictions</div>
+            {Object.values(DietaryRestrictions).map((option) => (
+              <div key={option} className="mb-2">
+                <input
+                  type="checkbox"
+                  id={option}
+                  name={option}
+                  value={option}
+                  onChange={() => toggleDietaryRestriction(option)}
+                  className="mr-2"
+                />
+                <label htmlFor={option}>{option}</label>
+              </div>
+            ))}
+          </div>
         </div>
-
-        <div className="flex-grow">
+        <div className="flex-grow m-4">
           <div className="text-dark-gray font-bold mb-2">Meal Plan</div>
           <button
-            onClick={handleGenerate}
+            onClick={handleMealPlan}
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full"
           >
-            {generating ? response : "Generate"}
+            {generating ? "Thinking..." : "Plan it!"}
           </button>
         </div>
       </div>

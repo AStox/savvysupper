@@ -8,7 +8,6 @@ import { Recipe } from "@/utils/meal";
 const MealPlan: React.FC = () => {
   const [selectedMeal, setSelectedMeal] = useState<Recipe | null>(null);
   const { meals } = useAppState();
-  console.log("meals", meals);
   const recipes = meals;
 
   const handleMealSelect = (meal: Recipe) => {
