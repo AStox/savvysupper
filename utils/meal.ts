@@ -1,4 +1,8 @@
 import {
+  generateFinalizeRecipePreamble1,
+  generateFinalizeRecipePreamble2,
+  generateImagePreamble,
+  generatePricingIngredientsPreamble,
   generateRecipeIdeaPreamble,
   generateRecipeIngredientsPreamble,
   generateRecipeInstructionsPreamble,
@@ -235,46 +239,8 @@ async function priceIngredients(recipe: Recipe) {
       const results = await fetchSearchResults(ingredient.title, 10, false);
       const chatHistory = [
         {
-          role: "system",
-          content: `You are a helpful algorithm designed to choose ingredients from the grocery store for a ${recipe.title} recipe. 
-          Return responses in valid JSON following this example:
-          {
-            title: string;
-            quantity: string;
-            currentPrice: number;
-            regularPrice: number;
-            onSale: boolean;
-            amountToBuy: number;
-          }`,
-        },
-        {
           role: "user",
-          content: `I am looking for ${ingredient.amount}${ingredient.units} of ${
-            ingredient.title
-          } for this recipe: ${recipe.title}. Ingredients must be ${recipe.dietaryRestrictions.join(
-            ", "
-          )}.
-        While focusing on cost savings, tell me which of the following grocery items I should buy and how many of it I should buy.
-        Amounts don't need to be exact, but should be close. If the recipe calls for 500g of chicken, 400g is fine. Don't buy two of the chicken in this case.
-        But if the recipe calls for 500g of chicken, 250g is not enough. Buy more than one of the chicken in this case.
-        ${JSON.stringify(
-          results.map((item: any) => ({
-            title: item.title,
-            price: item.currentPrice,
-            quantity: item.quantity,
-          }))
-        )}
-        
-        ${
-          tryAgain
-            ? `If the item I'm looking for is not in the list, tell me a substitute I should look for instead. Return it in the following format:
-        {
-          newTitle: string; 
-          newQuantity: string;
-        }`
-            : ``
-        }
-        `,
+          content: await generatePricingIngredientsPreamble(ingredient, results, recipe, tryAgain),
         },
       ];
 
@@ -306,53 +272,26 @@ async function finalizeRecipe(
 ): Promise<{ title: string; description: string; instructions: string[] }> {
   const chatHistory = [
     {
-      role: "system",
-      content: `You are a helpful algorithm designed to develop recipes based on grocery store sale data.`,
-    },
-    {
       role: "user",
-      content: `You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
-      It's also possible that the dietary restrictions labels missing or incorrect.
-      Adjust the title, description, dietary restrctions, cuisine, and instructions to match the shopping list. Do not include brand names anywhere.
-      The title should be short and avoid using brand names or too many adjectives to describe things the dish.
-      The title should make the dish sound appetizing and unique.
-      present it in the following JSON format:
-      
-      {
-        title: string;
-        description: string;
-        instructions: string[];
-        dietaryRestrictions: string[];
-        cuisine: string;
-      }
-
-      The Recipe:
-      ${JSON.stringify(recipe)}
-
-      Possible Dietary Restrictions:
-      ${Object.values(DietaryRestrictions).join(", ")}
-
-      Possible Cuisines:
-      ${Object.values(Cuisines).join(", ")}
-      `,
+      content: await generateFinalizeRecipePreamble1(recipe),
     },
   ];
+  const response = await fetchChatResponse(chatHistory);
+  chatHistory.push({
+    role: "assistant",
+    content: response,
+  });
+  chatHistory.push({
+    role: "user",
+    content: await generateFinalizeRecipePreamble2(),
+  });
+  console.log(chatHistory);
   const finalRecipe = JSON.parse(await fetchChatResponse(chatHistory));
   return finalRecipe;
 }
 
 async function generateImageForRecipe(recipe: Recipe) {
-  const openAIImageURL = (
-    await generateImage(`
-    A studio quality photo of the following recipe plated and ready to serve in a nice, cosy setting:
-      ${JSON.stringify({
-        title: recipe.title,
-        description: recipe.description,
-        ingredients: recipe.shoppingList.map((item) => item.title),
-        instructions: recipe.instructions,
-      })}
-    `)
-  ).url;
+  const openAIImageURL = (await generateImage(await generateImagePreamble(recipe))).url;
   // replace title with a filename safe title
   const blobUrl = await downloadAndSaveImage(
     openAIImageURL,

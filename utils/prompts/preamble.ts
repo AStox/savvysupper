@@ -11,7 +11,7 @@
 
 import { Ingredient } from "@prisma/client";
 import { fetchSearchResults } from "../search";
-import { Recipe } from "../meal";
+import { DietaryRestrictions, Recipe } from "../meal";
 
 export const generateRecipeIdeaPreamble = async (
   proteinsOnSale: Ingredient[],
@@ -21,7 +21,7 @@ export const generateRecipeIdeaPreamble = async (
 ) => `You are a helpful algorithm designed to take in grocery store sale data and output a delicioius recipe.
   Recipes should be healthy, balanced meals.
   Your recipes are delicious, diverse, healthy, and draw from multiple cultures and cuisines.
-  ${cuisine ? `Your recipe must be ${cuisine}.` : "Make recipes from all over the world."}
+  Your recipes should be diverse and come from all over the world.
   ${
     !!dietaryRestrictions && dietaryRestrictions.length > 0
       ? `Your recipe must be ${dietaryRestrictions.join(", ")}.`
@@ -99,3 +99,93 @@ given the following recipe, come up with the instructions and return them follow
     .map((item: any) => item.title)
     .join(", ")}, ${recipeIdea.ingredients?.unpriced.map((item: any) => item.title).join(", ")}
 `;
+
+export const generatePricingIngredientsPreamble = async (
+  recipeIngredient: { amount: number; units: string; title: string },
+  storeItems: Ingredient[],
+  recipe: Partial<Recipe>,
+  tryAgain = false
+) => `You are a helpful algorithm designed to choose ingredients from the grocery store for a ${
+  recipe.title
+} recipe. 
+Return responses in valid JSON following this example:
+{
+  title: string;
+  quantity: string;
+  currentPrice: number;
+  regularPrice: number;
+  onSale: boolean;
+  amountToBuy: number;
+}
+
+I am looking for ${recipeIngredient.amount}${recipeIngredient.units} of ${
+  recipeIngredient.title
+} for this recipe: ${recipe.title}. Ingredients must be ${recipe.dietaryRestrictions?.join(", ")}.
+While focusing on cost savings, tell me which of the following grocery items I should buy and how many of it I should buy.
+Amounts don't need to be exact, but should be close. If the recipe calls for 500g of chicken, 400g is fine. Don't buy two of the chicken in this case.
+But if the recipe calls for 500g of chicken, 250g is not enough. Buy more than one of the chicken in this case.
+${JSON.stringify(
+  storeItems.map((item: any) => ({
+    title: item.title,
+    price: item.currentPrice,
+    quantity: item.quantity,
+  }))
+)}
+
+${
+  tryAgain
+    ? `If the item I'm looking for is not in the list, tell me a substitute I should look for instead. Return it in the following format:
+{
+newTitle: string; 
+newQuantity: string;
+}`
+    : ``
+}
+`;
+
+export const generateFinalizeRecipePreamble1 = async (
+  recipe: Recipe
+) => `You are a helpful algorithm designed to develop recipes based on grocery store sale data.
+You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
+  It's also possible that the dietary restrictions labels missing or incorrect.
+  Adjust the title, description, and instructions to match the shopping list. Do not include brand names anywhere.
+  The title should be short and avoid using brand names or too many adjectives to describe things the dish.
+  The title should make the dish sound appetizing and unique.
+  present it in the following JSON format:
+  
+  {
+    title: string;
+    description: string;
+    instructions: string[];
+  }
+
+  The Recipe:
+  ${JSON.stringify(recipe)}
+  `;
+
+export const generateFinalizeRecipePreamble2 =
+  async () => `Now also adjust the dietary restrictions and cuisine based on the full recipe.
+  return the adjusted fields along with the previous JSON like so:
+  {
+    title: string;
+    description: string;
+    instructions: string[];
+    cuisine: string;
+    dietaryRestrictions: string[];
+  }
+  
+  Choose all dietary restrictions from the following list that apply to the recipe.
+
+  Possible dietary restrictions:
+  ${Object.values(DietaryRestrictions).join(", ")}
+  `;
+
+export const generateImagePreamble = async (recipe: Recipe) => `
+  A studio quality photo of the following recipe plated and ready to serve in a nice, cosy setting:
+    ${JSON.stringify({
+      title: recipe.title,
+      description: recipe.description,
+      ingredients: recipe.shoppingList.map((item) => item.title),
+      instructions: recipe.instructions,
+    })}
+  `;
