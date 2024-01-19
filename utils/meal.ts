@@ -75,9 +75,9 @@ export enum Cuisines {
 }
 
 export async function generateRecipe(
+  dietaryRestrictions: DietaryRestrictions[] = [],
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
-  let dietaryRestrictions: DietaryRestrictions[] = [];
   progressCallback("Looking at Whats on Sale", 0);
   const proteinsOnSale = await getProteins();
   progressCallback("Thinking of a Recipe", 0.1);

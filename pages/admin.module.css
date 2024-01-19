@@ -96,6 +96,49 @@
   max-width: 100%;
   height: auto;
   margin-top: 20px;
-  border: 1px solid #ccc; /* Optional: adds a border around the image */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.generateRecipeButton {
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+  padding: 15px 20px;
+  font-weight: bold;
+}
+
+.generateRecipeButton:hover {
+  background-color: #367c39;
+}
+
+.dietaryRestrictionButton {
+  background-color: #0070f3; /* Original blue background */
+  color: white;
+  border-radius: 15px; /* Rounder edges */
+  padding: 8px 12px; /* Smaller padding */
+  font-size: 0.85em; /* Smaller font size */
+  margin: 5px; /* Reduced margin */
+}
+
+.dietaryRestrictionButton:hover {
+  background-color: #0051bb; /* Darker blue on hover */
+}
+
+.active {
+  background-color: #003366; /* Darker blue background for active buttons */
+  color: white;
+  border-radius: 15px; /* Rounder edges */
+  padding: 8px 12px; /* Smaller padding */
+  font-size: 0.85em; /* Smaller font size */
+}
+
+.active:hover {
+  background-color: #002244; /* Even darker blue on hover */
 }

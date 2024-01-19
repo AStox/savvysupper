@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./admin.module.css";
-import { generateRecipe } from "@/utils/meal";
+import { DietaryRestrictions, generateRecipe } from "@/utils/meal";
 import { fetchSearchResults } from "@/utils/search";
 import { generateImage } from "@/utils/image";
 import { downloadAndSaveImage } from "@/utils/downloadAndSaveImage";
@@ -17,6 +17,7 @@ const AdminPage = () => {
   const [imagePrompt, setImagePrompt] = useState("");
   const [recipe, setRecipe] = useState("");
   const [numberOfRecipes, setNumberOfRecipes] = useState(1);
+  const [dietaryRestrictions, setDietaryRestrictions] = useState<DietaryRestrictions[]>([]);
 
   const ingredientScraper = async () => {
     setLoading(true);
@@ -66,19 +67,27 @@ const AdminPage = () => {
     setLoading(false);
   };
 
-  const genRecipe = async () => {
+  const genRecipes = async () => {
     setLoading(true);
     setProgress("");
     setResponse("");
     setImageSrc("");
+
+    const promises = [];
     for (let i = 0; i < numberOfRecipes; i++) {
-      setProgress("Generating recipe " + (i + 1) + " of " + numberOfRecipes);
-      const recipe = await generateRecipe((status, progress) =>
-        setResponse(status + " " + progress * 100 + "%")
+      promises.push(
+        generateRecipe(dietaryRestrictions, (status, progress) =>
+          setResponse(status + " " + progress * 100 + "%")
+        )
       );
+    }
+
+    const recipes = await Promise.all(promises);
+    recipes.forEach((recipe) => {
       setImageSrc(recipe.image);
       setResponse(JSON.stringify(recipe, null, 2));
-    }
+    });
+
     setLoading(false);
   };
 
@@ -108,6 +117,14 @@ const AdminPage = () => {
     const data = await response;
     setResponse(JSON.stringify(data, null, 2));
     setLoading(false);
+  };
+
+  const toggleDietaryRestriction = (restriction: DietaryRestrictions) => {
+    if (dietaryRestrictions.includes(restriction)) {
+      setDietaryRestrictions(dietaryRestrictions.filter((r) => r !== restriction));
+    } else {
+      setDietaryRestrictions([...dietaryRestrictions, restriction]);
+    }
   };
 
   return (
@@ -188,7 +205,20 @@ const AdminPage = () => {
           placeholder="Number of recipes to generate"
           disabled={loading}
         />
-        <button className={styles.button} onClick={genRecipe} disabled={loading}>
+        {Object.values(DietaryRestrictions).map((restriction) => (
+          <button
+            key={restriction}
+            className={`${styles.dietaryRestrictionButton} ${
+              dietaryRestrictions.includes(restriction) ? styles.active : ""
+            }`}
+            onClick={() => toggleDietaryRestriction(restriction)}
+            disabled={loading}
+          >
+            {restriction}
+          </button>
+        ))}
+
+        <button className={styles.generateRecipeButton} onClick={genRecipes} disabled={loading}>
           Generate Recipe
         </button>
       </div>

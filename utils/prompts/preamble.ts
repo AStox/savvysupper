@@ -32,11 +32,11 @@ export const generateRecipeIdeaPreamble = async (
 
   Return one recipe in JSON following this example:
   {
-    protein: "Chicken Leg Quarters",
-    cuisine: "Mexican",
-    title: "Sweet Potato and Chicken Hash",
-    description: "A cozy, hearty meal to warm you on those cold winter nights. lots of protein and veggies to keep you full and healthy."
-    serves: 4,
+    protein: string,
+    cuisine: string,
+    title: string,
+    description: string,
+    serves: number,
   }
 
   proteins on sale: ${proteinsOnSale.map((protein) => protein.title).join(", ")}
@@ -48,19 +48,8 @@ export const generateRecipeIngredientsPreamble = async (
 given the following recipe idea, choose the ingredients and return them following this example JSON:
 {
   ingredients: {
-    priced: [
-      {title: "sweet potatoes", amount: 0.2, units: "kg"},
-      {"title": "chicken breasts", "amount": 4, "units": "items"},
-      {"title": "red onion", "amount": 1, "units": "item"},
-      {"title": "zucchini", "amount": 1, "units": "item"},
-      {"title": "head of broccoli", "amount": 1, "units": "item"},
-      {"title": "cooked brown rice", "amount": 0.5, "units": "cup"},
-    ],
-    unpriced: [
-      {title: "olive oil", amount: 1, units: "tablespoon"},
-      {title: "salt", amount: 1, units: "teaspoon"},
-      {title: "black pepper", amount: 1, units: "teaspoon"}
-    ]
+    priced: {title: "string", amount: number, units: "string"}[],
+    unpriced: {title: "string", amount: number, units: "string"}[]
   },
 }
 
