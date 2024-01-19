@@ -120,6 +120,10 @@ const pages = {
         "Latin",
       ],
     },
+    {
+      name: "Plant Based",
+      children: ["Meat Alternatives", "Tofu"],
+    },
   ],
 };
 

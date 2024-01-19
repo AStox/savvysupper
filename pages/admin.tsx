@@ -8,45 +8,20 @@ import { deleteRecipe } from "@/utils/deleteRecipe";
 
 const AdminPage = () => {
   const [response, setResponse] = useState("");
+  const [imageSrc, setImageSrc] = useState("");
+  const [progress, setProgress] = useState("");
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [limit, setLimit] = useState(10);
   const [onSale, setOnSale] = useState(false);
   const [imagePrompt, setImagePrompt] = useState("");
-  const [imageSrc, setImageSrc] = useState("");
   const [recipe, setRecipe] = useState("");
-
-  const createCollection = async () => {
-    setLoading(true);
-    setResponse("");
-    const response = await fetch("/api/createCollection", { method: "POST" });
-    const data = await response.json();
-    setResponse(JSON.stringify(data, null, 2));
-    setLoading(false);
-  };
-
-  const dropCollection = async () => {
-    setLoading(true);
-    setResponse("");
-    setImageSrc("");
-    const response = await fetch("/api/dropCollection", { method: "POST" });
-    const data = await response.json();
-    setResponse(JSON.stringify(data, null, 2));
-    setLoading(false);
-  };
-
-  const insertCollection = async () => {
-    setLoading(true);
-    setResponse("");
-    setImageSrc("");
-    const response = await fetch("/api/insertCollection", { method: "POST" });
-    const data = await response.json();
-    setResponse(JSON.stringify(data, null, 2));
-    setLoading(false);
-  };
+  const [numberOfRecipes, setNumberOfRecipes] = useState(1);
 
   const ingredientScraper = async () => {
     setLoading(true);
+    setNumberOfRecipes(1);
+    setProgress("");
     setResponse("");
     setImageSrc("");
     const response = await fetch("/api/ingredientScraper", { method: "POST" });
@@ -57,6 +32,8 @@ const AdminPage = () => {
 
   const vectorize = async () => {
     setLoading(true);
+    setNumberOfRecipes(1);
+    setProgress("");
     setResponse("");
     setImageSrc("");
     const response = await fetch("/api/vectorize", { method: "POST" });
@@ -67,6 +44,8 @@ const AdminPage = () => {
 
   const searchCollection = async () => {
     setLoading(true);
+    setNumberOfRecipes(1);
+    setProgress("");
     setResponse("");
     setImageSrc("");
     const data = await fetchSearchResults(searchQuery, limit, onSale);
@@ -76,6 +55,8 @@ const AdminPage = () => {
 
   const genImage = async () => {
     setLoading(true);
+    setNumberOfRecipes(1);
+    setProgress("");
     setResponse("");
     setImageSrc("");
     const response = await generateImage(imagePrompt);
@@ -87,18 +68,24 @@ const AdminPage = () => {
 
   const genRecipe = async () => {
     setLoading(true);
+    setProgress("");
     setResponse("");
     setImageSrc("");
-    const recipe = await generateRecipe((status, progress) =>
-      setResponse(status + " " + progress * 100 + "%")
-    );
-    setImageSrc(recipe.image);
-    setResponse(JSON.stringify(recipe, null, 2));
+    for (let i = 0; i < numberOfRecipes; i++) {
+      setProgress("Generating recipe " + (i + 1) + " of " + numberOfRecipes);
+      const recipe = await generateRecipe((status, progress) =>
+        setResponse(status + " " + progress * 100 + "%")
+      );
+      setImageSrc(recipe.image);
+      setResponse(JSON.stringify(recipe, null, 2));
+    }
     setLoading(false);
   };
 
   const testDownloadAndSaveImage = async () => {
     setLoading(true);
+    setNumberOfRecipes(1);
+    setProgress("");
     setResponse("");
     setImageSrc("");
     const response = await downloadAndSaveImage(
@@ -113,6 +100,8 @@ const AdminPage = () => {
 
   const testDeleteRecipe = async () => {
     setLoading(true);
+    setNumberOfRecipes(1);
+    setProgress("");
     setResponse("");
     setImageSrc("");
     const response = deleteRecipe(recipe);
@@ -189,10 +178,22 @@ const AdminPage = () => {
           Delete Recipe
         </button>
       </div>
-      <button className={styles.button} onClick={genRecipe} disabled={loading}>
-        Generate Recipe
-      </button>
+      <div className={styles.searchGroup}>
+        <input
+          type="number"
+          className={styles.searchLimit}
+          value={numberOfRecipes}
+          onChange={(e) => setNumberOfRecipes(Number(e.target.value))}
+          min="1"
+          placeholder="Number of recipes to generate"
+          disabled={loading}
+        />
+        <button className={styles.button} onClick={genRecipe} disabled={loading}>
+          Generate Recipe
+        </button>
+      </div>
       {loading && <p className={styles.loading}>Loading...</p>}
+      {progress && <p className={styles.loading}>{progress}</p>}
       {imageSrc && <img src={imageSrc} alt="Generated" className={styles.generatedImage} />}
       <pre className={styles.responseBox}>{response}</pre>
     </div>

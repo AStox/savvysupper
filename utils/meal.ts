@@ -77,7 +77,7 @@ export enum Cuisines {
 export async function generateRecipe(
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
-  let dietaryRestrictions = [DietaryRestrictions.GlutenFree];
+  let dietaryRestrictions: DietaryRestrictions[] = [];
   progressCallback("Looking at Whats on Sale", 0);
   const proteinsOnSale = await getProteins();
   progressCallback("Thinking of a Recipe", 0.1);
@@ -124,7 +124,6 @@ async function getProteins(): Promise<Ingredient[]> {
     ...(await fetchSearchResults("Sausages", 3, true)),
     ...(await fetchSearchResults("Tofu", 3, true)),
     ...(await fetchSearchResults("Tempeh", 3, true)),
-    ...(await fetchSearchResults("Seitan", 3, true)),
     ...(await fetchSearchResults("Lentils", 3, true)),
     ...(await fetchSearchResults("Chickpeas", 3, true)),
     ...(await fetchSearchResults("Beans", 3, true)),
