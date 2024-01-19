@@ -77,12 +77,12 @@ export enum Cuisines {
 export async function generateRecipe(
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
-  let cuisine = Cuisines.Italian;
   let dietaryRestrictions = [DietaryRestrictions.GlutenFree];
   progressCallback("Looking at Whats on Sale", 0);
   const proteinsOnSale = await getProteins();
   progressCallback("Thinking of a Recipe", 0.1);
-  const recipeIdea = await generateRecipeIdea(proteinsOnSale, cuisine, dietaryRestrictions);
+  const previousRecipes = await getPreviousRecipes();
+  const recipeIdea = await generateRecipeIdea(proteinsOnSale, dietaryRestrictions, previousRecipes);
   (recipeIdea as any).dietaryRestrictions = dietaryRestrictions;
   console.log("RECIPE IDEA", recipeIdea);
   progressCallback("Choosing Ingredients", 0.2);
@@ -122,13 +122,26 @@ async function getProteins(): Promise<Ingredient[]> {
     ...(await fetchSearchResults("Seafood", 3, true)),
     ...(await fetchSearchResults("Bacon", 3, true)),
     ...(await fetchSearchResults("Sausages", 3, true)),
+    ...(await fetchSearchResults("Tofu", 3, true)),
+    ...(await fetchSearchResults("Tempeh", 3, true)),
+    ...(await fetchSearchResults("Seitan", 3, true)),
+    ...(await fetchSearchResults("Lentils", 3, true)),
+    ...(await fetchSearchResults("Chickpeas", 3, true)),
+    ...(await fetchSearchResults("Beans", 3, true)),
+    ...(await fetchSearchResults("Quinoa", 3, true)),
+    ...(await fetchSearchResults("Eggs", 3, true)),
   ];
+}
+
+async function getPreviousRecipes(): Promise<string[]> {
+  const recipes = await fetch("/api/getRecipes").then((res) => res.json());
+  return recipes.map((recipe: Recipe) => recipe.title);
 }
 
 async function generateRecipeIdea(
   proteinsOnSale: Ingredient[],
-  cuisine?: string,
-  dietaryRestrictions?: string[]
+  dietaryRestrictions: string[],
+  previousRecipes: string[]
 ): Promise<{
   title: string;
   protein: string;
@@ -136,7 +149,13 @@ async function generateRecipeIdea(
   serves: number;
   cuisine: string;
 }> {
-  const preamble = await generateRecipeIdeaPreamble(proteinsOnSale, cuisine, dietaryRestrictions);
+  const preamble = await generateRecipeIdeaPreamble(
+    proteinsOnSale,
+    dietaryRestrictions,
+    previousRecipes,
+    []
+  );
+  console.log("PREAMBLE", preamble);
   let chatHistory = [
     {
       role: "user",
@@ -150,11 +169,8 @@ async function generateRecipeIdea(
     protein: response.protein,
     description: response.description,
     serves: response.serves,
-    cuisine: cuisine || response.cuisine,
+    cuisine: response.cuisine,
   } as any;
-  if (cuisine) {
-    recipeIdea.cuisine = cuisine;
-  }
   return recipeIdea;
 }
 

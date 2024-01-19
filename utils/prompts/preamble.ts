@@ -10,15 +10,17 @@
 // import HotDogsAndSausages from "../../data/ingredients/Hot_Dogs_&_Sausages.json";
 
 import { Ingredient } from "@prisma/client";
-import { fetchSearchResults } from "../search";
 import { DietaryRestrictions, Recipe } from "../meal";
 
 export const generateRecipeIdeaPreamble = async (
   proteinsOnSale: Ingredient[],
-  cuisine?: string,
-  dietaryRestrictions?: string[],
-  ingredients?: Ingredient[]
+  dietaryRestrictions: string[],
+  previousRecipes: string[],
+  ingredients: Ingredient[]
 ) => `You are a helpful algorithm designed to take in grocery store sale data and output a delicioius recipe.
+
+  Try to avoid generating anything too similar to these: ${previousRecipes.join(", ")}
+
   Recipes should be healthy, balanced meals.
   Your recipes are delicious, diverse, healthy, and draw from multiple cultures and cuisines.
   Your recipes should be diverse and come from all over the world.
@@ -30,8 +32,8 @@ export const generateRecipeIdeaPreamble = async (
 
   Return one recipe in JSON following this example:
   {
-    protein: "Chicken Leg Quarters Value Size 3-5 Pieces",
-    ${cuisine ? "" : `cuisine: "Mexican",`}
+    protein: "Chicken Leg Quarters",
+    cuisine: "Mexican",
     title: "Sweet Potato and Chicken Hash",
     description: "A cozy, hearty meal to warm you on those cold winter nights. lots of protein and veggies to keep you full and healthy."
     serves: 4,
