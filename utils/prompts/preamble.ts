@@ -68,18 +68,9 @@ export const generateRecipeInstructionsPreamble = async (
 ) => `You are a helpful algorithm designed to take in grocery store sale data and output diverse and delicioius recipes.
 given the following recipe, come up with the instructions and return them following this example JSON:
 {
-  instructions: [
-    "Preheat oven to 425°F.",
-    "Chop all vegetables.",
-    "In a large bowl, toss sweet potatoes, zucchini, onion, and broccoli with olive oil, salt, and pepper.",
-    "Spread the vegetables on a baking sheet and roast in the oven for 25 minutes.",
-    "Cook the brown rice as per the instructions on the package.",
-    "Meanwhile, heat a large non-stick skillet over medium-high heat and cook the chicken breasts for 6-8 minutes on each side or until cooked through.",
-    "Once the vegetables are roasted, add the rice and chicken to the bowl and toss to combine.",
-    "Serve immediately and enjoy!"
-  ],
-  prepTime: 15,
-  cookTime: 30,
+  instructions: string[],
+  prepTime: number,
+  cookTime: number,
 }
 
   Recipe:
@@ -172,7 +163,7 @@ export const generateFinalizeRecipePreamble2 =
   `;
 
 export const generateImagePreamble = async (recipe: Recipe) => `
-  A studio quality photo of the following recipe plated and ready to serve in a nice, cosy setting:
+  A studio quality photo of the following recipe plated and ready to serve in a nice, cosy setting. The plated dish should be generally alone in the photo. The table it's on should be of any normal material:
     ${JSON.stringify({
       title: recipe.title,
       description: recipe.description,
