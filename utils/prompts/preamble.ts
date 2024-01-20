@@ -171,3 +171,48 @@ export const generateImagePreamble = async (recipe: Recipe) => `
       instructions: recipe.instructions,
     })}
   `;
+
+export const generateLeftoversPreamble = (recipe: Recipe) => `
+    Take a look at this recipe's ingredients list, and the associated shopping list.
+    I want you to figure out what amount of leftovers there will be for each ingredient by roughly subtracting the ingredient amount from the shopping list amount.
+
+    Return a JSON object in the following format, with an object containing a title, amountLeftOver, and units field for each ingredient in the recipe's shopping list:
+    [
+      {
+        title: string;
+        amountLeftOver: number;
+        units: string;
+      }
+    ]
+
+    Recipe's ingredients:
+    ${recipe.ingredients.priced
+      .map((item) => `${item.title}: ${item.amount} ${item.units}`)
+      .join("\n")}
+
+    Recipe's shopping list:
+    ${recipe.shoppingList.map((item) => `${item.title}: ${item.quantity}`).join("\n")}
+  `;
+
+export const generateNextRecipePreamble = async (
+  leftovers: { title: string; quantity: string }[],
+  ingredientLists: { title: string; quantity: string }[][]
+) => `
+      I'm going to show you a list of leftovers and a list of possible ingredients lists. I want you to choose the ingredient list that most closely matches the leftovers I have.
+      
+      Return the index of the ingredient list that most closely matches the leftovers like so:
+      {
+        index: number;
+      }
+
+      My leftovers:
+      ${leftovers.map((item) => `${item.title}: ${item.quantity}`).join("\n")}
+
+      Possible ingredient lists:
+      ${ingredientLists
+        .map(
+          (list, index) =>
+            `${index}: ${list.map((item) => `${item.title}: ${item.quantity}`).join("\n")}`
+        )
+        .join("\n\n")}
+`;

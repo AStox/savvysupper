@@ -5,23 +5,6 @@ import React from "react";
 import { Ingredient } from "@/pages/api/ingredientScraper";
 import { Recipe } from "@/utils/meal";
 
-// export interface Meal {
-//   id: string;
-//   title: string;
-//   image: string;
-//   ingredients: Ingredient[];
-//   instructions: string[];
-//   vegetarian: boolean;
-//   vegan: boolean;
-//   glutenFree: boolean;
-//   dairyFree: boolean;
-//   healthy: boolean;
-//   cheap: boolean;
-//   preparationMinutes: number;
-//   cookingMinutes: number;
-//   pricePerServing: number;
-// }
-
 interface MealCardProps {
   meal: Recipe;
   onReroll: () => void;
@@ -51,6 +34,14 @@ const MealCard: React.FC<MealCardProps> = ({ meal, onReroll, onSelect }) => {
         </button>
       </div>
       <div className="absolute bottom-0 p-4">
+        {meal.dietaryRestrictions.map((restriction) => (
+          <span
+            key={restriction}
+            className="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+          >
+            {restriction}
+          </span>
+        ))}
         <div>
           <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
             Cost per Serving
