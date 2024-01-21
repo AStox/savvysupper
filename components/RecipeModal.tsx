@@ -10,8 +10,14 @@ interface RecipeModalProps {
 
 const RecipeModal: React.FC<RecipeModalProps> = ({ meal, onClose }) => {
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-      <div className="relative top-20 mx-auto p-5 border w-3/4 md:w-1/2 lg:w-1/3 shadow-lg rounded-md bg-white">
+    <div
+      className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50"
+      onClick={onClose}
+    >
+      <div
+        className="relative top-20 mx-auto p-5 border w-4/5 md:w-3/4 lg:w-3/4 shadow-lg rounded-md bg-white"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex flex-col items-center space-y-4">
           <Image
             src={meal.image}
@@ -25,12 +31,12 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ meal, onClose }) => {
           <div className="text-left w-full">
             <h3 className="text-lg font-semibold text-gray-700">Ingredients</h3>
             <ul className="list-disc pl-5">
-              {meal.ingredients.priced.map((ingredient, index) => (
+              {meal.ingredients.map((ingredient, index) => (
                 <li key={index} className="text-gray-600">
                   {ingredient.title}{" "}
                 </li>
               ))}
-              {meal.ingredients.unpriced.map((ingredient, index) => (
+              {meal.unpricedIngredients.map((ingredient, index) => (
                 <li key={index} className="text-gray-600">
                   {ingredient.title}{" "}
                 </li>
