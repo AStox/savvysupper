@@ -201,19 +201,19 @@ export const generateLeftoversPreamble = (recipe: Recipe) => `
       .join("\n")}
   `;
 
-export const generateNextRecipePreamble = async (
-  leftovers: { title: string; quantity: string }[],
+export const generateNextRecipePreamble = (
+  leftovers: { title: string; amountLeftOver: number; units: string }[],
   ingredientLists: { title: string; quantity: string; amountToBuy: number }[][]
 ) => `
       I'm going to show you a list of leftovers and a list of possible ingredients lists. I want you to choose the ingredient list that most closely matches the leftovers I have.
       
-      Return the index of the ingredient list that most closely matches the leftovers like so:
+      Return the index of the ingredient list that most closely matches the leftovers in JSON like so:
       {
         index: number;
       }
 
       My leftovers:
-      ${leftovers.map((item) => `${item.title}: ${item.quantity}`).join("\n")}
+      ${leftovers.map((item) => `${item.title}: ${item.amountLeftOver} ${item.units}`).join("\n")}
 
       Possible ingredient lists:
       ${ingredientLists

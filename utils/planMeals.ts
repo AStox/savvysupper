@@ -23,45 +23,45 @@ export const PlanMeals = async (mealCount: number, dietaryRestrictions: DietaryR
   meals.push(first);
   const leftovers = JSON.parse(await getLeftovers(first)).leftovers;
   console.log("FIRST RECIPE LEFTOVERS", leftovers);
-  const next = await getNextRecipe(leftovers, allMeals);
+  const next = await getNextRecipe(
+    leftovers,
+    allMeals.filter((meal: Recipe) => meal.id !== first.id)
+  );
   meals.push(next);
   return meals;
 };
 
-const getNextRecipe = async (leftovers: Ingredient[], recipes: Recipe[]) => {
-  console.log(
-    "Get next recipe PREAMBLE",
-    generateNextRecipePreamble(
-      leftovers.map((item) => ({ title: item.title, quantity: item.quantity })),
-      recipes.map((recipe) =>
-        recipe.shoppingList.map((item) => ({
-          title: item.ingredient.title,
-          quantity: item.ingredient.quantity,
-          amountToBuy: item.amountToBuy,
-        }))
-      )
+const getNextRecipe = async (
+  leftovers: { title: string; units: string; amountLeftOver: number }[],
+  recipes: Recipe[]
+) => {
+  const preamble = generateNextRecipePreamble(
+    leftovers.map((item) => ({
+      title: item.title,
+      amountLeftOver: item.amountLeftOver,
+      units: item.units,
+    })),
+    recipes.map((recipe) =>
+      recipe.shoppingList.map((item) => ({
+        title: item.ingredient.title,
+        quantity: item.ingredient.quantity,
+        amountToBuy: item.amountToBuy,
+      }))
     )
   );
-  const { index } = await fetchChatResponse([
-    {
-      role: "user",
-      content: generateNextRecipePreamble(
-        leftovers.map((item) => ({ title: item.title, quantity: item.quantity })),
-        recipes.map((recipe) =>
-          recipe.shoppingList.map((item) => ({
-            title: item.ingredient.title,
-            quantity: item.ingredient.quantity,
-            amountToBuy: item.amountToBuy,
-          }))
-        )
-      ),
-    },
-  ]);
+  console.log("Get next recipe PREAMBLE", preamble);
+  const { index } = JSON.parse(
+    await fetchChatResponse([
+      {
+        role: "user",
+        content: preamble,
+      },
+    ])
+  );
   return recipes[index];
 };
 
 const getLeftovers = async (recipe: Recipe) => {
-  console.log("Get lefovers PREAMBLE", generateLeftoversPreamble(recipe));
   const leftovers = await fetchChatResponse([
     {
       role: "user",
