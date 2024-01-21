@@ -175,28 +175,35 @@ export const generateImagePreamble = async (recipe: Recipe) => `
 export const generateLeftoversPreamble = (recipe: Recipe) => `
     Take a look at this recipe's ingredients list, and the associated shopping list.
     I want you to figure out what amount of leftovers there will be for each ingredient by roughly subtracting the ingredient amount from the shopping list amount.
+    Don't include any leftovers that only have a very small amount, like less than 1/4 of the ingredient amount.
 
     Return a JSON object in the following format, with an object containing a title, amountLeftOver, and units field for each ingredient in the recipe's shopping list:
-    [
-      {
-        title: string;
-        amountLeftOver: number;
-        units: string;
-      }
-    ]
+    { leftovers: [
+        {
+          title: string;
+          amountLeftOver: number;
+          units: string;
+        }
+      ]
+    }
 
     Recipe's ingredients:
-    ${recipe.ingredients.priced
+    ${(recipe.ingredients as unknown as { title: string; amount: number; units: string }[])
       .map((item) => `${item.title}: ${item.amount} ${item.units}`)
       .join("\n")}
 
     Recipe's shopping list:
-    ${recipe.shoppingList.map((item) => `${item.title}: ${item.quantity}`).join("\n")}
+    ${recipe.shoppingList
+      .map(
+        (item) =>
+          `${item.ingredient.title}: ${item.ingredient.quantity}. Amount to buy: ${item.amountToBuy}`
+      )
+      .join("\n")}
   `;
 
 export const generateNextRecipePreamble = async (
   leftovers: { title: string; quantity: string }[],
-  ingredientLists: { title: string; quantity: string }[][]
+  ingredientLists: { title: string; quantity: string; amountToBuy: number }[][]
 ) => `
       I'm going to show you a list of leftovers and a list of possible ingredients lists. I want you to choose the ingredient list that most closely matches the leftovers I have.
       
@@ -212,7 +219,9 @@ export const generateNextRecipePreamble = async (
       ${ingredientLists
         .map(
           (list, index) =>
-            `${index}: ${list.map((item) => `${item.title}: ${item.quantity}`).join("\n")}`
+            `${index}: ${list
+              .map((item) => `${item.title}: ${item.quantity}. amountToBuy: ${item.amountToBuy}`)
+              .join("\n")}`
         )
         .join("\n\n")}
 `;

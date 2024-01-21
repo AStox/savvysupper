@@ -32,7 +32,7 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
 
   useEffect(() => {
     const fetchMeals = async () => {
-      const recipes = await PlanMeals(7, [DietaryRestrictions.Vegetarian]);
+      const recipes = await PlanMeals(7, []);
       console.log("recipes", recipes);
       setMeals(recipes);
     };

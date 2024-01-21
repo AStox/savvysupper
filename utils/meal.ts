@@ -36,11 +36,13 @@ export interface Recipe {
     }[];
   };
   shoppingList: {
-    title: string;
-    quantity: string;
-    currentPrice: number;
-    regularPrice: number;
-    onSale: boolean;
+    ingredient: {
+      title: string;
+      quantity: string;
+      currentPrice: number;
+      regularPrice: number;
+      onSale: boolean;
+    };
     amountToBuy: number;
   }[];
   instructions: string[];
@@ -235,8 +237,14 @@ async function generateRecipeInstructions(recipeIdea: {
 function calculateCosts(pricedRecipe: Recipe) {
   let recipeWithCosts = {
     ...pricedRecipe,
-    totalCost: pricedRecipe.shoppingList.reduce((acc, item) => acc + item.currentPrice, 0),
-    regularPrice: pricedRecipe.shoppingList.reduce((acc, item) => acc + item.regularPrice, 0),
+    totalCost: pricedRecipe.shoppingList.reduce(
+      (acc, item) => acc + item.ingredient.currentPrice,
+      0
+    ),
+    regularPrice: pricedRecipe.shoppingList.reduce(
+      (acc, item) => acc + item.ingredient.regularPrice,
+      0
+    ),
   };
   return recipeWithCosts;
 }

@@ -10,6 +10,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           array_contains: dietaryRestrictions,
         },
       },
+      include: {
+        shoppingList: {
+          include: {
+            ingredient: true, // Include the related Ingredient data
+          },
+        },
+      },
     });
     const shuffledRecipes = shuffleArray(allRecipes).slice(
       0,
