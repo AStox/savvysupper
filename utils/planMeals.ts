@@ -1,5 +1,5 @@
 import { Ingredient } from "@/pages/api/ingredientScraper";
-import { DietaryRestrictions, Recipe } from "./meal";
+import { DietaryRestrictions, Recipe } from "./generateRecipe";
 import { fetchChatResponse } from "./chat";
 import { generateLeftoversPreamble, generateNextRecipePreamble } from "./prompts/preamble";
 import { get } from "http";

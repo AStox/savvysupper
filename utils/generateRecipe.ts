@@ -6,9 +6,9 @@ import {
   generateRecipeIdeaPreamble,
   generateRecipeIngredientsPreamble,
   generateRecipeInstructionsPreamble,
-} from "../utils/prompts/preamble";
-import { fetchChatResponse } from "../utils/chat";
-import { fetchSearchResults } from "../utils/search";
+} from "./prompts/preamble";
+import { fetchChatResponse } from "./chat";
+import { fetchSearchResults } from "./search";
 import prisma from "@/lib/prisma";
 import { Ingredient } from "@prisma/client";
 import { generateImage } from "./image";
@@ -95,6 +95,7 @@ export async function generateRecipe(
   console.log("RECIPE", recipe);
   progressCallback("Making a Shopping List", 0.5);
   const pricedRecipe = await priceIngredients(recipe);
+  console.log("PRICED RECIPE", pricedRecipe);
   const recipeWithCosts = calculateCosts(pricedRecipe);
   console.log("RECIPE WITH COSTS", recipeWithCosts);
   progressCallback("Doing a Taste Test", 0.7);
@@ -237,14 +238,8 @@ async function generateRecipeInstructions(recipeIdea: {
 function calculateCosts(pricedRecipe: Recipe) {
   let recipeWithCosts = {
     ...pricedRecipe,
-    totalCost: pricedRecipe.shoppingList.reduce(
-      (acc, item) => acc + item.ingredient.currentPrice,
-      0
-    ),
-    regularPrice: pricedRecipe.shoppingList.reduce(
-      (acc, item) => acc + item.ingredient.regularPrice,
-      0
-    ),
+    totalCost: pricedRecipe.shoppingList.reduce((acc, item) => acc + item.currentPrice, 0),
+    regularPrice: pricedRecipe.shoppingList.reduce((acc, item) => acc + item.regularPrice, 0),
   };
   return recipeWithCosts;
 }

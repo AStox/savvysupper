@@ -8,13 +8,9 @@ Ingredients:
 4 garlic cloves, (minced)
 2 pounds ground chicken
 1 teaspoon salt, (plus more for seasoning)
-Top of Form
-Bottom of Form
 2 tablespoons ground cumin
 1 tablespoon fennel seeds
 1 tablespoon dried oregano
-Top of Form
-Bottom of Form
 2 teaspoons chili powder
 3 tablespoons flour
 2 15-ounce cans cannellini or other white beans, rinsed and drained
@@ -33,8 +29,6 @@ Ladle the chili into serving bowls. Sprinkle with the Parmesan cheese and choppe
 Shrimp & Rice
 Ingredients:
 2 tablespoons olive oil
-Top of Form
-Bottom of Form
 2 shallots, chopped
 1 (400g) can cherry tomatoes, 
 1 1/2 teaspoons kosher salt, divided

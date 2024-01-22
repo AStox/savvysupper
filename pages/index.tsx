@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
+import styles from "./index.module.css";
 import TopBar from "../components/TopBar";
-import MealPlan from "../components/MealPlan";
+import MealPlanSection from "../components/MealPlanSection";
 import SecondaryTopBar from "../components/SecondaryTopBar";
 import { AppStateProvider, useAppState } from "../components/AppStateContext";
 import { GetStaticProps } from "next";
 import prisma from "../lib/prisma";
-import { Recipe } from "@/utils/meal";
+import { Recipe } from "@/utils/generateRecipe";
+import ShoppingListSection from "@/components/ShoppingListSection";
 
 // export const getStaticProps: GetStaticProps = async () => {
 //   const recipes = await prisma.recipe.findMany();
@@ -20,15 +22,15 @@ import { Recipe } from "@/utils/meal";
 // };
 
 const Home: React.FC = () => {
-  const { meals } = useAppState();
-  // const totalCost = mockMeals.reduce((acc, meal) => acc + meal.cost, 0); // Example calculation
-  // const totalSavings = mockMeals.reduce((acc, meal) => acc + meal.savings, 0); // Example calculation
   return (
     <AppStateProvider>
-      <div>
+      <div className="flex flex-col h-screen">
         <TopBar />
         <SecondaryTopBar />
-        <MealPlan />
+        <div className="flex flex-row flex-grow overflow-hidden">
+          <MealPlanSection />
+          <ShoppingListSection />
+        </div>
       </div>
     </AppStateProvider>
   );

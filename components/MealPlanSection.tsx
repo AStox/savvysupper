@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import MealCard from "./MealCard";
 import { useAppState } from "./AppStateContext";
 import RecipeModal from "./RecipeModal";
-import { Recipe } from "@/utils/meal";
+import { Recipe } from "@/utils/generateRecipe";
+import ShoppingListSection from "./ShoppingListSection";
 
-const MealPlan: React.FC = () => {
+const MealPlanSection: React.FC = () => {
   const [selectedMeal, setSelectedMeal] = useState<Recipe | null>(null);
   const { meals } = useAppState();
   const recipes = meals;
@@ -19,7 +20,7 @@ const MealPlan: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-32 md:px-8 lg:px-16">
+    <div className="flex-grow container mx-auto px-4 py-32 md:px-8 lg:px-16">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {recipes?.map((recipe) => (
           <MealCard
@@ -35,4 +36,4 @@ const MealPlan: React.FC = () => {
   );
 };
 
-export default MealPlan;
+export default MealPlanSection;

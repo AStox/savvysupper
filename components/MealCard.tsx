@@ -3,7 +3,7 @@ import { faRedo } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import React from "react";
 import { Ingredient } from "@/pages/api/ingredientScraper";
-import { Recipe } from "@/utils/meal";
+import { Recipe } from "@/utils/generateRecipe";
 
 interface MealCardProps {
   meal: Recipe;

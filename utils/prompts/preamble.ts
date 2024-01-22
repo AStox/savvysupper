@@ -10,7 +10,7 @@
 // import HotDogsAndSausages from "../../data/ingredients/Hot_Dogs_&_Sausages.json";
 
 import { Ingredient } from "@prisma/client";
-import { DietaryRestrictions, Recipe } from "../meal";
+import { DietaryRestrictions, Recipe } from "../generateRecipe";
 
 export const generateRecipeIdeaPreamble = async (
   proteinsOnSale: Ingredient[],
@@ -52,10 +52,11 @@ given the following recipe idea, choose the ingredients and return them followin
     unpriced: {title: "string", amount: number, units: "string"}[]
   },
 }
-
+  Do your best to estimate the amount of each ingredient in one of the following units:"g", "ml", "oz". Even if the recipe calls for 2 salmon fillets, please estimate a weight in "g" for those fillets.
   Unpriced ingredients should be common pantry items like cooking oils, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary, etc.
   Unpriced ingredients should not include things like fresh herbs, like fresh basil, fresh rosemary, fresh thyme, etc.
   Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
+  Optimize for cost, even if that means buying in bulk.
 
   Recipe:
   ${recipeIdea.title}
@@ -163,7 +164,10 @@ export const generateFinalizeRecipePreamble2 =
   `;
 
 export const generateImagePreamble = async (recipe: Recipe) => `
-  A studio quality photo of the following recipe plated and ready to serve in a nice, cosy setting. The plated dish should be generally alone in the photo. The table it's on should be of any normal material:
+  A brightly lit, studio quality photo of the following recipe plated and ready to serve in a nice, cosy setting. The plated dish should be alone in the photo. 
+  The meal should use realistic but bright colours and should look appetizing and delicious.
+
+  Recipe:
     ${JSON.stringify({
       title: recipe.title,
       description: recipe.description,

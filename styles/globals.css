@@ -22,3 +22,7 @@ body {
   background-position: center -10%;
   background-size: cover;
 }
+
+.transition-width {
+  transition: width 0.3s ease-in-out;
+}

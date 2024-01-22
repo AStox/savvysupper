@@ -1,0 +1,4 @@
+.shoppingList {
+  max-height: calc(100vh - 120px); /* Adjust height based on top position */
+  overflow-y: auto; /* Enables scroll for long lists */
+}

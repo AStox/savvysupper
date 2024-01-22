@@ -1,5 +1,5 @@
 import { defaultChatHistory } from "../components/AppStateContext";
-import { Recipe } from "./meal";
+import { Recipe } from "./generateRecipe";
 
 async function getMeal(
   first: boolean,

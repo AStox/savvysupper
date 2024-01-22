@@ -1,17 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { getMeal } from "../utils/api";
-import { defaultChatHistory, useAppState } from "./AppStateContext";
-import { DietaryRestrictions, generateRecipe } from "@/utils/meal";
+import { useAppState } from "./AppStateContext";
+import { DietaryRestrictions, generateRecipe } from "@/utils/generateRecipe";
 import prisma from "../lib/prisma";
-import { Recipe } from "@/utils/meal";
+import { Recipe } from "@/utils/generateRecipe";
 
 type props = {
   setMeals: (meals: Recipe[]) => void;
 };
 
 const SecondaryTopBar: React.FC = (props) => {
-  const { meals, setMeals, chatHistory, setChatHistory, generating, setGenerating } = useAppState();
+  const { meals, setMeals, generating, setGenerating } = useAppState();
 
   const [response, setResponse] = useState("");
   const [dietaryRestrictions, setDietaryRestrictions] = useState<DietaryRestrictions[]>([]);
@@ -47,7 +47,7 @@ const SecondaryTopBar: React.FC = (props) => {
   };
 
   return (
-    <div className="bg-white shadow-md py-6 px-6 flex justify-center items-center">
+    <div className="bg-white shadow-md py-6 px-6 flex justify-center items-center z-20">
       <div className="flex items-center justify-around w-full max-w-4xl">
         <div className="flex-grow mr-4">
           <label htmlFor="number-of-meals" className="block text-gray-700 font-bold mb-2">
