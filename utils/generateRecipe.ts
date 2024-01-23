@@ -239,16 +239,22 @@ async function generateRecipeInstructions(recipeIdea: {
 function calculateCosts(pricedRecipe: Recipe) {
   let recipeWithCosts = {
     ...pricedRecipe,
-    totalCost: pricedRecipe.shoppingList.reduce((acc, item) => acc + item.currentPrice, 0),
-    regularPrice: pricedRecipe.shoppingList.reduce((acc, item) => acc + item.regularPrice, 0),
+    totalCost: pricedRecipe.shoppingList.reduce(
+      (acc, item) => acc + item.ingredient.currentPrice,
+      0
+    ),
+    regularPrice: pricedRecipe.shoppingList.reduce(
+      (acc, item) => acc + item.ingredient.regularPrice,
+      0
+    ),
   };
   return recipeWithCosts;
 }
 
 async function priceIngredients(recipe: Recipe) {
   recipe.shoppingList = [];
-  for (let i = 0; i < recipe.ingredients.priced.length; i++) {
-    const ingredient = recipe.ingredients.priced[i];
+  for (let i = 0; i < recipe.ingredients.length; i++) {
+    const ingredient = recipe.ingredients[i];
     console.log("Looking for Ingredient:", ingredient.title);
 
     const findClosestIngredient = async (
@@ -281,7 +287,10 @@ async function priceIngredients(recipe: Recipe) {
 
     const closestIngredientTitle = fromChat.title;
     const closestIngredient = (await fetchSearchResults(closestIngredientTitle, 1, false))[0];
-    recipe.shoppingList[i] = { ...closestIngredient, amountToBuy: fromChat.amountToBuy } as any;
+    recipe.shoppingList[i] = {
+      ingredient: { ...closestIngredient },
+      amountToBuy: fromChat.amountToBuy,
+    } as any;
   }
   return recipe;
 }

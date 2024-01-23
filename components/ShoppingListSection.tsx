@@ -133,9 +133,11 @@ const ShoppingListSection: React.FC = () => {
 
 function calculateLeftovers(meals: Recipe[]) {
   for (let i = 0; i < meals.length; i++) {
+    console.log("---------------------MEAL:", meals[i].title, "---------------------");
     meals[i].leftovers = [];
     const storeIngredients = meals[i].shoppingList.map((item) => item.ingredient.title);
     for (let j = 0; j < meals[i].shoppingList.length; j++) {
+      console.log("-", meals[i].shoppingList[j].ingredient.title, "-");
       const item = meals[i].shoppingList[j];
       console.log("ITEM:", item);
       const { amount, unit } = convertMeasurement(item.ingredient.quantity);

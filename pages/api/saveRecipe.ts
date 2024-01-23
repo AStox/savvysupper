@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Recipe } from "@/utils/generateRecipe";
 import prisma from "@/lib/prisma";
+import { Ingredient } from "@prisma/client";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { query } = req.query;
@@ -23,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 amountToBuy: item.amountToBuy,
                 ingredient: {
                   connect: {
-                    id: item.id,
+                    id: item.ingredient.id,
                   },
                 },
               };

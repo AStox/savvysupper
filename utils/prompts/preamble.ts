@@ -52,7 +52,8 @@ given the following recipe idea, choose the ingredients and return them followin
     unpriced: {title: "string", amount: number, units: "string"}[]
   },
 }
-  Do your best to estimate the amount of each ingredient in one of the following units:"g", "ml", "oz". Even if the recipe calls for 2 salmon fillets, please estimate a weight in "g" for those fillets.
+  priced ingredients' units should be one of the following: "g", "ml", "tsp", "tbsp", "cup", "oz", "lb", "ea"
+  unpriced units can be whatever makes sense.
   Unpriced ingredients should be common pantry items like cooking oils, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary, etc.
   Unpriced ingredients should not include things like fresh herbs, like fresh basil, fresh rosemary, fresh thyme, etc.
   Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
@@ -78,9 +79,9 @@ given the following recipe, come up with the instructions and return them follow
   ${recipeIdea.title}
   ${recipeIdea.description}
   Serves: ${recipeIdea.serves}
-  Ingredients: ${recipeIdea.ingredients?.priced
-    .map((item: any) => item.title)
-    .join(", ")}, ${recipeIdea.ingredients?.unpriced.map((item: any) => item.title).join(", ")}
+  Ingredients: ${recipeIdea.ingredients
+    ?.map((item: any) => item.title)
+    .join(", ")}, ${recipeIdea.unpricedIngredients?.map((item: any) => item.title).join(", ")}
 `;
 
 export const generatePricingIngredientsPreamble = async (
@@ -171,7 +172,7 @@ export const generateImagePreamble = async (recipe: Recipe) => `
     ${JSON.stringify({
       title: recipe.title,
       description: recipe.description,
-      ingredients: recipe.shoppingList.map((item) => item.title),
+      ingredients: recipe.shoppingList.map((item) => item.ingredient.title),
       instructions: recipe.instructions,
     })}
   `;
