@@ -24,17 +24,15 @@ export interface Recipe {
   prepTime: number;
   cookTime: number;
   ingredients: {
-    priced: {
-      title: string;
-      amount: number;
-      units: string;
-    }[];
-    unpriced: {
-      title: string;
-      amount: number;
-      units: string;
-    }[];
-  };
+    title: string;
+    amount: number;
+    units: string;
+  }[];
+  unpricedIngredients: {
+    title: string;
+    amount: number;
+    units: string;
+  }[];
   shoppingList: {
     ingredient: {
       title: string;
@@ -199,7 +197,8 @@ async function generateRecipeIngredients(recipeIdea: {
     protein: recipeIdea.protein,
     description: recipeIdea.description,
     serves: recipeIdea.serves,
-    ingredients: response.ingredients,
+    ingredients: response.ingredients.priced,
+    unpricedIngredients: response.ingredients.unpriced,
     dietaryRestrictions: recipeIdea.dietaryRestrictions,
   };
 }
@@ -211,6 +210,7 @@ async function generateRecipeInstructions(recipeIdea: {
   description: string;
   serves: number;
   ingredients: any;
+  unpricedIngredients: any;
   dietaryRestrictions: string[];
 }): Promise<Partial<Recipe>> {
   const preamble = await generateRecipeInstructionsPreamble(recipeIdea);
@@ -228,6 +228,7 @@ async function generateRecipeInstructions(recipeIdea: {
     description: recipeIdea.description,
     serves: recipeIdea.serves,
     ingredients: recipeIdea.ingredients,
+    unpricedIngredients: recipeIdea.unpricedIngredients,
     instructions: response.instructions,
     prepTime: response.prepTime,
     cookTime: response.cookTime,
