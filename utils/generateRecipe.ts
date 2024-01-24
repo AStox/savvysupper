@@ -112,25 +112,61 @@ export async function generateRecipe(
 }
 
 async function getProteins(): Promise<Ingredient[]> {
-  return [
-    ...(await fetchSearchResults("Beef", 3, true)),
-    ...(await fetchSearchResults("Veal", 3, true)),
-    ...(await fetchSearchResults("Chicken", 3, true)),
-    ...(await fetchSearchResults("Pork", 3, true)),
-    ...(await fetchSearchResults("Turkey", 3, true)),
-    ...(await fetchSearchResults("Lamb", 3, true)),
-    ...(await fetchSearchResults("Fish", 3, true)),
-    ...(await fetchSearchResults("Seafood", 3, true)),
-    ...(await fetchSearchResults("Bacon", 3, true)),
-    ...(await fetchSearchResults("Sausages", 3, true)),
-    ...(await fetchSearchResults("Tofu", 3, true)),
-    ...(await fetchSearchResults("Tempeh", 3, true)),
-    ...(await fetchSearchResults("Lentils", 3, true)),
-    ...(await fetchSearchResults("Chickpeas", 3, true)),
-    ...(await fetchSearchResults("Beans", 3, true)),
-    ...(await fetchSearchResults("Quinoa", 3, true)),
-    ...(await fetchSearchResults("Eggs", 3, true)),
+  const threshold = 0.86;
+  const proteins = [
+    ...(await fetchSearchResults("Beef", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Veal", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Chicken", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Pork", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Turkey", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Lamb", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Fish", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Seafood", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Bacon", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Sausages", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Tofu", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Tempeh", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Lentils", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Chickpeas", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Beans", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Quinoa", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
+    ...(await fetchSearchResults("Eggs", 3, true)).filter(
+      (item: any) => item.similarity > threshold
+    ),
   ];
+  return proteins;
 }
 
 async function getPreviousRecipes(): Promise<string[]> {
@@ -253,45 +289,51 @@ function calculateCosts(pricedRecipe: Recipe) {
 
 async function priceIngredients(recipe: Recipe) {
   recipe.shoppingList = [];
-  for (let i = 0; i < recipe.ingredients.length; i++) {
-    const ingredient = recipe.ingredients[i];
-    console.log("Looking for Ingredient:", ingredient.title);
+  await Promise.all(
+    recipe.ingredients.map(async (ingredient, i) => {
+      console.log("Looking for Ingredient:", ingredient.title);
 
-    const findClosestIngredient = async (
-      ingredient: { title: string; amount: number; units: string },
-      tryAgain: boolean
-    ) => {
-      const results = await fetchSearchResults(ingredient.title, 10, false);
-      const chatHistory = [
-        {
-          role: "user",
-          content: await generatePricingIngredientsPreamble(ingredient, results, recipe, tryAgain),
-        },
-      ];
+      const findClosestIngredient = async (
+        ingredient: { title: string; amount: number; units: string },
+        tryAgain: boolean
+      ) => {
+        const results = await fetchSearchResults(ingredient.title, 10, false);
+        const chatHistory = [
+          {
+            role: "user",
+            content: await generatePricingIngredientsPreamble(
+              ingredient,
+              results,
+              recipe,
+              tryAgain
+            ),
+          },
+        ];
 
-      const response = JSON.parse(await fetchChatResponse(chatHistory));
-      return response;
-    };
-    let fromChat = await findClosestIngredient(ingredient, true);
-    if (fromChat.newTitle) {
-      console.log("TRYING AGAIN WITH NEW TITLE", fromChat.newTitle);
-      fromChat = await findClosestIngredient(
-        {
-          title: fromChat.newTitle,
-          amount: ingredient.amount,
-          units: ingredient.units,
-        },
-        false
-      );
-    }
+        const response = JSON.parse(await fetchChatResponse(chatHistory));
+        return response;
+      };
 
-    const closestIngredientTitle = fromChat.title;
-    const closestIngredient = (await fetchSearchResults(closestIngredientTitle, 1, false))[0];
-    recipe.shoppingList[i] = {
-      ingredient: { ...closestIngredient },
-      amountToBuy: fromChat.amountToBuy,
-    } as any;
-  }
+      let fromChat = await findClosestIngredient(ingredient, true);
+      if (fromChat.newTitle) {
+        console.log("TRYING AGAIN WITH NEW TITLE", fromChat.newTitle);
+        fromChat = await findClosestIngredient(
+          {
+            title: fromChat.newTitle,
+            amount: ingredient.amount,
+            units: ingredient.units,
+          },
+          false
+        );
+      }
+      const closestIngredientTitle = fromChat.title;
+      const closestIngredient = (await fetchSearchResults(closestIngredientTitle, 1, false))[0];
+      recipe.shoppingList[i] = {
+        ingredient: { ...closestIngredient },
+        amountToBuy: fromChat.amountToBuy,
+      } as any;
+    })
+  );
   return recipe;
 }
 

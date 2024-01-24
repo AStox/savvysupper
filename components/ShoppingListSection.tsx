@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAppState } from "./AppStateContext";
-import styles from "./ShoppingListSection.module.css"; // Import the CSS module
+import styles from "./ShoppingListSection.module.css";
 import { Recipe } from "@/utils/generateRecipe";
 
 // interface ShoppingList {

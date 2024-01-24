@@ -15,19 +15,19 @@ export const fetchMeals = async (mealCount: number, dietaryRestrictions: Dietary
 export const PlanMeals = async (mealCount: number, dietaryRestrictions: DietaryRestrictions[]) => {
   let meals = [];
   const allMeals = await fetchMeals(mealCount, dietaryRestrictions);
-  if (allMeals.length < mealCount) {
-    throw new Error("Not enough recipes to plan meals");
-  }
+  // if (allMeals.length < mealCount) {
+  //   throw new Error("Not enough recipes to plan meals");
+  // }
   const first = allMeals[Math.floor(Math.random() * allMeals.length)];
   console.log("FIRST RECIPE", first);
   meals.push(first);
-  const leftovers = JSON.parse(await getLeftovers(first)).leftovers;
-  console.log("FIRST RECIPE LEFTOVERS", leftovers);
-  const next = await getNextRecipe(
-    leftovers,
-    allMeals.filter((meal: Recipe) => meal.id !== first.id)
-  );
-  meals.push(next);
+  // const leftovers = JSON.parse(await getLeftovers(first)).leftovers;
+  // console.log("FIRST RECIPE LEFTOVERS", leftovers);
+  // const next = await getNextRecipe(
+  //   leftovers,
+  //   allMeals.filter((meal: Recipe) => meal.id !== first.id)
+  // );
+  // meals.push(next);
   return meals;
 };
 
