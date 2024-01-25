@@ -41,6 +41,7 @@ export interface Recipe {
       regularPrice: number;
       onSale: boolean;
     };
+    recipeIngredientTitle: string;
     amountToBuy: number;
   }[];
   instructions: string[];
@@ -331,6 +332,7 @@ async function priceIngredients(recipe: Recipe) {
       recipe.shoppingList[i] = {
         ingredient: { ...closestIngredient },
         amountToBuy: fromChat.amountToBuy,
+        recipeIngredientTitle: ingredient.title,
       } as any;
     })
   );

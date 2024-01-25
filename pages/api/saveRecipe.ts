@@ -22,6 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             ...r.shoppingList.map((item: any) => {
               return {
                 amountToBuy: item.amountToBuy,
+                recipeIngredientTitle: item.recipeIngredientTitle,
                 ingredient: {
                   connect: {
                     id: item.ingredient.id,

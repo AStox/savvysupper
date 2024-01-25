@@ -47,6 +47,7 @@ model RecipeIngredient {
     ingredientId String
     recipeId     String
     amountToBuy  Int
+    recipeIngredientTitle String
 
     ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
     recipe       Recipe     @relation(fields: [recipeId], references: [id])

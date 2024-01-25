@@ -146,8 +146,12 @@ function calculateLeftovers(meals: Recipe[]) {
       const amountBought = item.amountToBuy * amount;
 
       console.log(meals[i].ingredients[j]);
+      const recipeIngredient = meals[i].ingredients.find(
+        (ingredient) => ingredient.title === item.recipeIngredientTitle
+      );
+      console.log("RECIPE INGREDIENT:", recipeIngredient?.title);
       const { amount: recipeAmount } = convertMeasurement(
-        `${meals[i].ingredients[j].amount}${meals[i].ingredients[j].unit}`
+        `${recipeIngredient?.amount}${recipeIngredient?.units}`
       );
       const amountLeftOver = amountBought - recipeAmount;
       console.log("AMOUNT LEFT OVER:", amountLeftOver);
