@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   console.log(`Found ${ingredients.length} ingredients with no embedding`);
 
-  const batchSize = 1000;
+  const batchSize = 500;
   const totalBatches = Math.ceil(ingredients.length / batchSize);
 
   for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
@@ -28,14 +28,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     for (let i = 0; i < batchIngredients.length; i++) {
-      await prisma.$executeRaw`
+      if (response.data[i].embedding.length > 0) {
+        console.log("embedding length", response.data[i].embedding.length);
+        await prisma.$executeRaw`
         UPDATE ingredients
         SET embedding = ${response.data[i].embedding}::vector
         WHERE id = ${(batchIngredients[i] as any).id}
       `;
-      console.log(
-        `Updated ingredient ${start + i + 1} of ${ingredients.length}: ${batchIngredients[i].title}`
-      );
+        console.log(
+          `Updated ingredient ${start + i + 1} of ${ingredients.length}: ${
+            batchIngredients[i].title
+          }`
+        );
+      }
     }
   }
 
@@ -47,7 +52,7 @@ async function vectorizeData(data: Ingredient[]) {
   const openAI = new OpenAI({ apiKey: apiKey });
   const titles = data.map((ingredient) => ingredient.title);
   const response = await openAI.embeddings.create({
-    model: "text-embedding-ada-002",
+    model: "text-embedding-3-large",
     input: titles,
   });
 

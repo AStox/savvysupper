@@ -20,7 +20,7 @@ model Ingredient {
     dateAdded   DateTime           @default(now())
     RecipeIngredient RecipeIngredient[]
 
-    embedding   Unsupported("vector(1536)")?
+    embedding   Unsupported("vector(3072)")?
 
     @@map("ingredients")
 }

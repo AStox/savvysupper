@@ -11,8 +11,8 @@ async function similaritySearch(
   const apiKey: string | undefined = process.env.OPENAI_API_KEY;
   const openAI = new OpenAI({ apiKey: apiKey });
   const vectorResponse = await openAI.embeddings.create({
-    model: "text-embedding-ada-002",
-    input: query,
+    model: "text-embedding-3-large",
+    input: query.toLocaleLowerCase(),
   });
 
   const embedding = vectorResponse.data[0].embedding;

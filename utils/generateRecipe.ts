@@ -113,9 +113,9 @@ export async function generateRecipe(
 }
 
 async function getProteins(): Promise<Ingredient[]> {
-  const threshold = 0.86;
+  const threshold = 0.1;
   const proteins = [
-    ...(await fetchSearchResults("Beef", 3, true)).filter(
+    ...(await fetchSearchResults("Steak", 3, true)).filter(
       (item: any) => item.similarity > threshold
     ),
     ...(await fetchSearchResults("Veal", 3, true)).filter(

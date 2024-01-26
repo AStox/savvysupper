@@ -15,111 +15,111 @@ export interface Ingredient {
 const pages = {
   name: "Root",
   children: [
-    // {
-    //   name: "Fresh Fruits & Vegetables",
-    //   children: [
-    //     "Fresh Fruits",
-    //     "Fresh Vegetables",
-    //     "Fresh Cut Fruits & Vegetables",
-    //     "Fresh Herbs",
-    //     "Fresh Organic Fruits",
-    //     "Fresh Organic Vegetables",
-    //   ],
-    // },
-    // {
-    //   name: "Meat & Seafood",
-    //   children: [
-    //     "Beef & Veal",
-    //     "Chicken",
-    //     "Pork",
-    //     "Turkey",
-    //     "Lamb",
-    //     "Fish",
-    //     "Fish & Seafood",
-    //     "Bacon",
-    //     "Hot Dogs & Sausages",
-    //   ],
-    // },
-    // {
-    //   name: "Dairy & Eggs",
-    //   children: [
-    //     "Milk",
-    //     "Cream & Creamers",
-    //     "Butter & Margarine",
-    //     "Yogurt",
-    //     "Sour Cream",
-    //     "Whipped Cream",
-    //     "Eggs",
-    //   ],
-    // },
-    // {
-    //   name: "Cheese",
-    //   children: [
-    //     "Artisan Cheese",
-    //     "Shredded & Grated Cheese",
-    //     "Block Cheese",
-    //     "Cottage Cheese",
-    //     "Soft & Spreadable Cheese",
-    //     "Cream Cheese",
-    //   ],
-    // },
-    // {
-    //   name: "Pantry",
-    //   children: [
-    //     {
-    //       name: "Pasta, Noodles & Sauce",
-    //       children: ["Dry Pasta & Noodles", "Fresh Pasta", "Pasta Sauce"],
-    //     },
-    //     {
-    //       name: "Rice, Grains & Legumes",
-    //       children: [
-    //         "Dry Rice",
-    //         "Cornmeal",
-    //         "Couscous",
-    //         "Quinoa",
-    //         "Specialty Grains",
-    //         "Dry Beans",
-    //         "Canned Beans",
-    //         "Dry Lentils",
-    //         "Canned Lentils",
-    //         "Dry Peas",
-    //         "Canned Chickpeas",
-    //         "Barley",
-    //       ],
-    //     },
-    //     "Condiments",
-    //     "Spices & Seasoning",
-    //     "Marinades & Sauces",
-    //     "Oils, Vinegars & Salad Dressing",
-    //     {
-    //       name: "Canned & Pickled",
-    //       children: [
-    //         "Canned Baked Beans",
-    //         "Canned Fruit",
-    //         "Canned Tomatoes",
-    //         "Canned Vegetables",
-    //         "Marinated Vegetables",
-    //         "Olives",
-    //         "Pickles",
-    //       ],
-    //     },
-    //     {
-    //       name: "Soup & Broth",
-    //       children: ["Broth & Bouillon"],
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: "International Foods",
-    //   children: [
-    //     "Indian & South Asian",
-    //     "Caribbean",
-    //     "Chinese & East Asian",
-    //     "Thai & Southeast Asian",
-    //     "International Fresh Fruits & Vegetables",
-    //     "Latin",
-    //   ],
-    // },
+    {
+      name: "Fresh Fruits & Vegetables",
+      children: [
+        "Fresh Fruits",
+        "Fresh Vegetables",
+        "Fresh Cut Fruits & Vegetables",
+        "Fresh Herbs",
+        "Fresh Organic Fruits",
+        "Fresh Organic Vegetables",
+      ],
+    },
+    {
+      name: "Meat & Seafood",
+      children: [
+        "Beef & Veal",
+        "Chicken",
+        "Pork",
+        "Turkey",
+        "Lamb",
+        "Fish",
+        "Fish & Seafood",
+        "Bacon",
+        "Hot Dogs & Sausages",
+      ],
+    },
+    {
+      name: "Dairy & Eggs",
+      children: [
+        "Milk",
+        "Cream & Creamers",
+        "Butter & Margarine",
+        "Yogurt",
+        "Sour Cream",
+        "Whipped Cream",
+        "Eggs",
+      ],
+    },
+    {
+      name: "Cheese",
+      children: [
+        "Artisan Cheese",
+        "Shredded & Grated Cheese",
+        "Block Cheese",
+        "Cottage Cheese",
+        "Soft & Spreadable Cheese",
+        "Cream Cheese",
+      ],
+    },
+    {
+      name: "Pantry",
+      children: [
+        {
+          name: "Pasta, Noodles & Sauce",
+          children: ["Dry Pasta & Noodles", "Fresh Pasta", "Pasta Sauce"],
+        },
+        {
+          name: "Rice, Grains & Legumes",
+          children: [
+            "Dry Rice",
+            "Cornmeal",
+            "Couscous",
+            "Quinoa",
+            "Specialty Grains",
+            "Dry Beans",
+            "Canned Beans",
+            "Dry Lentils",
+            "Canned Lentils",
+            "Dry Peas",
+            "Canned Chickpeas",
+            "Barley",
+          ],
+        },
+        "Condiments",
+        "Spices & Seasoning",
+        "Marinades & Sauces",
+        "Oils, Vinegars & Salad Dressing",
+        {
+          name: "Canned & Pickled",
+          children: [
+            "Canned Baked Beans",
+            "Canned Fruit",
+            "Canned Tomatoes",
+            "Canned Vegetables",
+            "Marinated Vegetables",
+            "Olives",
+            "Pickles",
+          ],
+        },
+        {
+          name: "Soup & Broth",
+          children: ["Broth & Bouillon"],
+        },
+      ],
+    },
+    {
+      name: "International Foods",
+      children: [
+        "Indian & South Asian",
+        "Caribbean",
+        "Chinese & East Asian",
+        "Thai & Southeast Asian",
+        "International Fresh Fruits & Vegetables",
+        "Latin",
+      ],
+    },
     {
       name: "Plant Based",
       children: ["Meat Alternatives", "Tofu"],
@@ -158,7 +158,8 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
           el
             .querySelector('h3[data-test="fop-title"]')
             ?.textContent?.trim()
-            .replace(/^(.*?)\s+\d+(\.\d+)?\s+\w+.*$/, "$1") || "";
+            .replace(/^(.*?)\s+\d+(\.\d+)?\s+\w+.*$/, "$1")
+            .toLowerCase() || "";
 
         const quantity =
           el.querySelector(".weight__SingleTextLine-sc-1sjeki5-0")?.textContent?.trim() || "1 ea";
