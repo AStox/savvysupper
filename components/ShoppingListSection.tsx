@@ -14,12 +14,21 @@ import { Recipe } from "@/utils/generateRecipe";
 // ]
 // }
 
+enum Tab {
+  ShoppingList,
+  Leftovers,
+  Ingredients,
+}
+
 const ShoppingListSection: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [activeTab, setActiveTab] = useState<"shoppingList" | "leftovers">("shoppingList");
+  const [activeTab, setActiveTab] = useState<Tab>(Tab.Ingredients);
   const { meals } = useAppState();
-  calculateLeftovers(meals);
-  console.log("MEALS WITH LEFTOVERS:", meals);
+  const mealsWithLeftovers = meals.map((meal) => ({
+    ...meal,
+    leftovers: calculateLeftovers(meal),
+  }));
+  console.log("MEALS WITH LEFTOVERS:", mealsWithLeftovers);
 
   return (
     <div
@@ -36,21 +45,64 @@ const ShoppingListSection: React.FC = () => {
       <div className={`p-4 ${isOpen ? "block" : "hidden"}`}>
         <button
           className={`flex-1 py-2 ${
-            activeTab === "shoppingList" ? "border-b-2 border-blue-500" : ""
+            activeTab === Tab.Ingredients ? "border-b-2 border-blue-500" : ""
           }`}
-          onClick={() => setActiveTab("shoppingList")}
+          onClick={() => setActiveTab(Tab.Ingredients)}
+        >
+          Ingredients
+        </button>
+        <button
+          className={`flex-1 py-2 ${
+            activeTab === Tab.ShoppingList ? "border-b-2 border-blue-500" : ""
+          }`}
+          onClick={() => setActiveTab(Tab.ShoppingList)}
         >
           Shopping List
         </button>
         <button
-          className={`flex-1 py-2 ${activeTab === "leftovers" ? "border-b-2 border-blue-500" : ""}`}
-          onClick={() => setActiveTab("leftovers")}
+          className={`flex-1 py-2 ${
+            activeTab === Tab.Leftovers ? "border-b-2 border-blue-500" : ""
+          }`}
+          onClick={() => setActiveTab(Tab.Leftovers)}
         >
           Leftovers
         </button>
-        {activeTab === "shoppingList" && (
+        {activeTab === Tab.Ingredients && (
           <>
-            {meals.map((meal, index) => (
+            {mealsWithLeftovers.map((meal, index) => (
+              <div key={index} className="mb-4">
+                <h3 className="text-lg font-semibold text-gray-800">{meal.title}</h3>
+                <table className="min-w-full">
+                  <thead>
+                    <tr>
+                      <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
+                        Ingredient
+                      </th>
+                      <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
+                        Quantity
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {meal.ingredients.map((item, itemIndex) => (
+                      <tr key={itemIndex}>
+                        <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
+                          {item.title}
+                        </td>
+                        <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
+                          {item.amount} {item.units}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ))}
+          </>
+        )}
+        {activeTab === Tab.ShoppingList && (
+          <>
+            {mealsWithLeftovers.map((meal, index) => (
               <div key={index} className="mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">{meal.title}</h3>
                 <table className="min-w-full">
@@ -93,9 +145,9 @@ const ShoppingListSection: React.FC = () => {
             ))}
           </>
         )}
-        {activeTab === "leftovers" && (
+        {activeTab === Tab.Leftovers && (
           <>
-            {meals.map((meal, index) => (
+            {mealsWithLeftovers.map((meal, index) => (
               <div key={index} className="mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">{meal.title}</h3>
                 <table className="min-w-full">
@@ -131,41 +183,41 @@ const ShoppingListSection: React.FC = () => {
   );
 };
 
-function calculateLeftovers(meals: Recipe[]) {
-  for (let i = 0; i < meals.length; i++) {
-    console.log("---------------------MEAL:", meals[i].title, "---------------------");
-    meals[i].leftovers = [];
-    const storeIngredients = meals[i].shoppingList.map((item) => item.ingredient.title);
-    for (let j = 0; j < meals[i].shoppingList.length; j++) {
-      console.log("-", meals[i].shoppingList[j].ingredient.title, "-");
-      const item = meals[i].shoppingList[j];
-      console.log("ITEM:", item);
-      const { amount, unit } = convertMeasurement(item.ingredient.quantity);
-      console.log("AMOUNT:", amount);
-      console.log("UNIT:", unit);
-      const amountBought = item.amountToBuy * amount;
+function calculateLeftovers(meal: Recipe): any[] {
+  let leftovers: any[] = [];
+  console.log("---------------------MEAL:", meal.title, "---------------------");
+  // meals[i].leftovers = [];
+  const storeIngredients = meal.shoppingList.map((item) => item.ingredient.title);
+  for (let j = 0; j < meal.shoppingList.length; j++) {
+    console.log("-", meal.shoppingList[j].ingredient.title, "-");
+    const item = meal.shoppingList[j];
+    console.log("ITEM:", item);
+    const { amount, unit } = convertMeasurement(item.ingredient.quantity);
+    console.log("AMOUNT:", amount);
+    console.log("UNIT:", unit);
+    const amountBought = item.amountToBuy * amount;
 
-      console.log(meals[i].ingredients[j]);
-      const recipeIngredient = meals[i].ingredients.find(
-        (ingredient) => ingredient.title === item.recipeIngredientTitle
-      );
-      console.log("RECIPE INGREDIENT:", recipeIngredient?.title);
-      const { amount: recipeAmount } = convertMeasurement(
-        `${recipeIngredient?.amount}${recipeIngredient?.units}`
-      );
-      const amountLeftOver = amountBought - recipeAmount;
-      console.log("AMOUNT LEFT OVER:", amountLeftOver);
-      if (amountLeftOver > 0) {
-        const leftoverIngredient = {
-          title: item.ingredient.title,
-          amountLeftOver,
-          unit: unit,
-          currentPrice: item.ingredient.currentPrice,
-        };
-        meals[i].leftovers.push(leftoverIngredient);
-      }
+    console.log(meal.ingredients[j]);
+    const recipeIngredient = meal.ingredients.find(
+      (ingredient) => ingredient.title === item.recipeIngredientTitle
+    );
+    console.log("RECIPE INGREDIENT:", recipeIngredient?.title);
+    const { amount: recipeAmount } = convertMeasurement(
+      `${recipeIngredient?.amount}${recipeIngredient?.units}`
+    );
+    const amountLeftOver = amountBought - recipeAmount;
+    console.log("AMOUNT LEFT OVER:", amountLeftOver);
+    if (amountLeftOver > 0) {
+      const leftoverIngredient = {
+        title: item.ingredient.title,
+        amountLeftOver,
+        unit: unit,
+        currentPrice: item.ingredient.currentPrice,
+      };
+      leftovers.push(leftoverIngredient);
     }
   }
+  return leftovers;
 }
 
 type Unit = "kg" | "lbs" | "L";
