@@ -23,6 +23,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               return {
                 amountToBuy: item.amountToBuy,
                 recipeIngredientTitle: item.recipeIngredientTitle,
+                amountLeftover: item.amountLeftover,
+                units: item.units,
                 ingredient: {
                   connect: {
                     id: item.ingredient.id,
