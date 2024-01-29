@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppState } from "./AppStateContext";
 import styles from "./ShoppingListSection.module.css";
 import { Recipe } from "@/utils/generateRecipe";
+import { generateLeftoversPreamble } from "@/utils/prompts/preamble";
+import { fetchChatResponse } from "@/utils/chat";
 
 // interface ShoppingList {
 //     [
@@ -24,11 +26,22 @@ const ShoppingListSection: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Ingredients);
   const { meals } = useAppState();
-  const mealsWithLeftovers = meals.map((meal) => ({
-    ...meal,
-    leftovers: calculateLeftovers(meal),
-  }));
-  console.log("MEALS WITH LEFTOVERS:", mealsWithLeftovers);
+  const [mealsWithLeftovers, setMealsWithLeftovers] = useState<Recipe[]>([]);
+
+  useEffect(() => {
+    const fetchAllLeftovers = async () => {
+      const updatedMeals = await Promise.all(
+        meals.map(async (meal) => {
+          const leftovers = await fetchLeftovers(meal);
+          return { ...meal, leftovers };
+        })
+      );
+      setMealsWithLeftovers(updatedMeals);
+    };
+
+    fetchAllLeftovers();
+    console.log("mealsWithLeftovers", mealsWithLeftovers);
+  }, [meals]);
 
   return (
     <div
@@ -182,6 +195,18 @@ const ShoppingListSection: React.FC = () => {
     </div>
   );
 };
+
+async function fetchLeftovers(meal: Recipe): Promise<any[]> {
+  const preamble = await generateLeftoversPreamble(meal);
+  let chatHistory = [
+    {
+      role: "user",
+      content: preamble,
+    },
+  ];
+  const response = JSON.parse(await fetchChatResponse(chatHistory));
+  return response.leftovers as any[];
+}
 
 function calculateLeftovers(meal: Recipe): any[] {
   let leftovers: any[] = [];

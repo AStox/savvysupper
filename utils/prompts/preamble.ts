@@ -180,13 +180,12 @@ export const generateImagePreamble = async (recipe: Recipe) => `
 export const generateLeftoversPreamble = (recipe: Recipe) => `
     Take a look at this recipe's ingredients list, and the associated shopping list.
     I want you to figure out what amount of leftovers there will be for each ingredient by roughly subtracting the ingredient amount from the shopping list amount.
-    Don't include any leftovers that only have a very small amount, like less than 1/4 of the ingredient amount.
 
-    Return a JSON object in the following format, with an object containing a title, amountLeftOver, and units field for each ingredient in the recipe's shopping list:
+    Return a JSON object in the following format, with an object containing a title, amountLeftover, and units field for each ingredient in the recipe's shopping list:
     { leftovers: [
         {
           title: string;
-          amountLeftOver: number;
+          amountLeftover: number;
           units: string;
         }
       ]

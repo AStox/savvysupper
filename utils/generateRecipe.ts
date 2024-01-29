@@ -2,6 +2,7 @@ import {
   generateFinalizeRecipePreamble1,
   generateFinalizeRecipePreamble2,
   generateImagePreamble,
+  generateLeftoversPreamble,
   generatePricingIngredientsPreamble,
   generateRecipeIdeaPreamble,
   generateRecipeIngredientsPreamble,
@@ -101,8 +102,21 @@ export async function generateRecipe(
   const finalizedRecipeFields = await finalizeRecipe(recipeWithCosts);
   const finalizedRecipe = { ...recipeWithCosts, ...finalizedRecipeFields };
   console.log("FINALIZED RECIPE", finalizedRecipe);
+
+  progressCallback("Crunching some numbers", 0.8);
+  const leftovers = await calculateLeftovers(finalizedRecipe);
+  const recipeWithLeftovers = {
+    ...finalizedRecipe,
+    shoppingList: finalizedRecipe.shoppingList.map((item) => ({
+      ...item,
+      amountLeftover: leftovers.find((leftover) => leftover.title === item.ingredient.title)
+        ?.amountLeftover,
+      units: leftovers.find((leftover) => leftover.title === item.ingredient.title)?.units,
+    })),
+  };
+  console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
   progressCallback("Taking a Picture", 0.85);
-  const recipeWithImage = await generateImageForRecipe(finalizedRecipe);
+  const recipeWithImage = await generateImageForRecipe(recipeWithLeftovers);
 
   // save recipe to database
   progressCallback("Saving recipe", 0.95);
@@ -372,4 +386,17 @@ async function generateImageForRecipe(recipe: Recipe) {
   recipe.image = blobUrl;
   console.log("RECIPE WITH IMAGE: ", recipe);
   return recipe;
+}
+
+async function calculateLeftovers(meal: Recipe): Promise<any[]> {
+  const preamble = await generateLeftoversPreamble(meal);
+  console.log("PREAMBLE", preamble);
+  let chatHistory = [
+    {
+      role: "user",
+      content: preamble,
+    },
+  ];
+  const response = JSON.parse(await fetchChatResponse(chatHistory));
+  return response.leftovers as any[];
 }
