@@ -30,20 +30,20 @@ const ShoppingListSection: React.FC = () => {
   const { meals } = useAppState();
   const [mealsWithLeftovers, setMealsWithLeftovers] = useState<RecipeWithLeftovers[]>([]);
 
-  useEffect(() => {
-    const fetchAllLeftovers = async () => {
-      const updatedMeals = await Promise.all(
-        meals.map(async (meal) => {
-          const leftovers = await fetchLeftovers(meal);
-          return { ...meal, leftovers };
-        })
-      );
-      setMealsWithLeftovers(updatedMeals);
-    };
+  // useEffect(() => {
+  // const fetchAllLeftovers = async () => {
+  //   const updatedMeals = await Promise.all(
+  //     meals.map(async (meal) => {
+  //       const leftovers = await fetchLeftovers(meal);
+  //       return { ...meal, leftovers };
+  //     })
+  //   );
+  //   setMealsWithLeftovers(updatedMeals);
+  // };
 
-    fetchAllLeftovers();
-    console.log("mealsWithLeftovers", mealsWithLeftovers);
-  }, [meals]);
+  // fetchAllLeftovers();
+  // console.log("mealsWithLeftovers", mealsWithLeftovers);
+  // }, [meals]);
 
   return (
     <div
@@ -84,7 +84,7 @@ const ShoppingListSection: React.FC = () => {
         </button>
         {activeTab === Tab.Ingredients && (
           <>
-            {mealsWithLeftovers.map((meal, index) => (
+            {meals.map((meal, index) => (
               <div key={index} className="mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">{meal.title}</h3>
                 <table className="min-w-full">
@@ -117,7 +117,7 @@ const ShoppingListSection: React.FC = () => {
         )}
         {activeTab === Tab.ShoppingList && (
           <>
-            {mealsWithLeftovers.map((meal, index) => (
+            {meals.map((meal, index) => (
               <div key={index} className="mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">{meal.title}</h3>
                 <table className="min-w-full">
@@ -162,7 +162,7 @@ const ShoppingListSection: React.FC = () => {
         )}
         {activeTab === Tab.Leftovers && (
           <>
-            {mealsWithLeftovers.map((meal, index) => (
+            {meals.map((meal, index) => (
               <div key={index} className="mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">{meal.title}</h3>
                 <table className="min-w-full">
@@ -172,18 +172,18 @@ const ShoppingListSection: React.FC = () => {
                         Ingredient
                       </th>
                       <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
-                        Amount Leftover
+                        Leftover
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {meal.leftovers.map((item, itemIndex) => (
+                    {meal.shoppingList.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
-                          {item.title}
+                          {item.ingredient.title}
                         </td>
                         <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
-                          {item.amountLeftOver} {item.unit}
+                          {item.amountLeftover} {item.units}
                         </td>
                       </tr>
                     ))}
@@ -248,7 +248,7 @@ function calculateLeftovers(meal: Recipe): any[] {
 }
 
 type Unit = "kg" | "lbs" | "L";
-type UnitsToIgnore = "tsp" | "tbsp" | "cup" | "oz" | "ml" | "g" | "ea";
+type UnitsToIgnore = "tsp" | "tbsp" | "cup" | "oz" | "ml" | "g" | "count";
 type AllUnits = Unit | UnitsToIgnore;
 
 function convertMeasurement(input: string): { amount: number; unit: string } {

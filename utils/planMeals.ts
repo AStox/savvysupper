@@ -1,26 +1,45 @@
-import { Ingredient } from "@/pages/api/ingredientScraper";
 import { DietaryRestrictions, Recipe } from "./generateRecipe";
 import { fetchChatResponse } from "./chat";
 import { generateLeftoversPreamble, generateNextRecipePreamble } from "./prompts/preamble";
-import { get } from "http";
 
 export const fetchMeals = async (mealCount: number, dietaryRestrictions: DietaryRestrictions[]) => {
   const recipes = await fetch("/api/mealPlan", {
     method: "POST",
     body: JSON.stringify({ dietaryRestrictions }),
   }).then((res) => res.json());
+  for (let i = 0; i < recipes.length; i++) {
+    const newShoppingList = [];
+    const recipe = recipes[i];
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      const ingredient = recipe.ingredients[j];
+      console.log("INGREDIENT", ingredient.title);
+
+      const shoppedItem = recipe.shoppingList.find(
+        (item: any) => item.recipeIngredientTitle === ingredient.title
+      );
+      if (!shoppedItem) {
+        throw new Error(`Could not find ingredient ${ingredient.title} in shopping list`);
+      }
+      newShoppingList.push(shoppedItem);
+    }
+    recipes[i].shoppingList = newShoppingList;
+  }
+
   return recipes;
 };
 
 export const PlanMeals = async (mealCount: number, dietaryRestrictions: DietaryRestrictions[]) => {
   let meals = [];
   const allMeals = await fetchMeals(mealCount, dietaryRestrictions);
+  console.log("ALL MEALS", allMeals);
   // if (allMeals.length < mealCount) {
   //   throw new Error("Not enough recipes to plan meals");
   // }
   const first = allMeals[Math.floor(Math.random() * allMeals.length)];
   console.log("FIRST RECIPE", first);
-  meals.push(first);
+  if (first) {
+    meals.push(first);
+  }
   // const leftovers = JSON.parse(await getLeftovers(first)).leftovers;
   // console.log("FIRST RECIPE LEFTOVERS", leftovers);
   // const next = await getNextRecipe(

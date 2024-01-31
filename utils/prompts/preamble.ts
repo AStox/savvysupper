@@ -23,7 +23,6 @@ export const generateRecipeIdeaPreamble = async (
 
   Recipes should be healthy, balanced meals.
   Your recipes are delicious, diverse, healthy, and draw from multiple cultures and cuisines.
-  Your recipes should be diverse and come from all over the world.
   ${
     !!dietaryRestrictions && dietaryRestrictions.length > 0
       ? `Your recipe must be ${dietaryRestrictions.join(", ")}.`
@@ -38,9 +37,9 @@ export const generateRecipeIdeaPreamble = async (
     description: string,
     serves: number,
   }
+  `;
 
-  proteins on sale: ${proteinsOnSale.map((protein) => protein.title).join(", ")}
-`;
+// proteins on sale: ${proteinsOnSale.map((protein) => protein.title).join(", ")}
 
 export const generateRecipeIngredientsPreamble = async (
   recipeIdea: Partial<Recipe>
@@ -52,7 +51,7 @@ given the following recipe idea, choose the ingredients and return them followin
     unpriced: {title: "string", amount: number, units: "string"}[]
   },
 }
-  priced ingredients' units should be one of the following: "g", "ml", "tsp", "tbsp", "cup", "oz", "lb", "ea"
+  priced ingredients' units should be one of the following: "g", "ml", "tsp", "tbsp", "cup", "oz", "lb", "count"
   unpriced units can be whatever makes sense.
   Unpriced ingredients should be common pantry items like cooking oils, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary, etc.
   Unpriced ingredients should not include things like fresh herbs, like fresh basil, fresh rosemary, fresh thyme, etc.

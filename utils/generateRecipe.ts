@@ -43,6 +43,8 @@ export interface Recipe {
       onSale: boolean;
     };
     recipeIngredientTitle: string;
+    amountLeftover: number;
+    units: string;
     amountToBuy: number;
   }[];
   instructions: string[];
@@ -87,11 +89,11 @@ export async function generateRecipePreview(
   dietaryRestrictions: DietaryRestrictions[] = [],
   progressCallback: (status: string, progress: number) => void
 ): Promise<RecipePreview> {
-  progressCallback("Looking at Whats on Sale", 0);
-  const proteinsOnSale = await getProteins();
+  // progressCallback("Looking at Whats on Sale", 0);
+  // const proteinsOnSale = await getProteins();
   progressCallback("Thinking of a Recipe", 0.3);
   const previousRecipes = await getPreviousRecipes();
-  const recipeIdea = await generateRecipeIdea(proteinsOnSale, dietaryRestrictions, previousRecipes);
+  const recipeIdea = await generateRecipeIdea([], dietaryRestrictions, previousRecipes);
   const RecipePreview = {
     title: recipeIdea.title,
     description: recipeIdea.description,
@@ -107,11 +109,11 @@ export async function generateRecipe(
   dietaryRestrictions: DietaryRestrictions[] = [],
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
-  progressCallback("Looking at Whats on Sale", 0);
-  const proteinsOnSale = await getProteins();
+  // progressCallback("Looking at Whats on Sale", 0);
+  // const proteinsOnSale = await getProteins();
   progressCallback("Thinking of a Recipe", 0.1);
   const previousRecipes = await getPreviousRecipes();
-  const recipeIdea = await generateRecipeIdea(proteinsOnSale, dietaryRestrictions, previousRecipes);
+  const recipeIdea = await generateRecipeIdea([], dietaryRestrictions, previousRecipes);
   (recipeIdea as any).dietaryRestrictions = dietaryRestrictions;
   console.log("RECIPE IDEA", recipeIdea);
   progressCallback("Choosing Ingredients", 0.2);
