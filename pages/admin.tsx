@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./admin.module.css";
-import { DietaryRestrictions, generateRecipe } from "@/utils/generateRecipe";
+import { DietaryRestrictions, generateRecipe, generateRecipePreview } from "@/utils/generateRecipe";
 import { fetchSearchResults } from "@/utils/search";
 import { generateImage } from "@/utils/image";
 import { downloadAndSaveImage } from "@/utils/downloadAndSaveImage";
@@ -77,6 +77,30 @@ const AdminPage = () => {
     for (let i = 0; i < numberOfRecipes; i++) {
       promises.push(
         generateRecipe(dietaryRestrictions, (status, progress) =>
+          setResponse(status + " " + progress * 100 + "%")
+        )
+      );
+    }
+
+    const recipes = await Promise.all(promises);
+    recipes.forEach((recipe) => {
+      setImageSrc(recipe.image);
+      setResponse(JSON.stringify(recipe, null, 2));
+    });
+
+    setLoading(false);
+  };
+
+  const genRecipePreviews = async () => {
+    setLoading(true);
+    setProgress("");
+    setResponse("");
+    setImageSrc("");
+
+    const promises = [];
+    for (let i = 0; i < numberOfRecipes; i++) {
+      promises.push(
+        generateRecipePreview(dietaryRestrictions, (status, progress) =>
           setResponse(status + " " + progress * 100 + "%")
         )
       );
@@ -220,6 +244,15 @@ const AdminPage = () => {
 
         <button className={styles.generateRecipeButton} onClick={genRecipes} disabled={loading}>
           Generate Recipe
+        </button>
+      </div>
+      <div className={styles.searchGroup}>
+        <button
+          className={styles.generateRecipeButton}
+          onClick={genRecipePreviews}
+          disabled={loading}
+        >
+          Generate Recipe Preview
         </button>
       </div>
       {loading && <p className={styles.loading}>Loading...</p>}

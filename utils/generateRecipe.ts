@@ -89,7 +89,7 @@ export async function generateRecipePreview(
 ): Promise<RecipePreview> {
   progressCallback("Looking at Whats on Sale", 0);
   const proteinsOnSale = await getProteins();
-  progressCallback("Thinking of a Recipe", 0.1);
+  progressCallback("Thinking of a Recipe", 0.3);
   const previousRecipes = await getPreviousRecipes();
   const recipeIdea = await generateRecipeIdea(proteinsOnSale, dietaryRestrictions, previousRecipes);
   const RecipePreview = {
@@ -98,6 +98,7 @@ export async function generateRecipePreview(
     image: "",
     dietaryRestrictions: dietaryRestrictions,
   };
+  progressCallback("Taking a picture", 0.7);
   const recipeWithImage = await generateImageForRecipe(RecipePreview);
   return recipeWithImage;
 }

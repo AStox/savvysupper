@@ -172,7 +172,7 @@ export const generateImagePreamble = async (recipe: Recipe) => `
     ${JSON.stringify({
       title: recipe.title,
       description: recipe.description,
-      ingredients: recipe.shoppingList.map((item) => item.ingredient.title),
+      ingredients: recipe.shoppingList?.map((item) => item.ingredient.title),
       instructions: recipe.instructions,
     })}
   `;
