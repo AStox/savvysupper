@@ -76,6 +76,32 @@ export enum Cuisines {
   MiddleEastern = "Middle Eastern",
 }
 
+interface RecipePreview {
+  title: string;
+  description: string;
+  image: string;
+  dietaryRestrictions: DietaryRestrictions[];
+}
+
+export async function generateRecipePreview(
+  dietaryRestrictions: DietaryRestrictions[] = [],
+  progressCallback: (status: string, progress: number) => void
+): Promise<RecipePreview> {
+  progressCallback("Looking at Whats on Sale", 0);
+  const proteinsOnSale = await getProteins();
+  progressCallback("Thinking of a Recipe", 0.1);
+  const previousRecipes = await getPreviousRecipes();
+  const recipeIdea = await generateRecipeIdea(proteinsOnSale, dietaryRestrictions, previousRecipes);
+  const RecipePreview = {
+    title: recipeIdea.title,
+    description: recipeIdea.description,
+    image: "",
+    dietaryRestrictions: dietaryRestrictions,
+  };
+  const recipeWithImage = await generateImageForRecipe(RecipePreview);
+  return recipeWithImage;
+}
+
 export async function generateRecipe(
   dietaryRestrictions: DietaryRestrictions[] = [],
   progressCallback: (status: string, progress: number) => void
@@ -376,7 +402,7 @@ async function finalizeRecipe(
   return finalRecipe;
 }
 
-async function generateImageForRecipe(recipe: Recipe) {
+async function generateImageForRecipe(recipe: any) {
   const openAIImageURL = (await generateImage(await generateImagePreamble(recipe))).url;
   // replace title with a filename safe title
   const blobUrl = await downloadAndSaveImage(
