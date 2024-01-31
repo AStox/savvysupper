@@ -22,11 +22,13 @@ enum Tab {
   Ingredients,
 }
 
+type RecipeWithLeftovers = Recipe & { leftovers: any[] };
+
 const ShoppingListSection: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Ingredients);
   const { meals } = useAppState();
-  const [mealsWithLeftovers, setMealsWithLeftovers] = useState<Recipe[]>([]);
+  const [mealsWithLeftovers, setMealsWithLeftovers] = useState<RecipeWithLeftovers[]>([]);
 
   useEffect(() => {
     const fetchAllLeftovers = async () => {

@@ -1,9 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { getMeal } from "../utils/api";
+import React, { useState } from "react";
 import { useAppState } from "./AppStateContext";
 import { DietaryRestrictions, generateRecipe } from "@/utils/generateRecipe";
-import prisma from "../lib/prisma";
 import { Recipe } from "@/utils/generateRecipe";
 
 type props = {

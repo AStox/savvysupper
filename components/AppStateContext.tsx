@@ -1,5 +1,4 @@
-import { DietaryRestrictions, Recipe } from "@/utils/generateRecipe";
-import prisma from "@/lib/prisma";
+import { Recipe } from "@/utils/generateRecipe";
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { PlanMeals } from "@/utils/planMeals";
 
