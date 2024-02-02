@@ -138,9 +138,12 @@ export async function generateRecipe(
     ...finalizedRecipe,
     shoppingList: finalizedRecipe.shoppingList.map((item) => ({
       ...item,
-      amountLeftover: leftovers.find((leftover) => leftover.title === item.ingredient.title)
-        ?.amountLeftover,
-      units: leftovers.find((leftover) => leftover.title === item.ingredient.title)?.units,
+      amountLeftover: leftovers.find(
+        (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
+      )?.amountLeftover,
+      units: leftovers.find(
+        (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
+      )?.units,
     })),
   };
   console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
@@ -150,9 +153,11 @@ export async function generateRecipe(
   // save recipe to database
   progressCallback("Saving recipe", 0.95);
   console.log("SAVING RECIPE", recipeWithImage);
-  await fetch(`/api/saveRecipe?query=${encodeURIComponent(JSON.stringify(recipeWithImage))}`);
+  const response = await fetch(
+    `/api/saveRecipe?query=${encodeURIComponent(JSON.stringify(recipeWithImage))}`
+  );
   progressCallback("Finished", 1);
-  return recipeWithImage;
+  return { ...recipeWithImage, response: response.message };
 }
 
 async function getProteins(): Promise<Ingredient[]> {
@@ -335,7 +340,8 @@ async function priceIngredients(recipe: Recipe) {
   recipe.shoppingList = [];
   await Promise.all(
     recipe.ingredients.map(async (ingredient, i) => {
-      console.log("Looking for Ingredient:", ingredient.title);
+      const firstIngredient = ingredient.title;
+      console.log("Looking for Ingredient:", firstIngredient);
 
       const findClosestIngredient = async (
         ingredient: { title: string; amount: number; units: string },
@@ -359,6 +365,7 @@ async function priceIngredients(recipe: Recipe) {
       };
 
       let fromChat = await findClosestIngredient(ingredient, true);
+      const secondIngredient = fromChat.title;
       if (fromChat.newTitle) {
         console.log("TRYING AGAIN WITH NEW TITLE", fromChat.newTitle);
         fromChat = await findClosestIngredient(
@@ -372,6 +379,13 @@ async function priceIngredients(recipe: Recipe) {
       }
       const closestIngredientTitle = fromChat.title;
       const closestIngredient = (await fetchSearchResults(closestIngredientTitle, 1, false))[0];
+      if (!closestIngredient) {
+        recipe.shoppingList[i] = {
+          error: `Could not find ${firstIngredient}${
+            secondIngredient ? ` or ${secondIngredient}` : ""
+          }`,
+        } as any;
+      }
       recipe.shoppingList[i] = {
         ingredient: { ...closestIngredient },
         amountToBuy: fromChat.amountToBuy,
@@ -418,14 +432,21 @@ async function generateImageForRecipe(recipe: any) {
 }
 
 async function calculateLeftovers(meal: Recipe): Promise<any[]> {
-  const preamble = await generateLeftoversPreamble(meal);
-  console.log("PREAMBLE", preamble);
-  let chatHistory = [
-    {
-      role: "user",
-      content: preamble,
-    },
-  ];
-  const response = JSON.parse(await fetchChatResponse(chatHistory));
-  return response.leftovers as any[];
+  const leftovers = [];
+  for (const ingredient of meal.ingredients) {
+    const preamble = await generateLeftoversPreamble(
+      ingredient,
+      meal.shoppingList.find((item) => item.recipeIngredientTitle === ingredient.title)
+    );
+    console.log("PREAMBLE", preamble);
+    let chatHistory = [
+      {
+        role: "user",
+        content: preamble,
+      },
+    ];
+    const response = JSON.parse(await fetchChatResponse(chatHistory));
+    leftovers.push(...response.leftovers);
+  }
+  return leftovers as any[];
 }

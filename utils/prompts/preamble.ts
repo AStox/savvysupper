@@ -176,9 +176,9 @@ export const generateImagePreamble = async (recipe: Recipe) => `
     })}
   `;
 
-export const generateLeftoversPreamble = (recipe: Recipe) => `
-    Take a look at this recipe's ingredients list, and the associated shopping list.
-    I want you to figure out what amount of leftovers there will be for each shopping list item by roughly subtracting the ingredient amount from the shopping list amount.
+export const generateLeftoversPreamble = (ingredient: any, groceryItem: any) => `
+    Take a look at this recipe ingredient and the associated grocery item I bought for it.
+    figure out how much of my ingredient, if any, will be leftover after using it in the recipe.
 
     Return a JSON object in the following format, with an object containing a title (the shopping list item's title), amountLeftover, and units field for each ingredient in the recipe's shopping list:
     { leftovers: [
@@ -190,18 +190,11 @@ export const generateLeftoversPreamble = (recipe: Recipe) => `
       ]
     }
 
-    Recipe's ingredients:
-    ${(recipe.ingredients as unknown as { title: string; amount: number; units: string }[])
-      .map((item) => `${item.title}: ${item.amount} ${item.units}`)
-      .join("\n")}
+    Recipe's ingredient:
+    ${ingredient.title}: ${ingredient.amount} ${ingredient.units}
 
-    Recipe's shopping list:
-    ${recipe.shoppingList
-      .map(
-        (item) =>
-          `${item.ingredient.title}: ${item.ingredient.quantity}. Amount to buy: ${item.amountToBuy}`
-      )
-      .join("\n")}
+    Grocery Item:
+    ${groceryItem.ingredient.title}: ${groceryItem.ingredient.quantity}. Amount to buy: ${groceryItem.amountToBuy}
   `;
 
 export const generateNextRecipePreamble = (

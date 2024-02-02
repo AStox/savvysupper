@@ -19,19 +19,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         cookTime: r.cookTime,
         shoppingList: {
           create: [
-            ...r.shoppingList.map((item: any) => {
-              return {
-                amountToBuy: item.amountToBuy,
-                recipeIngredientTitle: item.recipeIngredientTitle,
-                amountLeftover: item.amountLeftover,
-                units: item.units,
-                ingredient: {
-                  connect: {
-                    id: item.ingredient.id,
+            ...r.shoppingList
+              .filter((item) => item.ingredient.id)
+              .map((item: any) => {
+                return {
+                  amountToBuy: item.amountToBuy,
+                  recipeIngredientTitle: item.recipeIngredientTitle,
+                  amountLeftover: item.amountLeftover,
+                  units: item.units,
+                  ingredient: {
+                    connect: {
+                      id: item.ingredient.id,
+                    },
                   },
-                },
-              };
-            }),
+                };
+              }),
           ],
         },
         ingredients: r.ingredients,
