@@ -10,7 +10,7 @@ export interface Ingredient {
   category: string;
   currentPrice: number;
   regularPrice: number;
-  perUnitPrice?: number;
+  perUnitPrice: number;
   discount: number;
   onSale: boolean;
   dateAdded?: Date;
