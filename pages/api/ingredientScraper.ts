@@ -1,13 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer, { Page } from "puppeteer";
 import prisma from "@/lib/prisma";
+import { convertMeasurement } from "@/utils/convertMeasurement";
 
 export interface Ingredient {
   title: string;
-  quantity: string;
+  amount: number;
+  units: string;
   category: string;
   currentPrice: number;
   regularPrice: number;
+  perUnitPrice?: number;
+  discount: number;
   onSale: boolean;
   dateAdded?: Date;
   embedding?: number[];
@@ -153,49 +157,70 @@ async function scrapeUrl(page: Page, url: string, subcategoryName: string): Prom
   while (!reachedBottom && items.length < maxItems) {
     await page.waitForSelector('h3[data-test="fop-title"]');
 
-    const newItems: Ingredient[] = await page.$$eval('div[data-test="fop-body"]', (elements) =>
-      elements.map((el) => {
-        const title =
-          el
-            .querySelector('h3[data-test="fop-title"]')
-            ?.textContent?.trim()
-            .replace(/^(.*?)\s+\d+(\.\d+)?\s+\w+.*$/, "$1")
-            .toLowerCase() || "";
+    const newItems: Partial<Ingredient>[] = await page.$$eval(
+      'div[data-test="fop-body"]',
+      (elements) =>
+        elements.map((el) => {
+          const title =
+            el
+              .querySelector('h3[data-test="fop-title"]')
+              ?.textContent?.trim()
+              .replace(/^(.*?)\s+\d+(\.\d+)?\s+\w+.*$/, "$1")
+              .toLowerCase() || "";
 
-        const quantity =
-          el.querySelector(".weight__SingleTextLine-sc-1sjeki5-0")?.textContent?.trim() || "1 ea";
-        const currentPrice = parseFloat(
-          el.querySelector('span[data-test="fop-price"]')?.textContent?.replace("$", "").trim() ||
-            "0"
-        );
-        const onSale = !!el.querySelector('span[data-test="fop-offer-text"]');
-        const priceElements = el.querySelectorAll('div[data-test="fop-price-wrapper"] span');
-        const prices = Array.from(priceElements)
-          .map((span) => span.textContent?.trim())
-          .filter((text) => text && text.startsWith("$"));
+          const quantity =
+            el.querySelector(".weight__SingleTextLine-sc-1sjeki5-0")?.textContent?.trim() || "1 ea";
+          const currentPrice = parseFloat(
+            el.querySelector('span[data-test="fop-price"]')?.textContent?.replace("$", "").trim() ||
+              "0"
+          );
+          const onSale = !!el.querySelector('span[data-test="fop-offer-text"]');
+          const priceElements = el.querySelectorAll('div[data-test="fop-price-wrapper"] span');
+          const prices = Array.from(priceElements)
+            .map((span) => span.textContent?.trim())
+            .filter((text) => text && text.startsWith("$"));
 
-        const regularPrice = onSale
-          ? prices.length > 1
-            ? parseFloat((prices[1] || "").replace("$", ""))
-            : parseFloat((prices[0] || "").replace("$", ""))
-          : currentPrice;
-        return { title, quantity, currentPrice, onSale, regularPrice };
-      })
+          const regularPrice = onSale
+            ? prices.length > 1
+              ? parseFloat((prices[1] || "").replace("$", ""))
+              : parseFloat((prices[0] || "").replace("$", ""))
+            : currentPrice;
+          return { title, quantity, currentPrice, onSale, regularPrice };
+        })
     );
 
-    newItems.forEach((item: Ingredient) => {
-      item.category = subcategoryName;
-      if (item.title && item.currentPrice > 0) {
+    newItems.forEach((item: any) => {
+      // Set calculated fields
+      const category = subcategoryName;
+      const discount =
+        item.currentPrice && item.regularPrice && item.onSale
+          ? item.regularPrice - item.currentPrice
+          : 0;
+      const { amount, units } = convertMeasurement(item.quantity);
+      const perUnitPrice = item.currentPrice / parseFloat(item.quantity);
+
+      const offset = -5; // EST is UTC-5
+      const currentDate = new Date();
+      currentDate.setHours(currentDate.getHours() + offset);
+
+      item = {
+        title: item.title,
+        amount,
+        units,
+        category,
+        currentPrice: item.currentPrice,
+        regularPrice: item.regularPrice,
+        perUnitPrice,
+        discount,
+        onSale: item.onSale,
+        dateAdded: currentDate,
+      };
+      if (item.title && item.currentPrice && item.currentPrice > 0) {
         if (!addedTitles.has(item.title)) {
           items.push(item as Ingredient);
           addedTitles.add(item.title);
         }
       }
-      const offset = -5; // EST is UTC-5
-      const currentDate = new Date();
-      currentDate.setHours(currentDate.getHours() + offset);
-
-      item = { ...item, dateAdded: currentDate };
     });
     console.log("scraping page... found", items.length, "items so far");
 

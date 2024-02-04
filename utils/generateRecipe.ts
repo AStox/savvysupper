@@ -162,7 +162,7 @@ export async function generateRecipe(
     `/api/saveRecipe?query=${encodeURIComponent(JSON.stringify(recipeWithImage))}`
   );
   progressCallback("Finished", 1);
-  return { ...recipeWithImage, response: response.message };
+  return { ...recipeWithImage, response: response.json() };
 }
 
 async function getProteins(): Promise<Ingredient[]> {

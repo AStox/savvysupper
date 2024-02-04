@@ -13,10 +13,13 @@ generator client {
 model Ingredient {
     id          String             @default(cuid()) @id
     title       String
-    quantity    String
+    amount      Float
+    units       String
     category    String
     currentPrice Float
     regularPrice Float
+    perUnitPrice Float
+    discount    Float
     onSale      Boolean
     dateAdded   DateTime           @default(now())
     RecipeIngredient RecipeIngredient[]
