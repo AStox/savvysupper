@@ -23,9 +23,12 @@ async function similaritySearch(
       SELECT
         "id",
         "title",
-        "quantity",
+        "amount",
+        "units",
         "currentPrice",
         "regularPrice",
+        "perUnitPrice",
+        "discount",
         "onSale",
         1 - (embedding <=> ${vectorQuery}::vector) as similarity
       FROM ingredients
@@ -39,9 +42,12 @@ async function similaritySearch(
       SELECT
         "id",
         "title",
-        "quantity",
+        "amount",
+        "units",
         "currentPrice",
         "regularPrice",
+        "perUnitPrice",
+        "discount",
         "onSale",
         1 - (embedding <=> ${vectorQuery}::vector) as similarity
       FROM ingredients

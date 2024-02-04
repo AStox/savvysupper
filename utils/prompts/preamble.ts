@@ -90,7 +90,8 @@ export const generatePricingIngredientsPreamble = async (
 Return responses in valid JSON following this example:
 {
   title: string;
-  quantity: string;
+  amount: string;
+  units: string;
   currentPrice: number;
   regularPrice: number;
   onSale: boolean;
@@ -107,7 +108,8 @@ ${JSON.stringify(
   storeItems.map((item: any) => ({
     title: item.title,
     price: item.currentPrice,
-    quantity: item.quantity,
+    amount: item.amount,
+    units: item.units,
   }))
 )}
 
@@ -190,12 +192,12 @@ export const generateLeftoversPreamble = (ingredient: any, groceryItem: any) => 
     ${ingredient.title}: ${ingredient.amount} ${ingredient.units}
 
     Grocery Item:
-    ${groceryItem.ingredient.title}: ${groceryItem.ingredient.quantity}. Amount to buy: ${groceryItem.amountToBuy}
+    ${groceryItem.ingredient.title}: ${groceryItem.ingredient.amount}${groceryItem.ingredient.units}. Amount to buy: ${groceryItem.amountToBuy}
   `;
 
 export const generateNextRecipePreamble = (
   leftovers: { title: string; amountLeftOver: number; units: string }[],
-  ingredientLists: { title: string; quantity: string; amountToBuy: number }[][]
+  ingredientLists: { title: string; amount: number; units: string; amountToBuy: number }[][]
 ) => `
       I'm going to show you a list of leftovers and a list of possible ingredients lists. I want you to choose the ingredient list that most closely matches the leftovers I have.
       
@@ -212,7 +214,10 @@ export const generateNextRecipePreamble = (
         .map(
           (list, index) =>
             `${index}: ${list
-              .map((item) => `${item.title}: ${item.quantity}. amountToBuy: ${item.amountToBuy}`)
+              .map(
+                (item) =>
+                  `${item.title}: ${item.amount}${item.units}. amountToBuy: ${item.amountToBuy}`
+              )
               .join("\n")}`
         )
         .join("\n\n")}

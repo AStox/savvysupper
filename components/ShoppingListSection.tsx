@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAppState } from "./AppStateContext";
 import styles from "./ShoppingListSection.module.css";
 import { Recipe } from "@/utils/generateRecipe";
+import { Ingredient } from "@/pages/api/ingredientScraper";
 import { generateLeftoversPreamble } from "@/utils/prompts/preamble";
 import { fetchChatResponse } from "@/utils/chat";
+import { convertMeasurement } from "@/utils/convertMeasurement";
 
 // interface ShoppingList {
 //     [
@@ -18,7 +20,7 @@ import { fetchChatResponse } from "@/utils/chat";
 
 enum Tab {
   ShoppingList,
-  Leftovers,
+  // Leftovers,
   Ingredients,
 }
 
@@ -74,14 +76,14 @@ const ShoppingListSection: React.FC = () => {
         >
           Shopping List
         </button>
-        <button
+        {/* <button
           className={`flex-1 py-2 ${
             activeTab === Tab.Leftovers ? "border-b-2 border-blue-500" : ""
           }`}
           onClick={() => setActiveTab(Tab.Leftovers)}
         >
           Leftovers
-        </button>
+        </button> */}
         {activeTab === Tab.Ingredients && (
           <>
             {meals.map((meal, index) => (
@@ -144,7 +146,7 @@ const ShoppingListSection: React.FC = () => {
                           {item.ingredient.title}
                         </td>
                         <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
-                          {item.ingredient.quantity}
+                          {item.ingredient.amount} {item.ingredient.units}
                         </td>
                         <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
                           {item.ingredient.currentPrice}
@@ -160,7 +162,7 @@ const ShoppingListSection: React.FC = () => {
             ))}
           </>
         )}
-        {activeTab === Tab.Leftovers && (
+        {/* {activeTab === Tab.Leftovers && (
           <>
             {meals.map((meal, index) => (
               <div key={index} className="mb-4">
@@ -192,96 +194,55 @@ const ShoppingListSection: React.FC = () => {
               </div>
             ))}
           </>
-        )}
+        )} */}
       </div>
     </div>
   );
 };
 
-async function fetchLeftovers(meal: Recipe): Promise<any[]> {
-  const preamble = await generateLeftoversPreamble(meal);
-  let chatHistory = [
-    {
-      role: "user",
-      content: preamble,
-    },
-  ];
-  const response = JSON.parse(await fetchChatResponse(chatHistory));
-  return response.leftovers as any[];
-}
+// async function fetchLeftovers(meal: Recipe): Promise<any[]> {
+//   const preamble = await generateLeftoversPreamble(meal);
+//   let chatHistory = [
+//     {
+//       role: "user",
+//       content: preamble,
+//     },
+//   ];
+//   const response = JSON.parse(await fetchChatResponse(chatHistory));
+//   return response.leftovers as any[];
+// }
 
-function calculateLeftovers(meal: Recipe): any[] {
-  let leftovers: any[] = [];
-  console.log("---------------------MEAL:", meal.title, "---------------------");
-  // meals[i].leftovers = [];
-  const storeIngredients = meal.shoppingList.map((item) => item.ingredient.title);
-  for (let j = 0; j < meal.shoppingList.length; j++) {
-    console.log("-", meal.shoppingList[j].ingredient.title, "-");
-    const item = meal.shoppingList[j];
-    console.log("ITEM:", item);
-    const { amount, unit } = convertMeasurement(item.ingredient.quantity);
-    console.log("AMOUNT:", amount);
-    console.log("UNIT:", unit);
-    const amountBought = item.amountToBuy * amount;
+// function calculateLeftovers(meal: Recipe): any[] {
+//   let leftovers: any[] = [];
+//   console.log("---------------------MEAL:", meal.title, "---------------------");
+//   // meals[i].leftovers = [];
+//   const storeIngredients = meal.shoppingList.map((item) => item.ingredient.title);
+//   for (let j = 0; j < meal.shoppingList.length; j++) {
+//     console.log("-", meal.shoppingList[j].ingredient.title, "-");
+//     const item = meal.shoppingList[j];
+//     const amountBought = item.amountToBuy * item.ingredient.amount;
 
-    console.log(meal.ingredients[j]);
-    const recipeIngredient = meal.ingredients.find(
-      (ingredient) => ingredient.title === item.recipeIngredientTitle
-    );
-    console.log("RECIPE INGREDIENT:", recipeIngredient?.title);
-    const { amount: recipeAmount } = convertMeasurement(
-      `${recipeIngredient?.amount}${recipeIngredient?.units}`
-    );
-    const amountLeftOver = amountBought - recipeAmount;
-    console.log("AMOUNT LEFT OVER:", amountLeftOver);
-    if (amountLeftOver > 0) {
-      const leftoverIngredient = {
-        title: item.ingredient.title,
-        amountLeftOver,
-        unit: unit,
-        currentPrice: item.ingredient.currentPrice,
-      };
-      leftovers.push(leftoverIngredient);
-    }
-  }
-  return leftovers;
-}
-
-type Unit = "kg" | "lbs" | "L";
-type UnitsToIgnore = "tsp" | "tbsp" | "cup" | "oz" | "ml" | "g" | "count";
-type AllUnits = Unit | UnitsToIgnore;
-
-function convertMeasurement(input: string): { amount: number; unit: string } {
-  const unitMap: { [key in Unit]: number } = {
-    kg: 1000, // 1 kg = 1000 grams
-    lbs: 16, // 1 lb = 16 ounces
-    L: 1000, // 1 L = 1000 milliliters
-  };
-  const convertedUnit: { [key in Unit]: string } = {
-    kg: "g",
-    lbs: "oz",
-    L: "ml",
-  };
-
-  // Updated regular expression to match the number and unit, allowing for a space
-  const regex = /([\d.]+)\s*([a-zA-Z]+)/;
-  const matches = input.match(regex);
-
-  if (matches && matches.length === 3) {
-    const value = parseFloat(matches[1]);
-    const unit = matches[2] as AllUnits;
-
-    if (unit in unitMap) {
-      // Unit is one of the convertible types
-      return { amount: value * unitMap[unit as Unit], unit: convertedUnit[unit as Unit] };
-    } else {
-      // Unit is one of the non-convertible types (or unrecognized)
-      return { amount: value, unit: unit };
-    }
-  } else {
-    console.log(input);
-    throw new Error("Invalid input format");
-  }
-}
+//     console.log(meal.ingredients[j]);
+//     const recipeIngredient = meal.ingredients.find(
+//       (ingredient) => ingredient.title === item.recipeIngredientTitle
+//     );
+//     console.log("RECIPE INGREDIENT:", recipeIngredient?.title);
+//     const { amount: recipeAmount } = convertMeasurement(
+//       `${recipeIngredient?.amount}${recipeIngredient?.units}`
+//     );
+//     const amountLeftOver = amountBought - recipeAmount;
+//     console.log("AMOUNT LEFT OVER:", amountLeftOver);
+//     if (amountLeftOver > 0) {
+//       const leftoverIngredient = {
+//         title: item.ingredient.title,
+//         amountLeftOver,
+//         units: units,
+//         currentPrice: item.ingredient.currentPrice,
+//       };
+//       leftovers.push(leftoverIngredient);
+//     }
+//   }
+//   return leftovers;
+// }
 
 export default ShoppingListSection;

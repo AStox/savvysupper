@@ -50,67 +50,33 @@ export const PlanMeals = async (mealCount: number, dietaryRestrictions: DietaryR
   return meals;
 };
 
-const getNextRecipe = async (
-  leftovers: { title: string; units: string; amountLeftOver: number }[],
-  recipes: Recipe[]
-) => {
-  const preamble = generateNextRecipePreamble(
-    leftovers.map((item) => ({
-      title: item.title,
-      amountLeftOver: item.amountLeftOver,
-      units: item.units,
-    })),
-    recipes.map((recipe) =>
-      recipe.shoppingList.map((item) => ({
-        title: item.ingredient.title,
-        quantity: item.ingredient.quantity,
-        amountToBuy: item.amountToBuy,
-      }))
-    )
-  );
-  console.log("Get next recipe PREAMBLE", preamble);
-  const { index } = JSON.parse(
-    await fetchChatResponse([
-      {
-        role: "user",
-        content: preamble,
-      },
-    ])
-  );
-  return recipes[index];
-};
-
-const getLeftovers = async (recipe: Recipe) => {
-  const leftovers = await fetchChatResponse([
-    {
-      role: "user",
-      content: generateLeftoversPreamble(recipe),
-    },
-  ]);
-  return leftovers;
-};
-
-function parseQuantity(quantity: string): {
-  amount: number;
-  unit: string;
-} {
-  const match = quantity.match(/^(\d+(?:\.\d+)?)([a-zA-Z ]+)$/);
-  if (match) {
-    let amount = parseFloat(match[1]);
-    let unit = match[2].trim().toLowerCase();
-
-    // Convert kg to g
-    if (unit === "kg") {
-      amount *= 1000;
-      unit = "g";
-    }
-    // Default unit to 'count' for non-standard units
-    else if (!["g", "l", "ml", "oz", "lb"].includes(unit)) {
-      unit = "count";
-    }
-
-    return { amount, unit };
-  } else {
-    return { amount: 0, unit: "unknown" };
-  }
-}
+// const getNextRecipe = async (
+//   leftovers: { title: string; units: string; amountLeftOver: number }[],
+//   recipes: Recipe[]
+// ) => {
+//   const preamble = generateNextRecipePreamble(
+//     leftovers.map((item) => ({
+//       title: item.title,
+//       amountLeftOver: item.amountLeftOver,
+//       units: item.units,
+//     })),
+//     recipes.map((recipe) =>
+//       recipe.shoppingList.map((item) => ({
+//         title: item.ingredient.title,
+//         amount: item.ingredient.amount,
+//         units: item.ingredient.units,
+//         amountToBuy: item.amountToBuy,
+//       }))
+//     )
+//   );
+//   console.log("Get next recipe PREAMBLE", preamble);
+//   const { index } = JSON.parse(
+//     await fetchChatResponse([
+//       {
+//         role: "user",
+//         content: preamble,
+//       },
+//     ])
+//   );
+//   return recipes[index];
+// };

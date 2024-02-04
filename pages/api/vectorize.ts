@@ -8,7 +8,7 @@ let lastId: number | null = null;
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   // find all ingredients with no embedding
   const ingredients =
-    (await prisma.$queryRaw`SELECT id, title, quantity, "currentPrice", "regularPrice", "onSale", "dateAdded" FROM "ingredients" WHERE "embedding" IS NULL`) as Ingredient[];
+    (await prisma.$queryRaw`SELECT id, title, amount, units, "currentPrice", "regularPrice", "perUnitPrice", "discount", "onSale", "dateAdded" FROM "ingredients" WHERE "embedding" IS NULL`) as Ingredient[];
 
   console.log(`Found ${ingredients.length} ingredients with no embedding`);
 

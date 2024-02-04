@@ -680,7 +680,8 @@ const desiredOutput = `
 SAMPLE OF SALE DATA:
 {
 "title": "Chicken Leg Quarters Value Size 3-5 Pieces",
-"quantity": "1.425kg",
+"amount": 1.425,
+"units": "kg",
 "currentPrice": 12.54,
 "onSale": true,
 "regularPrice": 14.99

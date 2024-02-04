@@ -286,11 +286,19 @@ async function processSubcategory(page: Page, categoryPath: string[], subcategor
 }
 
 async function processCategories(page: Page, categories: any, categoryPath: string[] = []) {
-  for (const category of categories) {
-    if (typeof category === "string") {
-      await processSubcategory(page, categoryPath, category);
+  // Show progress
+  for (let i = 0; i < categories.length; i++) {
+    const totalCategories = categories.length;
+    const progress = (i / totalCategories) * 100;
+    console.log(
+      `Progress: ${progress.toFixed(2)}% done (${i}/${totalCategories} categories processed)`
+    );
+
+    // Process the category
+    if (typeof categories[i] === "string") {
+      await processSubcategory(page, categoryPath, categories[i]);
     } else {
-      await processCategories(page, category.children, [...categoryPath, category.name]);
+      await processCategories(page, categories[i].children, [...categoryPath, categories[i].name]);
     }
   }
 }

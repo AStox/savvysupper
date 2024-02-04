@@ -35,13 +35,7 @@ export interface Recipe {
     units: string;
   }[];
   shoppingList: {
-    ingredient: {
-      title: string;
-      quantity: string;
-      currentPrice: number;
-      regularPrice: number;
-      onSale: boolean;
-    };
+    ingredient: Ingredient;
     recipeIngredientTitle: string;
     amountLeftover: number;
     units: string;
