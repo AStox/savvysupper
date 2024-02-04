@@ -14,6 +14,7 @@ model Ingredient {
     id          String             @default(cuid()) @id
     title       String
     quantity    String
+    category    String
     currentPrice Float
     regularPrice Float
     onSale      Boolean

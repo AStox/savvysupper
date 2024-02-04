@@ -15,14 +15,11 @@ import { DietaryRestrictions, Recipe } from "../generateRecipe";
 export const generateRecipeIdeaPreamble = async (
   proteinsOnSale: Ingredient[],
   dietaryRestrictions: string[],
+  cuisine: string,
   previousRecipes: string[],
   ingredients: Ingredient[]
-) => `You are a helpful algorithm designed to take in grocery store sale data and output a delicioius recipe.
-
+) => `Generate a ${cuisine} recipe.
   Try to avoid generating anything too similar to these: ${previousRecipes.join(", ")}
-
-  Recipes should be healthy, balanced meals.
-  Your recipes are delicious, diverse, healthy, and draw from multiple cultures and cuisines.
   ${
     !!dietaryRestrictions && dietaryRestrictions.length > 0
       ? `Your recipe must be ${dietaryRestrictions.join(", ")}.`
@@ -32,7 +29,6 @@ export const generateRecipeIdeaPreamble = async (
   Return one recipe in JSON following this example:
   {
     protein: string,
-    cuisine: string,
     title: string,
     description: string,
     serves: number,

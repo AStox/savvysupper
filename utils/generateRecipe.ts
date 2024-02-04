@@ -91,9 +91,11 @@ export async function generateRecipePreview(
 ): Promise<RecipePreview> {
   // progressCallback("Looking at Whats on Sale", 0);
   // const proteinsOnSale = await getProteins();
+  const cuisine =
+    Object.values(Cuisines)[Math.floor(Math.random() * Object.values(Cuisines).length)];
   progressCallback("Thinking of a Recipe", 0.3);
   const previousRecipes = await getPreviousRecipes();
-  const recipeIdea = await generateRecipeIdea([], dietaryRestrictions, previousRecipes);
+  const recipeIdea = await generateRecipeIdea([], dietaryRestrictions, cuisine, previousRecipes);
   const RecipePreview = {
     title: recipeIdea.title,
     description: recipeIdea.description,
@@ -113,7 +115,10 @@ export async function generateRecipe(
   // const proteinsOnSale = await getProteins();
   progressCallback("Thinking of a Recipe", 0.1);
   const previousRecipes = await getPreviousRecipes();
-  const recipeIdea = await generateRecipeIdea([], dietaryRestrictions, previousRecipes);
+  const cuisine =
+    Object.values(Cuisines)[Math.floor(Math.random() * Object.values(Cuisines).length)];
+  progressCallback("Thinking of a Recipe", 0.3);
+  const recipeIdea = await generateRecipeIdea([], dietaryRestrictions, cuisine, previousRecipes);
   (recipeIdea as any).dietaryRestrictions = dietaryRestrictions;
   console.log("RECIPE IDEA", recipeIdea);
   progressCallback("Choosing Ingredients", 0.2);
@@ -226,6 +231,7 @@ async function getPreviousRecipes(): Promise<string[]> {
 async function generateRecipeIdea(
   proteinsOnSale: Ingredient[],
   dietaryRestrictions: string[],
+  cuisine: string,
   previousRecipes: string[]
 ): Promise<{
   title: string;
@@ -234,13 +240,15 @@ async function generateRecipeIdea(
   serves: number;
   cuisine: string;
 }> {
+  console.log("generateRecipeIdea", proteinsOnSale, dietaryRestrictions, cuisine, previousRecipes);
   const preamble = await generateRecipeIdeaPreamble(
     proteinsOnSale,
     dietaryRestrictions,
+    cuisine,
     previousRecipes,
     []
   );
-  console.log("PREAMBLE", preamble);
+  console.log("generateRecipeIdea PREAMBLE", preamble);
   let chatHistory = [
     {
       role: "user",
@@ -254,7 +262,7 @@ async function generateRecipeIdea(
     protein: response.protein,
     description: response.description,
     serves: response.serves,
-    cuisine: response.cuisine,
+    cuisine: cuisine,
   } as any;
   return recipeIdea;
 }
@@ -268,6 +276,7 @@ async function generateRecipeIngredients(recipeIdea: {
   dietaryRestrictions: string[];
 }): Promise<any> {
   const preamble = await generateRecipeIngredientsPreamble(recipeIdea);
+  console.log("generateRecipeIngredients PREAMBLE", preamble);
   let chatHistory = [
     {
       role: "user",
@@ -299,6 +308,7 @@ async function generateRecipeInstructions(recipeIdea: {
   dietaryRestrictions: string[];
 }): Promise<Partial<Recipe>> {
   const preamble = await generateRecipeInstructionsPreamble(recipeIdea);
+  console.log("generateRecipeInstructions PREAMBLE", preamble);
   let chatHistory = [
     {
       role: "user",
@@ -438,7 +448,7 @@ async function calculateLeftovers(meal: Recipe): Promise<any[]> {
       ingredient,
       meal.shoppingList.find((item) => item.recipeIngredientTitle === ingredient.title)
     );
-    console.log("PREAMBLE", preamble);
+    console.log("calculateLeftovers PREAMBLE", preamble);
     let chatHistory = [
       {
         role: "user",
