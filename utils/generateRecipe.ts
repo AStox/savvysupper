@@ -240,7 +240,6 @@ async function generateRecipeIdea(
   serves: number;
   cuisine: string;
 }> {
-  console.log("generateRecipeIdea", proteinsOnSale, dietaryRestrictions, cuisine, previousRecipes);
   const preamble = await generateRecipeIdeaPreamble(
     proteinsOnSale,
     dietaryRestrictions,
@@ -377,7 +376,7 @@ async function priceIngredients(recipe: Recipe) {
       let fromChat = await findClosestIngredient(ingredient, true);
       const secondIngredient = fromChat.title;
       if (fromChat.newTitle) {
-        console.log("TRYING AGAIN WITH NEW TITLE", fromChat.newTitle);
+        console.log(`Couldn't find ${firstIngredient}, trying ${fromChat.newTitle} instead`);
         fromChat = await findClosestIngredient(
           {
             title: fromChat.newTitle,

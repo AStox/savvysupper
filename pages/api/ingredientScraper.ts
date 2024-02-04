@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 export interface Ingredient {
   title: string;
   quantity: string;
+  category: string;
   currentPrice: number;
   regularPrice: number;
   onSale: boolean;
@@ -140,7 +141,7 @@ async function findLink(page: Page, linkText: string): Promise<string | null> {
   return null;
 }
 
-async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
+async function scrapeUrl(page: Page, url: string, subcategoryName: string): Promise<Ingredient[]> {
   await page.goto(url, { waitUntil: "networkidle2" });
 
   let items: Ingredient[] = [];
@@ -183,6 +184,7 @@ async function scrapeUrl(page: Page, url: string): Promise<Ingredient[]> {
     );
 
     newItems.forEach((item: Ingredient) => {
+      item.category = subcategoryName;
       if (item.title && item.currentPrice > 0) {
         if (!addedTitles.has(item.title)) {
           items.push(item as Ingredient);
@@ -242,62 +244,16 @@ function isWithinLastWeek(date: Date): boolean {
   return date > oneWeekAgo;
 }
 
-async function scrapeFirstItemInSubcategory(
-  page: Page,
-  url: string
-): Promise<{ title: string } | null> {
-  await page.goto(url, { waitUntil: "networkidle2" });
-  await page.waitForSelector('h3[data-test="fop-title"]');
-
-  const firstItem = await page.$eval('div[data-test="fop-body"]', (element) => {
-    const title = element.querySelector('h3[data-test="fop-title"]')?.textContent?.trim();
-    return title ? { title } : null;
-  });
-
-  return firstItem;
-}
-
-async function shouldScrapeSubcategory(title: string): Promise<boolean> {
-  const recentItem = await prisma.ingredient.findFirst({
-    where: {
-      title,
-    },
-    orderBy: {
-      dateAdded: "desc",
-    },
-  });
-  console.log(recentItem);
-  if (recentItem && recentItem.dateAdded) {
-    return !isWithinLastWeek(recentItem.dateAdded);
-  }
-
-  return true;
-}
-
 async function processSubcategory(page: Page, categoryPath: string[], subcategoryName: string) {
   // Iterate through each category in the path
   for (const categoryName of categoryPath) {
     await navigateToCategory(page, categoryName);
   }
 
-  // Now process the subcategory
   const subcategoryLink = await navigateToCategory(page, subcategoryName);
 
-  // const firstItem = await scrapeFirstItemInSubcategory(page, subcategoryLink);
-
-  // if (!firstItem || !firstItem.title) {
-  //   console.log(`Could not scrape the first item in ${subcategoryName}, skipping...`);
-  //   return;
-  // }
-
-  // const scrapeNeeded = await shouldScrapeSubcategory(firstItem.title);
-  // if (!scrapeNeeded) {
-  //   console.log(`Skipping ${subcategoryName}, data for '${firstItem.title}' is up-to-date.`);
-  //   return;
-  // }
-
   console.log(`Scraping data from subcategory: ${subcategoryName}`);
-  const items = await scrapeUrl(page, subcategoryLink);
+  const items = await scrapeUrl(page, subcategoryLink, subcategoryName);
 
   await prisma.ingredient.createMany({
     data: items,
