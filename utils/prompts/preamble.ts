@@ -10,7 +10,7 @@
 // import HotDogsAndSausages from "../../data/ingredients/Hot_Dogs_&_Sausages.json";
 
 import { Ingredient } from "@prisma/client";
-import { DietaryRestrictions, Recipe } from "../generateRecipe";
+import { Cuisines, DietaryRestrictions, Recipe } from "../generateRecipe";
 
 export const generateRecipeIdeaPreamble = async (
   proteinsOnSale: Ingredient[],
@@ -159,6 +159,9 @@ export const generateFinalizeRecipePreamble2 =
 
   Possible dietary restrictions:
   ${Object.values(DietaryRestrictions).join(", ")}
+
+  Choose a cuisine from the following list that best describes the recipe.
+  ${Object.values(Cuisines).join(", ")}
   `;
 
 export const generateImagePreamble = async (recipe: Recipe) => `

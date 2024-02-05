@@ -32,7 +32,7 @@ const MealCustomizationCard: React.FC = () => {
               key={genre}
               onClick={() => toggleGenre(genre)}
               className={`px-3 py-1 text-sm font-semibold rounded-full border ${
-                selectedGenres.includes(genre) ? "bg-gray-600 text-white" : "bg-white text-gray-600"
+                selectedGenres.includes(genre) ? "bg-gray-600 text-white" : "bg-white "
               }`}
             >
               {genre}
@@ -44,7 +44,7 @@ const MealCustomizationCard: React.FC = () => {
           value={otherPreference}
           onChange={(e) => setOtherPreference(e.target.value)}
           placeholder="Other..."
-          className="w-full p-2 border rounded text-gray-600"
+          className="w-full p-2 border rounded "
         />
       </div>
     </div>

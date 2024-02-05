@@ -6,6 +6,12 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --dark1: #747b7e;
+
+  /* Define default neumorphism colors */
+  --background-color: #fefcfb; /* Default background */
+  --shadow-dark: #b4b4b4; /* Darker shade for shadow */
+  --shadow-light: #ffffff; /* Lighter shade for highlight */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,8 +27,23 @@ body {
   /* background-image: url("/background.webp"); */
   background-position: center -10%;
   background-size: cover;
+  background-color: var(--background-color);
 }
 
-.transition-width {
-  transition: width 0.3s ease-in-out;
+.neumorphicBorder {
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px var(--shadow-dark), -1px -1px 3px var(--shadow-light);
+  margin: 2.5px;
+  /* width: 200px; */
+  /* height: 100px; */
+  display: flex;
+  /* justify-content: center; */
+  /* alignitems: center; */
+  /* color: white; */
+}
+
+.bg-dark {
+  background-color: var(--dark1);
+  color: white;
 }

@@ -35,11 +35,11 @@ export const PlanMeals = async (mealCount: number, dietaryRestrictions: DietaryR
   // if (allMeals.length < mealCount) {
   //   throw new Error("Not enough recipes to plan meals");
   // }
-  const first = allMeals[Math.floor(Math.random() * allMeals.length)];
-  console.log("FIRST RECIPE", first);
-  if (first) {
-    meals.push(first);
-  }
+  // const first = allMeals[Math.floor(Math.random() * allMeals.length)];
+  // // console.log("FIRST RECIPE", first);
+  // // if (first) {
+  // //   meals.push(first);
+  // // }
   // const leftovers = JSON.parse(await getLeftovers(first)).leftovers;
   // console.log("FIRST RECIPE LEFTOVERS", leftovers);
   // const next = await getNextRecipe(
@@ -47,7 +47,7 @@ export const PlanMeals = async (mealCount: number, dietaryRestrictions: DietaryR
   //   allMeals.filter((meal: Recipe) => meal.id !== first.id)
   // );
   // meals.push(next);
-  return meals;
+  return allMeals;
 };
 
 // const getNextRecipe = async (

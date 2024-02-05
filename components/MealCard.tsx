@@ -23,11 +23,11 @@ const MealCard: React.FC<MealCardProps> = ({ meal, onReroll, onSelect }) => {
         layout="fill"
         objectFit="cover"
       />
-      <div className="absolute top-0 left-0 right-0 bg-gray-700 text-white p-2 flex justify-between items-center">
+      <div className="absolute top-0 left-0 right-0 p-2 flex justify-between items-center">
         <h3 className="text-lg font-bold">{meal.title}</h3>
         <button
           onClick={onReroll}
-          className="text-white bg-transparent hover:bg-gray-600 rounded-full p-1"
+          className="bg-transparent hover:bg-gray-600 rounded-full p-1"
           style={{ width: "24px", height: "24px" }}
         >
           <FontAwesomeIcon icon={faRedo} />
@@ -37,16 +37,16 @@ const MealCard: React.FC<MealCardProps> = ({ meal, onReroll, onSelect }) => {
         {meal.dietaryRestrictions.map((restriction) => (
           <span
             key={restriction}
-            className="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+            className="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
           >
             {restriction}
           </span>
         ))}
         <div>
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
             Cost per Serving
           </span>
-          <span className="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+          <span className="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
             ${(meal.totalCost / meal.serves).toFixed(2)}
           </span>
         </div>

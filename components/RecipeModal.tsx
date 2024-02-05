@@ -26,27 +26,27 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ meal, onClose }) => {
             height={200}
             className="rounded-md"
           />
-          <h2 className="text-2xl font-bold text-gray-800">{meal.title}</h2>
+          <h2 className="text-2xl font-bold">{meal.title}</h2>
 
           <div className="text-left w-full">
-            <h3 className="text-lg font-semibold text-gray-700">Ingredients</h3>
+            <h3 className="text-lg font-semibold ">Ingredients</h3>
             <ul className="list-disc pl-5">
               {meal.ingredients.map((ingredient, index) => (
-                <li key={index} className="text-gray-600">
+                <li key={index} className="">
                   {ingredient.title}{" "}
                 </li>
               ))}
               {meal.unpricedIngredients.map((ingredient, index) => (
-                <li key={index} className="text-gray-600">
+                <li key={index} className="">
                   {ingredient.title}{" "}
                 </li>
               ))}
             </ul>
 
-            <h3 className="text-lg font-semibold text-gray-700">Instructions</h3>
+            <h3 className="text-lg font-semibold ">Instructions</h3>
             <ol className="list-decimal pl-5">
               {meal.instructions.map((instruction, index) => (
-                <li key={index} className="text-gray-600">
+                <li key={index} className="">
                   {instruction}
                 </li>
               ))}

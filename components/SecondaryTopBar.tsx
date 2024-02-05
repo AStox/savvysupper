@@ -45,17 +45,17 @@ const SecondaryTopBar: React.FC = (props) => {
   };
 
   return (
-    <div className="bg-white shadow-md py-6 px-6 flex justify-center items-center z-20">
+    <div className=" shadow-md py-6 px-6 flex justify-center items-center">
       <div className="flex items-center justify-around w-full max-w-4xl">
         <div className="flex-grow mr-4">
-          <label htmlFor="number-of-meals" className="block text-gray-700 font-bold mb-2">
+          <label htmlFor="number-of-meals" className="block font-bold mb-2">
             Number of Meals
           </label>
           <select
             id="number-of-meals"
             value={mealCount}
             onChange={(e) => setMealCount(parseInt(e.target.value))}
-            className="w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="w-full border rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           >
             {[...Array(7)].map((_, i) => (
               <option key={i + 1} value={i + 1}>
@@ -66,7 +66,7 @@ const SecondaryTopBar: React.FC = (props) => {
         </div>
         <div className="flex-grow m-4">
           <div className="border-2 border-gray-300 p-4 rounded-md">
-            <div className="text-gray-700 font-bold mb-4">Dietary Restrictions</div>
+            <div className="font-bold mb-4">Dietary Restrictions</div>
             {Object.values(DietaryRestrictions).map((option) => (
               <div key={option} className="mb-2">
                 <input
@@ -86,7 +86,7 @@ const SecondaryTopBar: React.FC = (props) => {
           <div className="text-dark-gray font-bold mb-2">Meal Plan</div>
           <button
             onClick={handleMealPlan}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full"
+            className="bg-blue-500 hover:bg-blue-600 font-bold py-2 px-4 rounded w-full"
           >
             {generating ? "Thinking..." : "Plan it!"}
           </button>

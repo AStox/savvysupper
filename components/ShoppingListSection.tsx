@@ -49,12 +49,12 @@ const ShoppingListSection: React.FC = () => {
 
   return (
     <div
-      className={`flex-none transition-width duration-300 overflow-hidden bg-white shadow-xl z-10 ${
+      className={`flex-none transition-width duration-300 overflow-hidden z-10 ${
         isOpen ? "w-96" : "w-0"
       } ${styles.shoppingList}`}
     >
       <button
-        className="absolute top-1/2 left-[-40px] w-10 h-10 bg-blue-500 text-white transform -translate-y-1/2 rounded-full shadow-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+        className="absolute top-1/2 left-[-40px] w-10 h-10 bg-blue-500 transform -translate-y-1/2 rounded-full shadow-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? "<" : ">"}
@@ -88,25 +88,19 @@ const ShoppingListSection: React.FC = () => {
           <>
             {meals.map((meal, index) => (
               <div key={index} className="mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">{meal.title}</h3>
+                <h3 className="text-lg font-semibold ">{meal.title}</h3>
                 <table className="min-w-full">
                   <thead>
                     <tr>
-                      <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
-                        Ingredient
-                      </th>
-                      <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
-                        Quantity
-                      </th>
+                      <th className="border-b font-medium  px-4 py-2 text-left">Ingredient</th>
+                      <th className="border-b font-medium  px-4 py-2 text-left">Quantity</th>
                     </tr>
                   </thead>
                   <tbody>
                     {meal.ingredients.map((item, itemIndex) => (
                       <tr key={itemIndex}>
-                        <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
-                          {item.title}
-                        </td>
-                        <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
+                        <td className="border-b border-gray-300 px-4 py-2 ">{item.title}</td>
+                        <td className="border-b border-gray-300 px-4 py-2 ">
                           {item.amount} {item.units}
                         </td>
                       </tr>
@@ -121,39 +115,29 @@ const ShoppingListSection: React.FC = () => {
           <>
             {meals.map((meal, index) => (
               <div key={index} className="mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">{meal.title}</h3>
+                <h3 className="text-lg font-semibold ">{meal.title}</h3>
                 <table className="min-w-full">
                   <thead>
                     <tr>
-                      <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
-                        Ingredient
-                      </th>
-                      <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
-                        Quantity
-                      </th>
-                      <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
-                        Price
-                      </th>
-                      <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
-                        To Buy
-                      </th>
+                      <th className="border-b font-medium  px-4 py-2 text-left">Ingredient</th>
+                      <th className="border-b font-medium  px-4 py-2 text-left">Quantity</th>
+                      <th className="border-b font-medium  px-4 py-2 text-left">Price</th>
+                      <th className="border-b font-medium  px-4 py-2 text-left">To Buy</th>
                     </tr>
                   </thead>
                   <tbody>
                     {meal.shoppingList.map((item, itemIndex) => (
                       <tr key={itemIndex}>
-                        <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
+                        <td className="border-b border-gray-300 px-4 py-2 ">
                           {item.ingredient.title}
                         </td>
-                        <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
+                        <td className="border-b border-gray-300 px-4 py-2 ">
                           {item.ingredient.amount} {item.ingredient.units}
                         </td>
-                        <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
+                        <td className="border-b border-gray-300 px-4 py-2 ">
                           {item.ingredient.currentPrice}
                         </td>
-                        <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
-                          {item.amountToBuy}
-                        </td>
+                        <td className="border-b border-gray-300 px-4 py-2 ">{item.amountToBuy}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -166,14 +150,14 @@ const ShoppingListSection: React.FC = () => {
           <>
             {meals.map((meal, index) => (
               <div key={index} className="mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">{meal.title}</h3>
+                <h3 className="text-lg font-semibold ">{meal.title}</h3>
                 <table className="min-w-full">
                   <thead>
                     <tr>
-                      <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
+                      <th className="border-b font-medium  px-4 py-2 text-left">
                         Ingredient
                       </th>
-                      <th className="border-b font-medium text-gray-700 px-4 py-2 text-left">
+                      <th className="border-b font-medium  px-4 py-2 text-left">
                         Leftover
                       </th>
                     </tr>
@@ -181,10 +165,10 @@ const ShoppingListSection: React.FC = () => {
                   <tbody>
                     {meal.shoppingList.map((item, itemIndex) => (
                       <tr key={itemIndex}>
-                        <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
+                        <td className="border-b border-gray-300 px-4 py-2 ">
                           {item.ingredient.title}
                         </td>
-                        <td className="border-b border-gray-300 px-4 py-2 text-gray-700">
+                        <td className="border-b border-gray-300 px-4 py-2 ">
                           {item.amountLeftover} {item.units}
                         </td>
                       </tr>

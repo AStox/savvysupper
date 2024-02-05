@@ -29,7 +29,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     for (let i = 0; i < batchIngredients.length; i++) {
       if (response.data[i].embedding.length > 0) {
-        console.log("embedding length", response.data[i].embedding.length);
         await prisma.$executeRaw`
         UPDATE ingredients
         SET embedding = ${response.data[i].embedding}::vector
