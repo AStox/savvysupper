@@ -14,7 +14,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 export async function executeRawSQLQuery(query: string): Promise<any> {
   try {
-    const result = await prisma.$queryRawUnsafe(`SELECT * FROM recipes`);
+    const result = await prisma.$queryRawUnsafe(query);
+    console.log("Raw SQL query result:", result);
     return result;
   } catch (error) {
     console.error("Error executing raw SQL query:", error);

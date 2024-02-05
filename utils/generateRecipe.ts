@@ -219,7 +219,7 @@ async function getProteins(): Promise<Ingredient[]> {
 
 async function getPreviousRecipes(): Promise<string[]> {
   const recipes = await fetch("/api/getRecipes").then((res) => res.json());
-  return recipes.map((recipe: Recipe) => recipe.title);
+  return recipes?.map((recipe: Recipe) => recipe.title);
 }
 
 async function generateRecipeIdea(

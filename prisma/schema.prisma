@@ -45,6 +45,8 @@ model Recipe {
     totalCost     Float
     regularPrice  Float
     dietaryRestrictions Json
+
+    @@map("recipes")
 }
 
 model RecipeIngredient {

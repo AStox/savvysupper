@@ -96,7 +96,7 @@ available Dietary Restrictions are: ${Object.values(DietaryRestrictions).join(",
 
 Your returned JSON should be in the following format:
 {
-  rawSql: \`SELECT * FROM recipe LIMIT 5\`,
+  rawSql: \`SELECT * FROM recipes WHERE "dietaryRestrictions" @> '["Vegan"]' LIMIT 5\`,
 }
 
 return 5 meals if not otherwise specified.
@@ -105,9 +105,7 @@ return 5 meals if not otherwise specified.
     };
 
     const chatHistory = [systemMessage, ...messages, newMessage];
-    console.log(chatHistory);
     const response = JSON.parse(await fetchChatResponse(chatHistory));
-    console.log("!!!!", response);
     const result = await executeRawSQLQuery(response.rawSql);
     setMessages([...messages, newMessage, { role: "assistant", content: JSON.stringify(result) }]);
   };
