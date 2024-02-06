@@ -24,14 +24,7 @@ const MealCard: React.FC<MealCardProps> = ({ meal, onReroll, onSelect }) => {
         objectFit="cover"
       />
       <div className="absolute top-0 left-0 right-0 p-2 flex justify-between items-center">
-        <h3 className="text-lg font-bold">{meal.title}</h3>
-        <button
-          onClick={onReroll}
-          className="bg-transparent hover:bg-gray-600 rounded-full p-1"
-          style={{ width: "24px", height: "24px" }}
-        >
-          <FontAwesomeIcon icon={faRedo} />
-        </button>
+        <h3 className="text-lg font-bold text-white bg-slate-500 px-5 py-2">{meal.title}</h3>
       </div>
       <div className="absolute bottom-0 p-4">
         {meal.dietaryRestrictions.map((restriction) => (

@@ -18,6 +18,7 @@ const initialMessages: Message[] = [
 ];
 
 export default function ChatSection() {
+  const [meals, setMeals] = useState([]);
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [inputText, setInputText] = useState("");
 
@@ -100,6 +101,7 @@ Your returned JSON should be in the following format:
 }
 
 return 5 meals if not otherwise specified.
+Add some randomization to the meals returned to make it more interesting.
 `,
       role: "system",
     };
@@ -107,7 +109,10 @@ return 5 meals if not otherwise specified.
     const chatHistory = [systemMessage, ...messages, newMessage];
     const response = JSON.parse(await fetchChatResponse(chatHistory));
     const result = await executeRawSQLQuery(response.rawSql);
-    setMessages([...messages, newMessage, { role: "assistant", content: JSON.stringify(result) }]);
+
+    console.log(result);
+    setMeals(result);
+    setMessages([...messages, newMessage, { role: "assistant", content: "done!" }]);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

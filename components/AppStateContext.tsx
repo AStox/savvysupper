@@ -30,14 +30,8 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
   const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
-    const fetchMeals = async () => {
-      const recipes = await PlanMeals(7, []);
-      console.log("recipes", recipes);
-      setMeals(recipes);
-    };
-
-    fetchMeals();
-  }, []);
+    console.log("Meals updated:", meals);
+  }, [meals]);
 
   return (
     <AppStateContext.Provider
