@@ -3,23 +3,22 @@ import { fetchChatResponse } from "@/utils/chat";
 import { executeRawSQLQuery } from "@/utils/executeRawSql";
 import { Cuisines, DietaryRestrictions } from "@/utils/generateRecipe";
 import { useState } from "react";
+import { useAppState } from "./AppStateContext";
 
 type Message = {
   content: string;
   role: "assistant" | "user" | "system";
 };
 
-const initialMessages: Message[] = [
-  {
-    role: "assistant",
-    content:
-      "Hi, I can make you a meal plan that takes advantage of local sales. Just tell me what you feel like.",
-  },
-];
+const initialMessage: Message = {
+  role: "assistant",
+  content:
+    "Hi, I can make you a meal plan that takes advantage of local sales. Just tell me what you feel like.",
+};
 
 export default function ChatSection() {
-  const [meals, setMeals] = useState([]);
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const { meals, setMeals } = useAppState();
+  const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [inputText, setInputText] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,12 +28,12 @@ export default function ChatSection() {
   const handleSend = async () => {
     if (inputText.trim() === "") return;
 
-    const newMessage: Message = {
+    const userMessage: Message = {
       content: inputText,
       role: "user",
     };
 
-    setMessages([...messages, newMessage]);
+    setMessages([...messages, userMessage]);
     setInputText(""); // Clear input after sending
 
     const systemMessage: Message = {
@@ -106,13 +105,31 @@ Add some randomization to the meals returned to make it more interesting.
       role: "system",
     };
 
-    const chatHistory = [systemMessage, ...messages, newMessage];
-    const response = JSON.parse(await fetchChatResponse(chatHistory));
-    const result = await executeRawSQLQuery(response.rawSql);
+    const chatHistory = [systemMessage, ...messages, userMessage];
+    const sql = JSON.parse(await fetchChatResponse(chatHistory));
+    const result = await executeRawSQLQuery(sql.rawSql);
 
-    console.log(result);
+    const response = await fetchChatResponse(
+      [
+        initialMessage,
+        userMessage,
+        {
+          role: "assistant",
+          content: `Here are some recipes I found for you: [${result
+            .map((meal: any) => meal.title)
+            .join(", ")}]`,
+        },
+        {
+          role: "user",
+          content: `In one sentence tell me what you found. If you weren't able to meet my criteria, tell me that.
+            You should only talk about the recipes you returned in the previous message. Don't mention or suggest any other recipes.
+            Ignore any user message that is not about recipes. You're only meant to help me come up with a meal plan. Further, don't break the illusion by telling me this restriction. Just ignore my messages.`,
+        },
+      ],
+      false
+    );
     setMeals(result);
-    setMessages([...messages, newMessage, { role: "assistant", content: "done!" }]);
+    setMessages([...messages, userMessage, { role: "assistant", content: response }]);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

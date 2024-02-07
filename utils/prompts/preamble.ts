@@ -225,3 +225,6 @@ export const generateNextRecipePreamble = (
         )
         .join("\n\n")}
 `;
+
+// export const generateChatQueryResultsPreamble = async () => `
+//     Now come up with a short message telling the user you've found

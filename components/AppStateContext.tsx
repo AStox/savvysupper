@@ -29,10 +29,6 @@ export const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) 
   const [numberOfMeals, setNumberOfMeals] = useState(1);
   const [generating, setGenerating] = useState(false);
 
-  useEffect(() => {
-    console.log("Meals updated:", meals);
-  }, [meals]);
-
   return (
     <AppStateContext.Provider
       value={{
