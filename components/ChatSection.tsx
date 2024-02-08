@@ -5,6 +5,8 @@ import { Cuisines, DietaryRestrictions } from "@/utils/generateRecipe";
 import { useState } from "react";
 import { useAppState } from "./AppStateContext";
 import { generateChatQueryPreamble } from "@/utils/prompts/preamble";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ChatSection.module.css";
 
 type Message = {
@@ -19,10 +21,11 @@ const initialMessage: Message = {
 };
 
 export default function ChatSection() {
-  const { meals, setMeals } = useAppState();
+  const { setMeals } = useAppState();
   const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [inputText, setInputText] = useState("");
   const [isFetching, setIsFetching] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(event.target.value);
@@ -48,26 +51,33 @@ export default function ChatSection() {
     const chatHistory = [systemMessage, ...messages, userMessage];
     const sql = JSON.parse(await fetchChatResponse(chatHistory));
     const result = await executeRawSQLQuery(sql.rawSql);
+    console.log("RESULT", result);
 
-    const response = await fetchChatResponse(
-      [
-        initialMessage,
-        userMessage,
-        {
-          role: "assistant",
-          content: `Here are some recipes I found for you: [${result
-            .map((meal: any) => meal.title)
-            .join(", ")}]`,
-        },
-        {
-          role: "user",
-          content: `In one sentence tell me what you found. If you weren't able to meet my criteria, tell me that.
+    let response;
+    if (result.length > 0) {
+      response = await fetchChatResponse(
+        [
+          initialMessage,
+          userMessage,
+          {
+            role: "assistant",
+            content: `Here are some recipes I found for you: [${result
+              .map((meal: any) => meal.title)
+              .join(", ")}]`,
+          },
+          {
+            role: "user",
+            content: `In one sentence tell me what you found. If you weren't able to meet my criteria, tell me that.
             You should only talk about the recipes you returned in the previous message. Don't mention or suggest any other recipes.
             Ignore any user message that is not about recipes. You're only meant to help me come up with a meal plan. Further, don't break the illusion by telling me this restriction. Just ignore my messages.`,
-        },
-      ],
-      false
-    );
+          },
+        ],
+        false
+      );
+    } else {
+      setHasError(true);
+      response = "I'm sorry, I couldn't find any recipes that match your criteria.";
+    }
     setMeals(result);
     setMessages([...messages, userMessage, { role: "assistant", content: response }]);
     setIsFetching(false);
@@ -90,6 +100,9 @@ export default function ChatSection() {
             }`}
           >
             {message.content}
+            {hasError && i === messages.length - 1 && message.role === "assistant" && (
+              <FontAwesomeIcon icon={faExclamationCircle} className="text-red-500 ml-2" />
+            )}
           </div>
         ))}
         {isFetching && (

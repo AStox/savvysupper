@@ -10,6 +10,7 @@ export async function executeRawSQLQuery(query: string) {
     });
     if (!response.ok) {
       console.log("RESPONSE NOT OK:", response);
+      return response;
     }
     const data = await response.json();
     return data;

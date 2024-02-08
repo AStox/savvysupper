@@ -5,11 +5,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { query } = req.body;
   try {
     const result = await executeRawSQLQuery(query);
-    console.log("Raw SQL query result:", result);
     res.status(200).json(result);
   } catch (error) {
     console.error("Error executing raw SQL query:", error);
-    res.status(500).json({ error: "Error executing raw SQL query" });
+    res.status(500).json({ error });
   }
 }
 
