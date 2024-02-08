@@ -320,7 +320,7 @@ json_agg(json_build_object(
         'discount', i.discount,
         'onSale', i."onSale"
     )
-)) AS shoppingList
+)) AS "shoppingList"
 FROM recipes r
 JOIN "RecipeIngredient" ri ON r.id = ri."recipeId"
 JOIN ingredients i ON ri."ingredientId" = i.id

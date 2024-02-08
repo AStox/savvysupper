@@ -69,7 +69,7 @@ const ShoppingListSection: React.FC = () => {
           Ingredients
         </button>
         <button
-          className={`flex-1 py-2 ${
+          className={`flex-1 mx-5 px-2 py-2 ${
             activeTab === Tab.ShoppingList ? "border-b-2 border-blue-500" : ""
           }`}
           onClick={() => setActiveTab(Tab.ShoppingList)}
