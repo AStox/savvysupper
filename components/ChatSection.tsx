@@ -4,6 +4,8 @@ import { executeRawSQLQuery } from "@/utils/executeRawSql";
 import { Cuisines, DietaryRestrictions } from "@/utils/generateRecipe";
 import { useState } from "react";
 import { useAppState } from "./AppStateContext";
+import { generateChatQueryPreamble } from "@/utils/prompts/preamble";
+import styles from "./ChatSection.module.css";
 
 type Message = {
   content: string;
@@ -20,6 +22,7 @@ export default function ChatSection() {
   const { meals, setMeals } = useAppState();
   const [messages, setMessages] = useState<Message[]>([initialMessage]);
   const [inputText, setInputText] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(event.target.value);
@@ -34,74 +37,11 @@ export default function ChatSection() {
     };
 
     setMessages([...messages, userMessage]);
-    setInputText(""); // Clear input after sending
+    setInputText("");
+    setIsFetching(true);
 
     const systemMessage: Message = {
-      content: `You are an ai assistant taking in plane text from users about what kind of meal plan they would like and outputting a json object that contains a prisma query to get meals that match their criteria.
-      Below is the recipe table schema that you will be querying:
-      \`\`\`
-      model Ingredient {
-        id          String             @default(cuid()) @id
-        title       String
-        amount      Float
-        units       String
-        category    String
-        currentPrice Float
-        regularPrice Float
-        perUnitPrice Float
-        discount    Float
-        onSale      Boolean
-        dateAdded   DateTime           @default(now())
-        RecipeIngredient RecipeIngredient[]
-    
-        embedding   Unsupported("vector(3072)")?
-    
-        @@map("ingredients")
-    }
-    
-    model Recipe {
-        id            String             @default(cuid()) @id
-        title         String
-        image         String?
-        cuisine       String
-        description   String
-        serves        Int
-        prepTime      Int
-        cookTime      Int
-        ingredients   Json
-        unpricedIngredients Json
-        shoppingList  RecipeIngredient[]
-        instructions  Json
-        totalCost     Float
-        regularPrice  Float
-        dietaryRestrictions Json
-    }
-    
-    model RecipeIngredient {
-        ingredientId String
-        recipeId     String
-        amountToBuy  Int
-        amountLeftover Int
-        units       String
-        recipeIngredientTitle String
-    
-        ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
-        recipe       Recipe     @relation(fields: [recipeId], references: [id])
-    
-        @@id([ingredientId, recipeId])
-    }
-\`\`\`
-available cuisines are: ${Object.values(Cuisines).join(", ")}
-available Dietary Restrictions are: ${Object.values(DietaryRestrictions).join(", ")}
-
-Your returned JSON should be in the following format:
-{
-  rawSql: \`SELECT * FROM recipes WHERE "dietaryRestrictions" @> '["Vegan"]' LIMIT 5\`,
-}
-
-return 5 meals if not otherwise specified.
-Add some randomization to the meals returned to make it more interesting.
-`,
+      content: generateChatQueryPreamble(),
       role: "system",
     };
 
@@ -130,6 +70,7 @@ Add some randomization to the meals returned to make it more interesting.
     );
     setMeals(result);
     setMessages([...messages, userMessage, { role: "assistant", content: response }]);
+    setIsFetching(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -151,6 +92,15 @@ Add some randomization to the meals returned to make it more interesting.
             {message.content}
           </div>
         ))}
+        {isFetching && (
+          <div className="flex justify-center items-center">
+            <div className={styles.typingIndicator}>
+              <span className={styles.dot}></span>
+              <span className={styles.dot}></span>
+              <span className={styles.dot}></span>
+            </div>
+          </div>
+        )}
       </div>
       <div className="p-4">
         <div className="flex space-x-2">
