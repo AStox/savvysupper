@@ -126,7 +126,7 @@ const ShoppingListSection: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {meal.shoppingList.map((item, itemIndex) => (
+                    {meal.shoppingList?.map((item, itemIndex) => (
                       <tr key={itemIndex}>
                         <td className="border-b border-gray-300 px-4 py-2 ">
                           {item.ingredient.title}
