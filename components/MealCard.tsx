@@ -23,26 +23,18 @@ const MealCard: React.FC<MealCardProps> = ({ meal, onReroll, onSelect }) => {
         layout="fill"
         objectFit="cover"
       />
-      <div className="absolute top-0 left-0 right-0 p-2 flex justify-between items-center">
-        <h3 className="text-lg font-bold text-white bg-slate-500 px-5 py-2">{meal.title}</h3>
+      <div className="absolute top-0 left-0 right-0 flex justify-between items-center bg-slate-500">
+        <h3 className="text-md font-bold text-white m-auto px-1 py-2">{meal.title}</h3>
       </div>
-      <div className="absolute bottom-0 p-4">
+      <div className="absolute bottom-0 px-2">
         {meal.dietaryRestrictions.map((restriction) => (
           <span
             key={restriction}
-            className="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
+            className="inline-block bg-green-200 rounded-full px-2 text-sm font-semibold mr-2 mb-2"
           >
             {restriction}
           </span>
         ))}
-        <div>
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
-            Cost per Serving
-          </span>
-          <span className="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
-            ${(meal.totalCost / meal.serves).toFixed(2)}
-          </span>
-        </div>
       </div>
     </div>
   );
