@@ -286,49 +286,61 @@ available Dietary Restrictions are: ${Object.values(DietaryRestrictions).join(",
 
 Your returned JSON should be in the following format:
 {
-rawSql: \`SELECT 
-r.id,
-r.title,
-r.image,
-r.cuisine,
-r.description,
-r.serves,
-r."prepTime",
-r."cookTime",
-r.ingredients,
-r."unpricedIngredients",
-r.instructions,
-r."totalCost",
-r."regularPrice",
-r."dietaryRestrictions",
-json_agg(json_build_object(
-    'ingredientId', ri."ingredientId",
-    'recipeId', ri."recipeId",
-    'amountToBuy', ri."amountToBuy",
-    'amountLeftover', ri."amountLeftover",
-    'units', ri.units,
-    'recipeIngredientTitle', ri."recipeIngredientTitle",
-    'ingredient', json_build_object(
-        'id', i.id,
-        'title', i.title,
-        'amount', i.amount,
-        'units', i.units,
-        'category', i.category,
-        'currentPrice', i."currentPrice",
-        'regularPrice', i."regularPrice",
-        'perUnitPrice', i."perUnitPrice",
-        'discount', i.discount,
-        'onSale', i."onSale"
-    )
-)) AS "shoppingList"
+rawSql: \`
+SELECT 
+    r.id,
+    r.title,
+    r.image,
+    r.cuisine,
+    r.description,
+    r.serves,
+    r."prepTime",
+    r."cookTime",
+    r.ingredients,
+    r."unpricedIngredients",
+    r.instructions,
+    r."totalCost",
+    r."regularPrice",
+    r."dietaryRestrictions",
+    json_agg(json_build_object(
+        'ingredientId', ri."ingredientId",
+        'recipeId', ri."recipeId",
+        'amountToBuy', ri."amountToBuy",
+        'amountLeftover', ri."amountLeftover",
+        'units', ri.units,
+        'recipeIngredientTitle', ri."recipeIngredientTitle",
+        'ingredient', json_build_object(
+            'id', i.id,
+            'title', i.title,
+            'amount', i.amount,
+            'units', i.units,
+            'category', i.category,
+            'currentPrice', i."currentPrice",
+            'regularPrice', i."regularPrice",
+            'perUnitPrice', i."perUnitPrice",
+            'discount', i.discount,
+            'onSale', i."onSale"
+        )
+    )) AS "shoppingList"
 FROM recipes r
 JOIN "RecipeIngredient" ri ON r.id = ri."recipeId"
 JOIN ingredients i ON ri."ingredientId" = i.id
-WHERE r."dietaryRestrictions" @> '["Vegan"]'
+WHERE 
+    r."dietaryRestrictions" @> '["Vegan"]' AND
+    EXISTS (
+        SELECT 1
+        FROM "RecipeIngredient" ri2
+        JOIN ingredients i2 ON ri2."ingredientId" = i2.id
+        WHERE ri2."recipeId" = r.id AND (
+          LOWER(i2.title) LIKE '%chickpeas%' OR
+          LOWER(i2.title) LIKE '%chickpea%' OR
+          LOWER(i2.title) LIKE '%chick peas%' OR
+          LOWER(i2.title) LIKE '%chick pea%'
+      )
+    )
 GROUP BY r.id
 ORDER BY RANDOM()
 LIMIT 5;
-
 \`,
 }
 
