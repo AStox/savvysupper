@@ -111,11 +111,11 @@ export async function generateRecipe(
   const previousRecipes = await getPreviousRecipes();
   const cuisine =
     Object.values(Cuisines)[Math.floor(Math.random() * Object.values(Cuisines).length)];
-  progressCallback("Thinking of a Recipe", 0.3);
+  progressCallback("Thinking of a Recipe", 0.2);
   const recipeIdea = await generateRecipeIdea([], dietaryRestrictions, cuisine, previousRecipes);
   (recipeIdea as any).dietaryRestrictions = dietaryRestrictions;
   console.log("RECIPE IDEA", recipeIdea);
-  progressCallback("Choosing Ingredients", 0.2);
+  progressCallback("Choosing Ingredients", 0.3);
   const recipeIngredients = await generateRecipeIngredients(recipeIdea as any);
   console.log("RECIPE INGREDIENTS", recipeIngredients);
   progressCallback("Writing Instructions", 0.35);
@@ -123,6 +123,14 @@ export async function generateRecipe(
   console.log("RECIPE", recipe);
   progressCallback("Making a Shopping List", 0.5);
   const pricedRecipe = await priceIngredients(recipe);
+  pricedRecipe.shoppingList.reduce((acc, item) => {
+    if (!item.ingredient.title) {
+      console.log("ERROR missing ingredient: ", item);
+      acc = false;
+      throw new Error("Missing ingredient title");
+    }
+    return acc;
+  }, true);
   console.log("PRICED RECIPE", pricedRecipe);
   const recipeWithCosts = calculateCosts(pricedRecipe);
   console.log("RECIPE WITH COSTS", recipeWithCosts);
@@ -130,9 +138,11 @@ export async function generateRecipe(
   const finalizedRecipeFields = await finalizeRecipe(recipeWithCosts);
   const finalizedRecipe = { ...recipeWithCosts, ...finalizedRecipeFields };
   console.log("FINALIZED RECIPE", finalizedRecipe);
+  // makesure every item in shopping list has an ingredient.title and if it doesn't, abort the whole function.
 
   progressCallback("Crunching some numbers", 0.8);
   const leftovers = await calculateLeftovers(finalizedRecipe);
+  console.log("LEFTOVERS", leftovers);
   const recipeWithLeftovers = {
     ...finalizedRecipe,
     shoppingList: finalizedRecipe.shoppingList.map((item) => ({
@@ -417,13 +427,14 @@ async function finalizeRecipe(
     role: "user",
     content: await generateFinalizeRecipePreamble2(),
   });
-  console.log(chatHistory);
   const finalRecipe = JSON.parse(await fetchChatResponse(chatHistory));
   return finalRecipe;
 }
 
 async function generateImageForRecipe(recipe: any) {
-  const openAIImageURL = (await generateImage(await generateImagePreamble(recipe))).url;
+  const prompt = await generateImagePreamble(recipe);
+  console.log("generateImageForRecipe PROMPT", prompt);
+  const openAIImageURL = (await generateImage(prompt)).url;
   // replace title with a filename safe title
   const blobUrl = await downloadAndSaveImage(
     openAIImageURL,
@@ -449,6 +460,7 @@ async function calculateLeftovers(meal: Recipe): Promise<any[]> {
       },
     ];
     const response = JSON.parse(await fetchChatResponse(chatHistory));
+    console.log("calculateLeftovers RESPONSE", response);
     leftovers.push(...response.leftovers);
   }
   return leftovers as any[];

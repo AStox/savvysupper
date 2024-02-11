@@ -33,7 +33,6 @@ export function convertMeasurement(input: string): { amount: number; units: stri
       return { amount: value, units: unit };
     }
   } else {
-    console.log(input);
     throw new Error("Invalid input format");
   }
 }

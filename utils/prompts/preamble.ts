@@ -20,6 +20,8 @@ export const generateRecipeIdeaPreamble = async (
   ingredients: Ingredient[]
 ) => `Generate a ${cuisine} recipe.
   Try to avoid generating anything too similar to these: ${previousRecipes.join(", ")}
+  Try to use ingredients that are likely to be sold at major Canadian grocery stores.
+  These meals are meant to be cost-saving, and simple to make, so don't include anything too fancy or expensive, but don't be afraid to get creative.
   ${
     !!dietaryRestrictions && dietaryRestrictions.length > 0
       ? `Your recipe must be ${dietaryRestrictions.join(", ")}.`
@@ -49,10 +51,11 @@ given the following recipe idea, choose the ingredients and return them followin
 }
   priced ingredients' units should be one of the following: "g", "ml", "tsp", "tbsp", "cup", "oz", "lb", "count"
   unpriced units can be whatever makes sense.
-  Unpriced ingredients should be common pantry items like cooking oils, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary, etc.
+  Unpriced ingredients should be common pantry items like cooking oils, olive oil, vegetable oil, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary. Other unpriced ingredients could be things like salt, pepper, sugar, flour, etc.
   Unpriced ingredients should not include things like fresh herbs, like fresh basil, fresh rosemary, fresh thyme, etc.
   Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
   Optimize for cost, even if that means buying in bulk.
+  These meals are meant to be cost-saving, and simple to make, so don't include anything too fancy or expensive.
 
   Recipe:
   ${recipeIdea.title}
@@ -167,7 +170,8 @@ export const generateFinalizeRecipePreamble2 =
 export const generateImagePreamble = async (recipe: Recipe) => `
   A brightly lit, studio quality photo of the following recipe plated and ready to serve in a nice, cosy setting. The plated dish should be alone in the photo. 
   The meal should use realistic but with bright colours and should look appetizing and delicious. It should be a minimalist setting, where only the dish is on display.
-  The meal should look like it's homemade, as opposed to professionally made. The photo should be taken from a 45 degree angle, and the dish should be in focus.
+  The meal should look like it's homemade, cooked by an amateur chef, as opposed to professionally made. But it should still be plated and displayed nicely.
+  The photo should be taken from a 45 degree angle, and the dish should be centered, in focus and taking up at least 60% of the image
   All ingredients should be shown processed. That means no full onions, but rather chopped onions. No full chickens, but rather chicken breasts or thighs. No whole fish, but rather fillets or chunks.
 
   Recipe:
