@@ -166,15 +166,14 @@ export const generateFinalizeRecipePreamble2 =
 
 export const generateImagePreamble = async (recipe: Recipe) => `
   A brightly lit, studio quality photo of the following recipe plated and ready to serve in a nice, cosy setting. The plated dish should be alone in the photo. 
-  The meal should use realistic but bright colours and should look appetizing and delicious.
+  The meal should use realistic but with bright colours and should look appetizing and delicious. It should be a minimalist setting, where only the dish is on display.
+  The meal should look like it's homemade, as opposed to professionally made. The photo should be taken from a 45 degree angle, and the dish should be in focus.
+  All ingredients should be shown processed. That means no full onions, but rather chopped onions. No full chickens, but rather chicken breasts or thighs. No whole fish, but rather fillets or chunks.
 
   Recipe:
-    ${JSON.stringify({
-      title: recipe.title,
-      description: recipe.description,
-      ingredients: recipe.shoppingList?.map((item) => item.ingredient.title),
-      instructions: recipe.instructions,
-    })}
+    name: ${recipe.title}
+    description: ${recipe.description}
+    instructions: ${recipe.instructions.join(". ")}
   `;
 
 export const generateLeftoversPreamble = (ingredient: any, groceryItem: any) => `
