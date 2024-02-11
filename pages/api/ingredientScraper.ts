@@ -69,6 +69,17 @@ const pages = {
       ],
     },
     {
+      name: "Bread & Bakery",
+      children: [
+        "Bread",
+        "Buns & Dinner Rolls",
+        "Bagels",
+        "English Muffins",
+        "Wraps, Pita & Flatbread",
+        "Gluten-Free Baked Goods",
+      ],
+    },
+    {
       name: "Pantry",
       children: [
         {
