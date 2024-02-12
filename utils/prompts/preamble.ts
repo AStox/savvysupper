@@ -52,6 +52,7 @@ given the following recipe idea, choose the ingredients and return them followin
   priced ingredients' units should be one of the following: "g", "ml", "tsp", "tbsp", "cup", "oz", "lb", "count"
   unpriced units can be whatever makes sense.
   Unpriced ingredients should be common pantry items like cooking oils, olive oil, vegetable oil, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary. Other unpriced ingredients could be things like salt, pepper, sugar, flour, etc.
+  International or uncommon spices should be priced. Some examples: Garam Masala, Sumac, Za'atar, turmeric, etc.
   Unpriced ingredients should not include things like fresh herbs, like fresh basil, fresh rosemary, fresh thyme, etc.
   Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
   Optimize for cost, even if that means buying in bulk.
@@ -97,6 +98,7 @@ Return responses in valid JSON following this example:
   units: string;
   currentPrice: number;
   regularPrice: number;
+  perUnitPrice: number;
   onSale: boolean;
   amountToBuy: number;
 }
@@ -107,6 +109,7 @@ I am looking for ${recipeIngredient.amount}${recipeIngredient.units} of ${
 While focusing on cost savings, tell me which of the following grocery items I should buy and how many of it I should buy.
 Amounts don't need to be exact, but should be close. If the recipe calls for 500g of chicken, 400g is fine. Don't buy two of the chicken in this case.
 But if the recipe calls for 500g of chicken, 250g is not enough. Buy more than one of the chicken in this case.
+When choosing between items, consider the perUnitPrice.
 ${JSON.stringify(
   storeItems.map((item: any) => ({
     title: item.title,
@@ -131,10 +134,10 @@ export const generateFinalizeRecipePreamble1 = async (
   recipe: Recipe
 ) => `You are a helpful algorithm designed to develop recipes based on grocery store sale data.
 You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
-  It's also possible that the dietary restrictions labels missing or incorrect.
+  It's also possible that the dietary restrictions are missing or incorrect.
   Adjust the title, description, and instructions to match the shopping list. Do not include brand names anywhere.
-  The title should be short and avoid using brand names or too many adjectives to describe things the dish.
-  The title should make the dish sound appetizing and unique.
+  Don't mention ingredient amounts in the instructions unless absolutely necessary, in which case, err on the side of the recipe's original amounts.
+  The title should just be the same as the originla recipe's title, but fix any inconsistencies, as ingredients may have been changed.
   present it in the following JSON format:
   
   {
