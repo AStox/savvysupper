@@ -138,7 +138,7 @@ export async function generateRecipe(
   const finalizedRecipeFields = await finalizeRecipe(recipeWithCosts);
   const finalizedRecipe = { ...recipeWithCosts, ...finalizedRecipeFields };
   console.log("FINALIZED RECIPE", finalizedRecipe);
-  // makesure every item in shopping list has an ingredient.title and if it doesn't, abort the whole function.
+  // make sure every item in shopping list has an ingredient.title and if it doesn't, abort the whole function.
 
   progressCallback("Crunching some numbers", 0.8);
   const leftovers = await calculateLeftovers(finalizedRecipe);
@@ -156,6 +156,19 @@ export async function generateRecipe(
     })),
   };
   console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
+
+  // rename ingredients to match shopping list
+  for (const item of finalizedRecipe.ingredients) {
+    const shoppingListItem = finalizedRecipe.shoppingList.find(
+      (shoppingListItem) => shoppingListItem.recipeIngredientTitle === item.title
+    );
+    if (shoppingListItem) {
+      item.title = shoppingListItem.ingredient.title;
+    } else {
+      console.log("ERROR missing shopping list item: ", item);
+    }
+  }
+
   progressCallback("Taking a Picture", 0.85);
   const recipeWithImage = await generateImageForRecipe(recipeWithLeftovers);
 
