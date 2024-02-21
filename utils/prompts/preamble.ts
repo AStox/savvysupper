@@ -110,6 +110,7 @@ While focusing on cost savings, tell me which of the following grocery items I s
 Amounts don't need to be exact, but should be close. If the recipe calls for 500g of chicken, 400g is fine. Don't buy two of the chicken in this case.
 But if the recipe calls for 500g of chicken, 250g is not enough. Buy more than one of the chicken in this case.
 When choosing between items, consider the perUnitPrice.
+When it comes to bell peppers, for example, if the recipe calls for 2 bell peppers, and the store sells them individually, you should buy two. If the store sells them in a mix pack of 3, you should buy 1 pack.
 ${JSON.stringify(
   storeItems.map((item: any) => ({
     title: item.title,
