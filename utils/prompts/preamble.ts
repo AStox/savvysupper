@@ -22,6 +22,8 @@ export const generateRecipeIdeaPreamble = async (
   Try to avoid generating anything too similar to these: ${previousRecipes.join(", ")}
   Try to use ingredients that are likely to be sold at major Canadian grocery stores.
   These meals are meant to be cost-saving, and simple to make, so don't include anything too fancy or expensive, but don't be afraid to get creative.
+  The meal can be any number of servings, but should be at least 2 servings and should be a complete meal. Don't generate sides, snacks, or smaller dishes unless also accompanied by something else to complete a full meal.
+  You also don't need to include the cuisine in the title. For example if you're making chicken ratatouille, you don't need to call it "French Chicken Ratatouille". Just call it "Chicken Ratatouille".
   ${
     !!dietaryRestrictions && dietaryRestrictions.length > 0
       ? `Your recipe must be ${dietaryRestrictions.join(", ")}.`
@@ -52,7 +54,8 @@ given the following recipe idea, choose the ingredients and return them followin
   priced ingredients' units should be one of the following: "g", "ml", "tsp", "tbsp", "cup", "oz", "lb", "count"
   unpriced units can be whatever makes sense.
   Unpriced ingredients should be common pantry items like cooking oils, olive oil, vegetable oil, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary. Other unpriced ingredients could be things like salt, pepper, sugar, flour, etc.
-  International or uncommon spices should be priced. Some examples: Garam Masala, Sumac, Za'atar, turmeric, etc.
+  This is a recipe for Canadians so non-Canadian, International or uncommon spices should be priced. Some examples: Garam Masala, Sumac, Za'atar, turmeric, Dashi, etc.
+  Basically anything a regular Canadian would have in their pantry should be unpriced.
   Unpriced ingredients should not include things like fresh herbs, like fresh basil, fresh rosemary, fresh thyme, etc.
   Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
   Optimize for cost, even if that means buying in bulk.
@@ -137,6 +140,9 @@ export const generateFinalizeRecipePreamble1 = async (
 You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
   It's also possible that the dietary restrictions are missing or incorrect.
   Adjust the title, description, and instructions to match the shopping list. Do not include brand names anywhere.
+  Don't make the title too descriptive. Just capture the essence of the dish in as simple a way as possible.
+  If an ingredient we've chosen is from a specific cuisine or culture, don't mention that culture in the title.
+  Keep the title simple! It shouldn't have to be more than 4 or 5 words.
   Don't mention ingredient amounts in the instructions unless absolutely necessary, in which case, err on the side of the recipe's original amounts.
   The title should just be the same as the originla recipe's title, but fix any inconsistencies, as ingredients may have been changed.
   present it in the following JSON format:
@@ -172,8 +178,9 @@ export const generateFinalizeRecipePreamble2 =
   `;
 
 export const generateImagePreamble = async (recipe: Recipe) => `
-  A brightly lit, studio quality photo of the following recipe plated and ready to serve in a nice, modern and clean setting. The plated dish should be alone in the photo. 
-  The light should be natural with no sunset, sunrise or sunbeams present. The photos should resemble those in NYT Cooking, Bon Appetit Magazine or Food 52.
+  A bright top-down lit, shadowless, studio quality photo of the following recipe plated and ready to serve in a nice, modern and clean setting. The plated dish should be alone in the photo. 
+  The light should be natural lighting from above to minimize shadows. The lighting should not be angled or cast shadows.
+  The photos should resemble those in NYT Cooking, Bon Appetit Magazine or Food 52.
   Use only the ingredients in the recipe and ensure they look as realistic as possible. Do not add ingredients, and do not use unnatural shapes or colours.
   The meal should use realistic but with bright colours and should look appetizing and delicious.
   The meal should look like it's homemade, cooked by an amateur chef, as opposed to professionally made. But it should still be plated and displayed nicely.
@@ -182,8 +189,7 @@ export const generateImagePreamble = async (recipe: Recipe) => `
 
   Recipe:
     name: ${recipe.title}
-    description: ${recipe.description}
-    instructions: ${recipe.instructions.join(". ")}
+    description: ${recipe.description}}
   `;
 
 export const generateLeftoversPreamble = (ingredient: any, groceryItem: any) => `
