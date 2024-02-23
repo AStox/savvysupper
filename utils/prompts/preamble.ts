@@ -172,8 +172,10 @@ export const generateFinalizeRecipePreamble2 =
   `;
 
 export const generateImagePreamble = async (recipe: Recipe) => `
-  A brightly lit, studio quality photo of the following recipe plated and ready to serve in a nice, cosy setting. The plated dish should be alone in the photo. 
-  The meal should use realistic but with bright colours and should look appetizing and delicious. It should be a minimalist setting, where only the dish is on display.
+  A brightly lit, studio quality photo of the following recipe plated and ready to serve in a nice, modern and clean setting. The plated dish should be alone in the photo. 
+  The light should be natural with no sunset, sunrise or sunbeams present. The photos should resemble those in NYT Cooking, Bon Appetit Magazine or Food 52.
+  Use only the ingredients in the recipe and ensure they look as realistic as possible. Do not add ingredients, and do not use unnatural shapes or colours.
+  The meal should use realistic but with bright colours and should look appetizing and delicious.
   The meal should look like it's homemade, cooked by an amateur chef, as opposed to professionally made. But it should still be plated and displayed nicely.
   The photo should be taken from a 45 degree angle, and the dish should be centered, in focus and taking up at least 60% of the image
   All ingredients should be shown processed. That means no full onions, but rather chopped onions. No full chickens, but rather chicken breasts or thighs. No whole fish, but rather fillets or chunks.
