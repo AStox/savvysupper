@@ -23,7 +23,11 @@ export const generateRecipeIdeaPreamble = async (
   Try to use ingredients that are likely to be sold at major Canadian grocery stores.
   These meals are meant to be cost-saving, and simple to make, so don't include anything too fancy or expensive, but don't be afraid to get creative.
   The meal can be any number of servings, but should be at least 2 servings and should be a complete meal. Don't generate sides, snacks, or smaller dishes unless also accompanied by something else to complete a full meal.
-  You also don't need to include the cuisine in the title. For example if you're making chicken ratatouille, you don't need to call it "French Chicken Ratatouille". Just call it "Chicken Ratatouille".
+  Don't include the cuisine in the title. For example, "American turkey meatloaf" should just be "Turkey Meatloaf".
+  If the common name for the recipe is in another language, don't translate it to english, unless you think Canadians wouldn't recognize it. Just use the original name. Like "pad gra prow" instead of "Thai Basil Chicken", but something like "Rigatoni con Salsiccia e Crema di Zucca" should be "Rigatoni with Creamy Pumpkin Sauce".
+  But remember that this is for Canadians, so if the common name is in another language, and you think Canadians wouldn't recognize it, then translate it to english.
+  For example, "Espinacas con Garbanzos" should be "Spinach with Chickpeas".
+  The title should be short, no more than 4 or 5 words. 
   ${
     !!dietaryRestrictions && dietaryRestrictions.length > 0
       ? `Your recipe must be ${dietaryRestrictions.join(", ")}.`
@@ -54,7 +58,7 @@ given the following recipe idea, choose the ingredients and return them followin
   priced ingredients' units should be one of the following: "g", "ml", "tsp", "tbsp", "cup", "oz", "lb", "count"
   unpriced units can be whatever makes sense.
   Unpriced ingredients should be common pantry items like cooking oils, olive oil, vegetable oil, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary. Other unpriced ingredients could be things like salt, pepper, sugar, flour, etc.
-  This is a recipe for Canadians so non-Canadian, International or uncommon spices should be priced. Some examples: Garam Masala, Sumac, Za'atar, turmeric, Dashi, etc.
+  This is a recipe for Canadians so non-Canadian, International or uncommon spices should be priced. Some examples: Garam Masala, Sumac, Za'atar, turmeric, Dashi, tamarind paste, etc.
   Basically anything a regular Canadian would have in their pantry should be unpriced.
   Unpriced ingredients should not include things like fresh herbs, like fresh basil, fresh rosemary, fresh thyme, etc.
   Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
@@ -140,11 +144,9 @@ export const generateFinalizeRecipePreamble1 = async (
 You've generated the following recipe, then from a list of available grocery items, you chose the shopping list for this recipe. It's possible not all items match the original recipe, either in type or quantity.
   It's also possible that the dietary restrictions are missing or incorrect.
   Adjust the title, description, and instructions to match the shopping list. Do not include brand names anywhere.
-  Don't make the title too descriptive. Just capture the essence of the dish in as simple a way as possible.
-  If an ingredient we've chosen is from a specific cuisine or culture, don't mention that culture in the title.
-  Keep the title simple! It shouldn't have to be more than 4 or 5 words.
+  The title should just be the same as the original recipe's title, but fix any inconsistencies, as ingredients may have been changed.
   Don't mention ingredient amounts in the instructions unless absolutely necessary, in which case, err on the side of the recipe's original amounts.
-  The title should just be the same as the originla recipe's title, but fix any inconsistencies, as ingredients may have been changed.
+  Update the description to fix any inconsistencies, as ingredients may have been changed. Mention any major ingredient changes in the description. This means changes like "chicken" to "tofu" or "beef" to "lamb", but not changes like "red bell pepper" to "green bell pepper". Only changes that alter the essence of the recipe should be mentioned.
   present it in the following JSON format:
   
   {
