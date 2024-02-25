@@ -6,10 +6,14 @@ import RecipeModal from "./RecipeModal";
 import { Recipe } from "@/utils/generateRecipe";
 import ShoppingListSection from "./ShoppingListSection";
 
-const MealPlanSection: React.FC = () => {
+type Props = {
+  recipes?: Recipe[];
+};
+
+const MealPlanSection: React.FC<Props> = ({ recipes }) => {
   const [selectedMeal, setSelectedMeal] = useState<Recipe | null>(null);
   const { meals } = useAppState();
-  const recipes = meals;
+  recipes = recipes || meals;
 
   const handleMealSelect = (meal: Recipe) => {
     setSelectedMeal(meal);
