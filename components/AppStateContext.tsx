@@ -1,6 +1,5 @@
 import { Recipe } from "@/utils/generateRecipe";
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import { PlanMeals } from "@/utils/planMeals";
 
 const AppStateContext = createContext<{
   meals: Recipe[];

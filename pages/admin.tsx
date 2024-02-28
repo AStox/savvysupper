@@ -91,30 +91,6 @@ const AdminPage = () => {
     setLoading(false);
   };
 
-  const genRecipePreviews = async () => {
-    setLoading(true);
-    setProgress("");
-    setResponse("");
-    setImageSrc("");
-
-    const promises = [];
-    for (let i = 0; i < numberOfRecipes; i++) {
-      promises.push(
-        generateRecipePreview(dietaryRestrictions, (status, progress) =>
-          setResponse(status + " " + progress * 100 + "%")
-        )
-      );
-    }
-
-    const recipes = await Promise.all(promises);
-    recipes.forEach((recipe) => {
-      setImageSrc(recipe.image);
-      setResponse(JSON.stringify(recipe, null, 2));
-    });
-
-    setLoading(false);
-  };
-
   const testDownloadAndSaveImage = async () => {
     setLoading(true);
     setNumberOfRecipes(1);
@@ -244,15 +220,6 @@ const AdminPage = () => {
 
         <button className={styles.generateRecipeButton} onClick={genRecipes} disabled={loading}>
           Generate Recipe
-        </button>
-      </div>
-      <div className={styles.searchGroup}>
-        <button
-          className={styles.generateRecipeButton}
-          onClick={genRecipePreviews}
-          disabled={loading}
-        >
-          Generate Recipe Preview
         </button>
       </div>
       {loading && <p className={styles.loading}>Loading...</p>}

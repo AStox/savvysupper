@@ -64,10 +64,14 @@ given the following recipe idea, choose the ingredients and return them followin
   Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
   Optimize for cost, even if that means buying in bulk.
   These meals are meant to be cost-saving, and simple to make, so don't include anything too fancy or expensive.
+  If the recipe has any dietary restrictions then you should only include ingredients that fit those restrictions.
 
   Recipe:
   ${recipeIdea.title}
   ${recipeIdea.description}
+  Dietary restrictions: ${
+    recipeIdea.dietaryRestrictions ? recipeIdea.dietaryRestrictions.join(", ") : "None"
+  }
   Serves: ${recipeIdea.serves}
 `;
 

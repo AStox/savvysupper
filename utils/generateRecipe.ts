@@ -79,30 +79,8 @@ interface RecipePreview {
   dietaryRestrictions: DietaryRestrictions[];
 }
 
-export async function generateRecipePreview(
-  dietaryRestrictions: DietaryRestrictions[] = [],
-  progressCallback: (status: string, progress: number) => void
-): Promise<RecipePreview> {
-  // progressCallback("Looking at Whats on Sale", 0);
-  // const proteinsOnSale = await getProteins();
-  const cuisine =
-    Object.values(Cuisines)[Math.floor(Math.random() * Object.values(Cuisines).length)];
-  progressCallback("Thinking of a Recipe", 0.3);
-  const previousRecipes = await getPreviousRecipes();
-  const recipeIdea = await generateRecipeIdea([], dietaryRestrictions, cuisine, previousRecipes);
-  const RecipePreview = {
-    title: recipeIdea.title,
-    description: recipeIdea.description,
-    image: "",
-    dietaryRestrictions: dietaryRestrictions,
-  };
-  progressCallback("Taking a picture", 0.7);
-  const recipeWithImage = await generateImageForRecipe(RecipePreview);
-  return recipeWithImage;
-}
-
 export async function generateRecipe(
-  dietaryRestrictions: DietaryRestrictions[] = [],
+  dietaryRestrictions: DietaryRestrictions[] = [DietaryRestrictions.GlutenFree],
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
   // progressCallback("Looking at Whats on Sale", 0);
