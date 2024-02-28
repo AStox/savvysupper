@@ -54,19 +54,6 @@ const AdminPage = () => {
     setLoading(false);
   };
 
-  const genImage = async () => {
-    setLoading(true);
-    setNumberOfRecipes(1);
-    setProgress("");
-    setResponse("");
-    setImageSrc("");
-    const response = await generateImage(imagePrompt);
-    const data = await response;
-    setImageSrc(data.url);
-    setResponse(JSON.stringify(data, null, 2));
-    setLoading(false);
-  };
-
   const genRecipes = async () => {
     setLoading(true);
     setProgress("");
@@ -88,22 +75,6 @@ const AdminPage = () => {
       setResponse(JSON.stringify(recipe, null, 2));
     });
 
-    setLoading(false);
-  };
-
-  const testDownloadAndSaveImage = async () => {
-    setLoading(true);
-    setNumberOfRecipes(1);
-    setProgress("");
-    setResponse("");
-    setImageSrc("");
-    const response = await downloadAndSaveImage(
-      "https://images.unsplash.com/photo-1682686581413-0a0ec9bb35bb?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "test.jpg"
-    );
-    const data = await response;
-    setResponse(JSON.stringify(data, null, 2));
-    setImageSrc(data);
     setLoading(false);
   };
 
@@ -166,22 +137,6 @@ const AdminPage = () => {
           Search
         </button>
       </div>
-      <div className={styles.searchGroup}>
-        <input
-          type="text"
-          className={styles.searchInput}
-          value={imagePrompt}
-          onChange={(e) => setImagePrompt(e.target.value)}
-          placeholder="Enter image prompt"
-          disabled={loading}
-        />
-        <button className={styles.searchButton} onClick={genImage} disabled={loading}>
-          Generate Image
-        </button>
-      </div>
-      <button className={styles.button} onClick={testDownloadAndSaveImage} disabled={loading}>
-        Test Download and Save Image
-      </button>
       <div className={styles.searchGroup}>
         <input
           type="text"
