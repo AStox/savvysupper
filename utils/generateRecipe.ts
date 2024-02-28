@@ -80,11 +80,9 @@ interface RecipePreview {
 }
 
 export async function generateRecipe(
-  dietaryRestrictions: DietaryRestrictions[] = [DietaryRestrictions.GlutenFree],
+  dietaryRestrictions: DietaryRestrictions[] = [],
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
-  // progressCallback("Looking at Whats on Sale", 0);
-  // const proteinsOnSale = await getProteins();
   progressCallback("Thinking of a Recipe", 0.1);
   const previousRecipes = await getPreviousRecipes();
   const cuisine =
@@ -93,71 +91,90 @@ export async function generateRecipe(
   const recipeIdea = await generateRecipeIdea([], dietaryRestrictions, cuisine, previousRecipes);
   (recipeIdea as any).dietaryRestrictions = dietaryRestrictions;
   console.log("RECIPE IDEA", recipeIdea);
+
+  // Start image generation asynchronously
+  const recipeImagePromise = generateImageForRecipe(recipeIdea);
+
   progressCallback("Choosing Ingredients", 0.3);
   const recipeIngredients = await generateRecipeIngredients(recipeIdea as any);
   console.log("RECIPE INGREDIENTS", recipeIngredients);
-  progressCallback("Writing Instructions", 0.35);
-  const recipe = (await generateRecipeInstructions(recipeIngredients)) as Recipe;
-  console.log("RECIPE", recipe);
+
+  // Run recipe instructions generation and ingredient pricing concurrently
+  const [recipeInstructions, pricedRecipe] = await Promise.all([
+    generateRecipeInstructions(recipeIngredients),
+    priceIngredients(recipeIngredients),
+  ]);
+
+  console.log("RECIPE INSTRUCTIONS", recipeInstructions);
+  console.log("PRICED RECIPE", pricedRecipe);
+
   progressCallback("Making a Shopping List", 0.5);
-  const pricedRecipe = await priceIngredients(recipe);
-  pricedRecipe.shoppingList.reduce((acc, item) => {
+  // Perform operations that require the priced recipe
+  const validShoppingList = pricedRecipe.shoppingList.every((item) => {
     if (!item.ingredient.title) {
       console.log("ERROR missing ingredient: ", item);
-      acc = false;
       throw new Error("Missing ingredient title");
     }
-    return acc;
-  }, true);
-  console.log("PRICED RECIPE", pricedRecipe);
+    return true;
+  });
+
+  if (!validShoppingList) {
+    throw new Error("Shopping list validation failed.");
+  }
+  console.log("VALIDATED SHOPPING LIST", pricedRecipe.shoppingList);
+
+  // Calculate Costs for the recipe
   const recipeWithCosts = calculateCosts(pricedRecipe);
   console.log("RECIPE WITH COSTS", recipeWithCosts);
+
+  // Finalizing the Recipe with any last minute adjustments
+
   progressCallback("Doing a Taste Test", 0.7);
-  const finalizedRecipeFields = await finalizeRecipe(recipeWithCosts);
-  const finalizedRecipe = { ...recipeWithCosts, ...finalizedRecipeFields };
-  console.log("FINALIZED RECIPE", finalizedRecipe);
-  // make sure every item in shopping list has an ingredient.title and if it doesn't, abort the whole function.
-
-  progressCallback("Crunching some numbers", 0.8);
-  const leftovers = await calculateLeftovers(finalizedRecipe);
-  console.log("LEFTOVERS", leftovers);
-  const recipeWithLeftovers = {
-    ...finalizedRecipe,
-    shoppingList: finalizedRecipe.shoppingList.map((item) => ({
-      ...item,
-      amountLeftover: leftovers.find(
-        (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
-      )?.amountLeftover,
-      units: leftovers.find(
-        (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
-      )?.units,
-    })),
+  const finalizedRecipeFields = await finalizeRecipe({
+    ...recipeWithCosts,
+    instructions: recipeInstructions.instructions as string[],
+    prepTime: recipeInstructions.prepTime as number,
+    cookTime: recipeInstructions.cookTime as number,
+  });
+  const finalizedRecipe = {
+    ...recipeWithCosts,
+    ...finalizedRecipeFields,
+    instructions: recipeInstructions.instructions as string[],
+    prepTime: recipeInstructions.prepTime as number,
+    cookTime: recipeInstructions.cookTime as number,
   };
-  console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
+  console.log("FINALIZED RECIPE", finalizedRecipe);
 
-  // rename ingredients to match shopping list
-  for (const item of finalizedRecipe.ingredients) {
-    const shoppingListItem = finalizedRecipe.shoppingList.find(
-      (shoppingListItem) => shoppingListItem.recipeIngredientTitle === item.title
-    );
-    if (shoppingListItem) {
-      item.title = shoppingListItem.ingredient.title;
-    } else {
-      console.log("ERROR missing shopping list item: ", item);
-    }
-  }
+  // progressCallback("Crunching some numbers", 0.8);
+  // const leftovers = await calculateLeftovers(finalizedRecipe);
+  // console.log("LEFTOVERS", leftovers);
+  // const recipeWithLeftovers = {
+  //   ...finalizedRecipe,
+  //   shoppingList: finalizedRecipe.shoppingList.map((item) => ({
+  //     ...item,
+  //     amountLeftover: leftovers.find(
+  //       (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
+  //     )?.amountLeftover,
+  //     units: leftovers.find(
+  //       (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
+  //     )?.units,
+  //   })),
+  // };
+  // console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
 
-  progressCallback("Taking a Picture", 0.85);
-  const recipeWithImage = await generateImageForRecipe(recipeWithLeftovers);
+  // Wait for the image promise here if the image is needed for the next steps
+  const recipeImage = await recipeImagePromise;
 
-  // save recipe to database
+  const recipeWithImage = { ...finalizedRecipe, image: recipeImage };
+  console.log("RECIPE WITH IMAGE", recipeWithImage);
+
+  // Save recipe to database
   progressCallback("Saving recipe", 0.95);
-  console.log("SAVING RECIPE", recipeWithImage);
   const response = await fetch(
     `/api/saveRecipe?query=${encodeURIComponent(JSON.stringify(recipeWithImage))}`
   );
   progressCallback("Finished", 1);
-  return { ...recipeWithImage, response: response.json() };
+  return { ...recipeWithImage, response: await response.json() } as Recipe;
 }
 
 async function getProteins(): Promise<Ingredient[]> {
@@ -312,16 +329,9 @@ async function generateRecipeInstructions(recipeIdea: {
 
   const response = JSON.parse(await fetchChatResponse(chatHistory));
   return {
-    title: recipeIdea.title,
-    cuisine: recipeIdea.cuisine,
-    description: recipeIdea.description,
-    serves: recipeIdea.serves,
-    ingredients: recipeIdea.ingredients,
-    unpricedIngredients: recipeIdea.unpricedIngredients,
     instructions: response.instructions,
     prepTime: response.prepTime,
     cookTime: response.cookTime,
-    dietaryRestrictions: recipeIdea.dietaryRestrictions,
   };
 }
 
@@ -426,14 +436,11 @@ async function generateImageForRecipe(recipe: any) {
   const prompt = await generateImagePreamble(recipe);
   console.log("generateImageForRecipe PROMPT", prompt);
   const openAIImageURL = (await generateImage(prompt)).url;
-  // replace title with a filename safe title
   const blobUrl = await downloadAndSaveImage(
     openAIImageURL,
     `${recipe.title.replace(/\s/g, "_")}.png`
   );
-  recipe.image = blobUrl;
-  console.log("RECIPE WITH IMAGE: ", recipe);
-  return recipe;
+  return blobUrl;
 }
 
 async function calculateLeftovers(meal: Recipe): Promise<any[]> {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./admin.module.css";
-import { DietaryRestrictions, generateRecipe, generateRecipePreview } from "@/utils/generateRecipe";
+import { DietaryRestrictions, generateRecipe } from "@/utils/generateRecipe";
 import { fetchSearchResults } from "@/utils/search";
 import { generateImage } from "@/utils/image";
 import { downloadAndSaveImage } from "@/utils/downloadAndSaveImage";
