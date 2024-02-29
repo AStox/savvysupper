@@ -13,5 +13,5 @@ export async function fetchChatResponse(chatHistory: any, jsonFormat = true) {
 
   const data = await response.json();
   console.log("Chat Response:", data);
-  return data.content;
+  return data;
 }

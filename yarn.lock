@@ -212,6 +212,11 @@
   dependencies:
     prop-types "^15.8.1"
 
+"@google/generative-ai@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@google/generative-ai/-/generative-ai-0.2.1.tgz#29e5e7fb9379413fdac6da42d22f86c2f9ecc078"
+  integrity sha512-gNmMFadfwi7qf/6M9gImgyGJXY1jKQ/de8vGOqgJ0PPYgQ7WwzZDavbKrIuXS2zdqZZaYtxW3EFN6aG9x5wtFw==
+
 "@graphql-tools/merge@8.3.1":
   version "8.3.1"
   resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-8.3.1.tgz#06121942ad28982a14635dbc87b5d488a041d722"
