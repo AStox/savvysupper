@@ -1,8 +1,12 @@
 // openAIService.ts
-import { AIService, CompletionResponse, CompletionRequestOptions } from "./completionService";
+import {
+  CompletionService,
+  CompletionResponse,
+  CompletionRequestOptions,
+} from "./completionService";
 import OpenAI from "openai";
 
-export class OpenAIService implements AIService {
+export class OpenAIService implements CompletionService {
   private apiKey: string;
 
   constructor(apiKey: string) {
