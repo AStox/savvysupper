@@ -145,27 +145,27 @@ export async function generateRecipe(
   };
   console.log("FINALIZED RECIPE", finalizedRecipe);
 
-  // progressCallback("Crunching some numbers", 0.8);
-  // const leftovers = await calculateLeftovers(finalizedRecipe);
-  // console.log("LEFTOVERS", leftovers);
-  // const recipeWithLeftovers = {
-  //   ...finalizedRecipe,
-  //   shoppingList: finalizedRecipe.shoppingList.map((item) => ({
-  //     ...item,
-  //     amountLeftover: leftovers.find(
-  //       (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
-  //     )?.amountLeftover,
-  //     units: leftovers.find(
-  //       (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
-  //     )?.units,
-  //   })),
-  // };
-  // console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
+  progressCallback("Crunching some numbers", 0.8);
+  const leftovers = await calculateLeftovers(finalizedRecipe);
+  console.log("LEFTOVERS", leftovers);
+  const recipeWithLeftovers = {
+    ...finalizedRecipe,
+    shoppingList: finalizedRecipe.shoppingList.map((item) => ({
+      ...item,
+      amountLeftover: leftovers.find(
+        (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
+      )?.amountLeftover,
+      units: leftovers.find(
+        (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
+      )?.units,
+    })),
+  };
+  console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
 
   // Wait for the image promise here if the image is needed for the next steps
   const recipeImage = await recipeImagePromise;
 
-  const recipeWithImage = { ...finalizedRecipe, image: recipeImage };
+  const recipeWithImage = { ...recipeWithLeftovers, image: recipeImage };
   console.log("RECIPE WITH IMAGE", recipeWithImage);
 
   // Save recipe to database
