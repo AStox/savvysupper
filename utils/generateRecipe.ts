@@ -14,6 +14,7 @@ import prisma from "@/lib/prisma";
 import { Ingredient } from "@prisma/client";
 import { generateImage } from "./image";
 import { downloadAndSaveImage } from "./downloadAndSaveImage";
+import { fetchSaleProteins } from "./chat/fetchSaleProteins";
 
 export interface Recipe {
   id: string;
@@ -96,7 +97,7 @@ export async function generateRecipe(
   const previousRecipes = await getPreviousRecipes();
   const cuisine =
     Object.values(Cuisines)[Math.floor(Math.random() * Object.values(Cuisines).length)];
-  const proteins = await getProteins();
+  const proteins = await fetchSaleProteins();
   progressCallback("Thinking of a Recipe", 0.2);
   const recipeIdea = await generateRecipeIdea(
     proteins,
