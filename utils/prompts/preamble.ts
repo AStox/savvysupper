@@ -34,6 +34,8 @@ export const generateRecipeIdeaPreamble = async (
       : ""
   }
 
+  Proteins on sale: ${proteinsOnSale.map((protein) => protein.title).join(", ")}
+
   Return one recipe in JSON following this example:
   {
     protein: string,

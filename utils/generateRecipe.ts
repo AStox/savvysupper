@@ -70,6 +70,15 @@ export enum Cuisines {
   Moroccan = "Moroccan",
   Cajun = "Cajun",
   MiddleEastern = "Middle Eastern",
+  Korean = "Korean",
+  Vietnamese = "Vietnamese",
+  Brazilian = "Brazilian",
+  Ethiopian = "Ethiopian",
+  British = "British",
+  Irish = "Irish",
+  German = "German",
+  Russian = "Russian",
+  Caribbean = "Caribbean",
 }
 
 interface RecipePreview {
@@ -87,8 +96,14 @@ export async function generateRecipe(
   const previousRecipes = await getPreviousRecipes();
   const cuisine =
     Object.values(Cuisines)[Math.floor(Math.random() * Object.values(Cuisines).length)];
+  const proteins = await getProteins();
   progressCallback("Thinking of a Recipe", 0.2);
-  const recipeIdea = await generateRecipeIdea([], dietaryRestrictions, cuisine, previousRecipes);
+  const recipeIdea = await generateRecipeIdea(
+    proteins,
+    dietaryRestrictions,
+    cuisine,
+    previousRecipes
+  );
   (recipeIdea as any).dietaryRestrictions = dietaryRestrictions;
   console.log("RECIPE IDEA", recipeIdea);
 
@@ -179,6 +194,7 @@ export async function generateRecipe(
 
 async function getProteins(): Promise<Ingredient[]> {
   const threshold = 0.1;
+  // const highestSale =
   const proteins = [
     ...(await fetchSearchResults("Steak", 3, true)).filter(
       (item: any) => item.similarity > threshold
