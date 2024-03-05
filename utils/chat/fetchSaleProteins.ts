@@ -1,6 +1,6 @@
 export async function fetchSaleProteins() {
   try {
-    const response = await fetch(`/api/getSaleProteins`);
+    const response = await fetch(`/api/getSaleItems`);
     if (!response.ok) {
       console.log("RESPONSE NOT OK:", response);
     }

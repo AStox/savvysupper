@@ -20,21 +20,21 @@ export const generateRecipeIdeaPreamble = async (
   ingredients: Ingredient[]
 ) => `Generate a ${cuisine} recipe.
   Try to avoid generating anything too similar to these: ${previousRecipes.join(", ")}
-  Try to use ingredients that are likely to be sold at major Canadian grocery stores.
+  The recipe should be something that only uses ingredients that are likely to be sold at major Canadian grocery stores, like sobeys, metro, loblaws, etc.
   These meals are meant to be cost-saving, and simple to make, so don't include anything too fancy or expensive, but don't be afraid to get creative.
   The meal can be any number of servings, but should be at least 2 servings and should be a complete meal. Don't generate sides, snacks, or smaller dishes unless also accompanied by something else to complete a full meal.
   Don't include the cuisine in the title. For example, "American turkey meatloaf" should just be "Turkey Meatloaf".
-  If the common name for the recipe is in another language, don't translate it to english, unless you think Canadians wouldn't recognize it. Just use the original name. Like "pad gra prow" instead of "Thai Basil Chicken", but something like "Rigatoni con Salsiccia e Crema di Zucca" should be "Rigatoni with Creamy Pumpkin Sauce".
-  But remember that this is for Canadians, so if the common name is in another language, and you think Canadians wouldn't recognize it, then translate it to english.
-  For example, "Espinacas con Garbanzos" should be "Spinach with Chickpeas".
+  If the common name for the recipe is in another language, don't translate it to english, unless you think Canadians wouldn't recognize it. Like "pad gra prow" instead of "Thai Basil Chicken", but something like "Rigatoni con Salsiccia e Crema di Zucca" should be "Rigatoni with Creamy Pumpkin Sauce", "Espinacas con Garbanzos" should be "Spinach with Chickpeas".
+  Remember that this is for Canadians, so if the common name is in another language, and you think Canadians wouldn't recognize it, then translate it to english.
   The title should be short, no more than 4 or 5 words. 
   ${
     !!dietaryRestrictions && dietaryRestrictions.length > 0
       ? `Your recipe must be ${dietaryRestrictions.join(", ")}.`
       : ""
   }
-
-  Proteins on sale: ${proteinsOnSale.map((protein) => protein.title).join(", ")}
+  The following are the ingredients that are the most discounted at the store right now, in order of greatest discount to least discount.
+  You can use these as a starting point for your recipe idea, especially proteins, but you're generating recipes for a website so make sure to avoid repeating yourself using the listed recipes above.
+  ${proteinsOnSale.map((protein) => protein.title).join(", ")}
 
   Return one recipe in JSON following this example:
   {
