@@ -20,40 +20,66 @@ async function similaritySearch(
   let ingredients: (Ingredient & { similarity: number })[];
   if (onSale) {
     ingredients = await prisma.$queryRaw`
-      SELECT
-        "id",
-        "title",
-        "amount",
-        "units",
-        "currentPrice",
-        "regularPrice",
-        "perUnitPrice",
-        "discount",
-        "onSale",
-        1 - (embedding <=> ${vectorQuery}::vector) as similarity
-      FROM ingredients
-      WHERE 1 - (embedding <=> ${vectorQuery}::vector) > .5
-      AND "onSale" = true
-      ORDER BY "discount" DESC, similarity DESC
+      SELECT DISTINCT ON (i.title)
+        i.id,
+        i.title,
+        i.amount,
+        i.units,
+        i."currentPrice",
+        i."regularPrice",
+        i".perUnitPrice",
+        i.discount,
+        i."onSale",
+        1 - (i.embedding <=> ${vectorQuery}::vector) as similarity
+      FROM (
+        SELECT
+          "id",
+          "title",
+          "amount",
+          "units",
+          "currentPrice",
+          "regularPrice",
+          "perUnitPrice",
+          "discount",
+          "onSale",
+          embedding
+        FROM ingredients
+        WHERE 1 - (embedding <=> ${vectorQuery}::vector) > .5
+          AND "onSale" = true
+      ) AS i
+      ORDER BY i.title, i.discount DESC, similarity DESC
       LIMIT ${limit};
     `;
   } else {
     ingredients = await prisma.$queryRaw`
-      SELECT
-        "id",
-        "title",
-        "amount",
-        "units",
-        "currentPrice",
-        "regularPrice",
-        "perUnitPrice",
-        "discount",
-        "onSale",
-        1 - (embedding <=> ${vectorQuery}::vector) as similarity
-      FROM ingredients
-      WHERE 1 - (embedding <=> ${vectorQuery}::vector) > .5
-      AND "onSale" = false
-      ORDER BY "discount" DESC, similarity DESC
+      SELECT DISTINCT ON (i.title)
+        i.id,
+        i.title,
+        i.amount,
+        i.units,
+        i."currentPrice",
+        i."regularPrice",
+        i".perUnitPrice",
+        i.discount,
+        i."onSale",
+        1 - (i.embedding <=> ${vectorQuery}::vector) as similarity
+      FROM (
+        SELECT
+          "id",
+          "title",
+          "amount",
+          "units",
+          "currentPrice",
+          "regularPrice",
+          "perUnitPrice",
+          "discount",
+          "onSale",
+          embedding
+        FROM ingredients
+        WHERE 1 - (embedding <=> ${vectorQuery}::vector) > .5
+          AND "onSale" = false
+      ) AS i
+      ORDER BY i.title, i.discount DESC, similarity DESC
       LIMIT ${limit};
     `;
   }

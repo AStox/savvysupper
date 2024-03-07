@@ -193,65 +193,6 @@ export async function generateRecipe(
   return { ...recipeWithImage, response: await response.json() } as Recipe;
 }
 
-async function getProteins(): Promise<Ingredient[]> {
-  const threshold = 0.1;
-  // const highestSale =
-  const proteins = [
-    ...(await fetchSearchResults("Steak", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Veal", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Chicken", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Pork", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Turkey", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Lamb", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Fish", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Seafood", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Bacon", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Sausages", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Tofu", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Tempeh", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Lentils", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Chickpeas", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Beans", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Quinoa", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-    ...(await fetchSearchResults("Eggs", 3, true)).filter(
-      (item: any) => item.similarity > threshold
-    ),
-  ];
-  return proteins;
-}
-
 async function getPreviousRecipes(): Promise<string[]> {
   const recipes = await fetch("/api/getRecipes").then((res) => res.json());
   return recipes?.map((recipe: Recipe) => recipe.title);
@@ -379,6 +320,11 @@ async function priceIngredients(recipe: Recipe) {
         tryAgain: boolean
       ) => {
         const results = await fetchSearchResults(ingredient.title, 10, false);
+        console.log("---------------Search Results:", results);
+        if (results.length === 0) {
+          // throw an error describing the ingredient, the search query, and the fact that the search returned no results
+          throw new Error(`No results found for ${ingredient.title} from the search`);
+        }
         const chatHistory = [
           {
             role: "user",
