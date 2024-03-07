@@ -82,6 +82,7 @@ const pages = {
     {
       name: "Pantry",
       children: [
+        "Spreads, Syrup & Honey",
         {
           name: "Pasta, Noodles & Sauce",
           children: ["Dry Pasta & Noodles", "Fresh Pasta", "Pasta Sauce"],
