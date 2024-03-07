@@ -15,12 +15,13 @@ model Ingredient {
     title       String
     amount      Float
     units       String
-    category    String
+    category    String[]
     currentPrice Float
     regularPrice Float
     perUnitPrice Float
     discount    Float
     onSale      Boolean
+    image      String?
     dateAdded   DateTime           @default(now())
     RecipeIngredient RecipeIngredient[]
 

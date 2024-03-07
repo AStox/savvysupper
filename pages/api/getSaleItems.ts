@@ -53,7 +53,7 @@ async function getSaleItems(): Promise<Array<Ingredient & { similarity: number }
       FROM ingredients
       WHERE "onSale" = true
       ORDER BY "discount" DESC
-      LIMIT 20
+      LIMIT 50
   `;
 
   return ingredients;
