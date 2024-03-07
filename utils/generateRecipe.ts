@@ -297,11 +297,11 @@ function calculateCosts(pricedRecipe: Recipe) {
   let recipeWithCosts = {
     ...pricedRecipe,
     totalCost: pricedRecipe.shoppingList.reduce(
-      (acc, item) => acc + item.ingredient.currentPrice,
+      (acc, item) => acc + item.ingredient.currentPrice * item.amountToBuy,
       0
     ),
     regularPrice: pricedRecipe.shoppingList.reduce(
-      (acc, item) => acc + item.ingredient.regularPrice,
+      (acc, item) => acc + item.ingredient.regularPrice * item.amountToBuy,
       0
     ),
   };
