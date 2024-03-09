@@ -15,7 +15,7 @@ model Ingredient {
     title       String
     amount      Float
     units       String
-    category    String[]
+    categories    String[]
     currentPrice Float
     regularPrice Float
     perUnitPrice Float

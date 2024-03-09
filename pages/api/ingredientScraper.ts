@@ -7,7 +7,7 @@ export interface Ingredient {
   title: string;
   amount: number;
   units: string;
-  category: string;
+  categories: string[];
   currentPrice: number;
   regularPrice: number;
   perUnitPrice: number;
@@ -145,7 +145,6 @@ const pages = {
 };
 
 async function findLink(page: Page, linkText: string): Promise<string | null> {
-  // Use XPath to find the link based on its text content
   const linkXPath = `//a[contains(text(), "${linkText}")]`;
   const links = await page.$x(linkXPath);
 
@@ -157,7 +156,7 @@ async function findLink(page: Page, linkText: string): Promise<string | null> {
   return null;
 }
 
-async function scrapeUrl(page: Page, url: string, subcategoryName: string): Promise<Ingredient[]> {
+async function scrapeUrl(page: Page, url: string, categoryPath: string[]): Promise<Ingredient[]> {
   await page.goto(url, { waitUntil: "networkidle2" });
 
   let items: Ingredient[] = [];
@@ -180,6 +179,9 @@ async function scrapeUrl(page: Page, url: string, subcategoryName: string): Prom
               .replace(/^(.*?)\s+\d+(\.\d+)?\s+\w+.*$/, "$1")
               .toLowerCase() || "";
 
+          const imageElement = el.previousElementSibling?.lastChild?.firstChild
+            ?.firstChild as HTMLElement;
+          const image = imageElement?.getAttribute("src") || "";
           const quantity =
             el.querySelector(".weight__SingleTextLine-sc-1sjeki5-0")?.textContent?.trim() || "1 ea";
           const currentPrice = parseFloat(
@@ -197,13 +199,12 @@ async function scrapeUrl(page: Page, url: string, subcategoryName: string): Prom
               ? parseFloat((prices[1] || "").replace("$", ""))
               : parseFloat((prices[0] || "").replace("$", ""))
             : currentPrice;
-          return { title, quantity, currentPrice, onSale, regularPrice };
+          return { title, quantity, currentPrice, onSale, regularPrice, image };
         })
     );
 
     newItems.forEach((item: any) => {
-      // Set calculated fields
-      const category = subcategoryName;
+      const categories = categoryPath;
       const discount =
         item.currentPrice && item.regularPrice && item.onSale
           ? item.regularPrice - item.currentPrice
@@ -219,7 +220,7 @@ async function scrapeUrl(page: Page, url: string, subcategoryName: string): Prom
         title: item.title,
         amount,
         units,
-        category,
+        categories,
         currentPrice: item.currentPrice,
         regularPrice: item.regularPrice,
         perUnitPrice,
@@ -234,10 +235,11 @@ async function scrapeUrl(page: Page, url: string, subcategoryName: string): Prom
         }
       }
     });
+
     console.log("scraping page... found", items.length, "items so far");
 
     await page.evaluate(() => window.scrollBy(0, window.innerHeight));
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(500);
     console.log("scrolling...");
 
     reachedBottom = await page.evaluate(() => {
@@ -255,7 +257,11 @@ async function scrapeUrl(page: Page, url: string, subcategoryName: string): Prom
   return items;
 }
 
-async function navigateToCategory(page: Page, categoryName: string): Promise<string> {
+async function navigateToCategory(
+  page: Page,
+  categoryName: string,
+  categoryPath: string[]
+): Promise<string> {
   const topLevelCategories = new Set(
     pages.children.map((cat) => (typeof cat === "string" ? cat : cat.name))
   );
@@ -281,16 +287,18 @@ function isWithinLastWeek(date: Date): boolean {
   return date > oneWeekAgo;
 }
 
-async function processSubcategory(page: Page, categoryPath: string[], subcategoryName: string) {
+async function processSubcategory(page: Page, categoryPath: string[]) {
+  const subcategoryName = categoryPath[categoryPath.length - 1];
+
   // Iterate through each category in the path
   for (const categoryName of categoryPath) {
-    await navigateToCategory(page, categoryName);
+    await navigateToCategory(page, categoryName, categoryPath);
   }
 
-  const subcategoryLink = await navigateToCategory(page, subcategoryName);
+  const subcategoryLink = await navigateToCategory(page, subcategoryName, categoryPath);
 
   console.log(`Scraping data from subcategory: ${subcategoryName}`);
-  const items = await scrapeUrl(page, subcategoryLink, subcategoryName);
+  const items = await scrapeUrl(page, subcategoryLink, categoryPath);
 
   await prisma.ingredient.createMany({
     data: items,
@@ -298,7 +306,6 @@ async function processSubcategory(page: Page, categoryPath: string[], subcategor
 }
 
 async function processCategories(page: Page, categories: any, categoryPath: string[] = []) {
-  // Show progress
   for (let i = 0; i < categories.length; i++) {
     const totalCategories = categories.length;
     const progress = (i / totalCategories) * 100;
@@ -306,9 +313,8 @@ async function processCategories(page: Page, categories: any, categoryPath: stri
       `Progress: ${progress.toFixed(2)}% done (${i}/${totalCategories} categories processed)`
     );
 
-    // Process the category
     if (typeof categories[i] === "string") {
-      await processSubcategory(page, categoryPath, categories[i]);
+      await processSubcategory(page, [...categoryPath, categories[i]]);
     } else {
       await processCategories(page, categories[i].children, [...categoryPath, categories[i].name]);
     }
@@ -320,16 +326,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1080 });
-
-  // request interception to disable images and CSS
-  // await page.setRequestInterception(true);
-  // page.on("request", (request) => {
-  //   if (request.resourceType() === "image" || request.resourceType() === "stylesheet") {
-  //     request.abort();
-  //   } else {
-  //     request.continue();
-  //   }
-  // });
 
   try {
     console.log("Navigating to main products page...");
