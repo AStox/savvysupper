@@ -12,7 +12,7 @@ generator client {
 
 model Ingredient {
     id          String             @default(cuid()) @id
-    title       String
+    title       String             @unique
     amount      Float
     units       String
     categories    String[]

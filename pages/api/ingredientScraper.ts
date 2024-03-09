@@ -266,7 +266,7 @@ async function navigateToCategory(
     pages.children.map((cat) => (typeof cat === "string" ? cat : cat.name))
   );
 
-  if (topLevelCategories.has(categoryName)) {
+  if (topLevelCategories.has(categoryName) && categoryPath.length === 1) {
     console.log("Navigating to main products page for top-level category...");
     await page.goto("https://voila.ca/products", { waitUntil: "networkidle2" });
   }
@@ -280,29 +280,30 @@ async function navigateToCategory(
   return categoryLink;
 }
 
-function isWithinLastWeek(date: Date): boolean {
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
-  return date > oneWeekAgo;
-}
-
 async function processSubcategory(page: Page, categoryPath: string[]) {
   const subcategoryName = categoryPath[categoryPath.length - 1];
 
-  // Iterate through each category in the path
-  for (const categoryName of categoryPath) {
-    await navigateToCategory(page, categoryName, categoryPath);
+  // Navigate to the parent category first
+  for (let i = 0; i < categoryPath.length - 1; i++) {
+    const categoryName = categoryPath[i];
+    await navigateToCategory(page, categoryName, categoryPath.slice(0, i + 1));
   }
 
+  // Navigate to the subcategory
   const subcategoryLink = await navigateToCategory(page, subcategoryName, categoryPath);
 
   console.log(`Scraping data from subcategory: ${subcategoryName}`);
   const items = await scrapeUrl(page, subcategoryLink, categoryPath);
 
-  await prisma.ingredient.createMany({
-    data: items,
-  });
+  const upsertItems = items.map((item) => ({
+    where: { title: item.title },
+    create: item,
+    update: item,
+  }));
+
+  const upsertedItems = await prisma.$transaction(
+    upsertItems.map((item) => prisma.ingredient.upsert(item))
+  );
 }
 
 async function processCategories(page: Page, categories: any, categoryPath: string[] = []) {
@@ -314,9 +315,27 @@ async function processCategories(page: Page, categories: any, categoryPath: stri
     );
 
     if (typeof categories[i] === "string") {
-      await processSubcategory(page, [...categoryPath, categories[i]]);
+      const currentCategory = categories[i];
+      await processSubcategory(page, [...categoryPath, currentCategory]);
     } else {
-      await processCategories(page, categories[i].children, [...categoryPath, categories[i].name]);
+      const currentCategory = categories[i].name;
+      await processCategories(page, categories[i].children, [...categoryPath, currentCategory]);
+    }
+
+    // Check if we've finished processing the current top-level category
+    const topLevelCategories = new Set(
+      pages.children.map((cat) => (typeof cat === "string" ? cat : cat.name))
+    );
+    const currentTopLevelCategory = categoryPath[0];
+    const nextCategory = categories[i + 1];
+
+    if (
+      topLevelCategories.has(currentTopLevelCategory) &&
+      (nextCategory === undefined || topLevelCategories.has(nextCategory))
+    ) {
+      // We've finished processing the current top-level category
+      console.log("Finished processing top-level category:", currentTopLevelCategory);
+      categoryPath = []; // Reset the categoryPath for the next top-level category
     }
   }
 }
