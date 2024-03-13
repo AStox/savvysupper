@@ -35,9 +35,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         WHERE id = ${(batchIngredients[i] as any).id}
       `;
         console.log(
-          `Updated ingredient ${start + i + 1} of ${ingredients.length}: ${
-            batchIngredients[i].title
-          }`
+          `Updated ingredient ${start + i + 1} of ${ingredients.length}: title: ${
+            ingredients[i].title
+          }, categories: ${ingredients[i].categories.join(" -> ")}`
         );
       }
     }
