@@ -8,7 +8,7 @@ let lastId: number | null = null;
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   // find all ingredients with no embedding
   const ingredients =
-    (await prisma.$queryRaw`SELECT id, title, amount, units, "currentPrice", "regularPrice", "perUnitPrice", "discount", "onSale", "dateAdded" FROM "ingredients" WHERE "embedding" IS NULL`) as Ingredient[];
+    (await prisma.$queryRaw`SELECT id, title, amount, units, categories, "currentPrice", "regularPrice", "perUnitPrice", "discount", "onSale", "dateAdded" FROM "ingredients" WHERE "embedding" IS NULL`) as Ingredient[];
 
   console.log(`Found ${ingredients.length} ingredients with no embedding`);
 
@@ -49,7 +49,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 async function vectorizeData(data: Ingredient[]) {
   const apiKey: string | undefined = process.env.OPENAI_API_KEY;
   const openAI = new OpenAI({ apiKey: apiKey });
-  const titles = data.map((ingredient) => ingredient.title);
+  const titles = data.map(
+    (ingredient) => `title: ${ingredient.title}, categories: ${ingredient.categories.join(" -> ")}`
+  );
   const response = await openAI.embeddings.create({
     model: "text-embedding-3-large",
     input: titles,

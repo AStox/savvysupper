@@ -43,6 +43,18 @@ const AdminPage = () => {
     setLoading(false);
   };
 
+  const deleteVectors = async () => {
+    setLoading(true);
+    setNumberOfRecipes(1);
+    setProgress("");
+    setResponse("");
+    setImageSrc("");
+    const response = await fetch("/api/deleteVectors", { method: "POST" });
+    const data = await response.json();
+    setResponse(JSON.stringify(data, null, 2));
+    setLoading(false);
+  };
+
   const searchCollection = async () => {
     setLoading(true);
     setNumberOfRecipes(1);
@@ -105,6 +117,9 @@ const AdminPage = () => {
       </button>
       <button className={styles.button} onClick={vectorize} disabled={loading}>
         Vectorize
+      </button>
+      <button className={styles.button} onClick={deleteVectors} disabled={loading}>
+        Delete Vectors
       </button>
       <div className={styles.searchGroup}>
         <input
