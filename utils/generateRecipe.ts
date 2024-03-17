@@ -27,6 +27,7 @@ export interface Recipe {
   cookTime: number;
   ingredients: {
     title: string;
+    category: string;
     amount: number;
     units: string;
   }[];
@@ -316,13 +317,12 @@ async function priceIngredients(recipe: Recipe) {
       console.log("Looking for Ingredient:", firstIngredient);
 
       const findClosestIngredient = async (
-        ingredient: { title: string; amount: number; units: string },
+        ingredient: { title: string; amount: number; units: string; category: string },
         tryAgain: boolean
       ) => {
-        const results = await fetchSearchResults(ingredient.title, 10, false);
-        console.log("---------------Search Results:", results);
+        const query = `title:${ingredient.title}, category:${ingredient.category}`;
+        const results = await fetchSearchResults(query, 10, false);
         if (results.length === 0) {
-          // throw an error describing the ingredient, the search query, and the fact that the search returned no results
           throw new Error(`No results found for ${ingredient.title} from the search`);
         }
         const chatHistory = [
@@ -350,12 +350,15 @@ async function priceIngredients(recipe: Recipe) {
             title: fromChat.newTitle,
             amount: ingredient.amount,
             units: ingredient.units,
+            category: fromChat.newCategory,
           },
           false
         );
       }
       const closestIngredientTitle = fromChat.title;
-      const closestIngredient = (await fetchSearchResults(closestIngredientTitle, 1, false))[0];
+      const closestIngredientCategory = fromChat.category;
+      const closestIngredientQuery = `title:${closestIngredientTitle}, category:${closestIngredientCategory}`;
+      const closestIngredient = (await fetchSearchResults(closestIngredientQuery, 1, false))[0];
       if (!closestIngredient) {
         recipe.shoppingList[i] = {
           error: `Could not find ${firstIngredient}${

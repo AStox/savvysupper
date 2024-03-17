@@ -53,15 +53,17 @@ export const generateRecipeIngredientsPreamble = async (
 given the following recipe idea, choose the ingredients and return them following this example JSON:
 {
   ingredients: {
-    priced: {title: "string", amount: number, units: "string"}[],
-    unpriced: {title: "string", amount: number, units: "string"}[]
+    priced: {title: string, amount: number, units: string, category: string}[],
+    unpriced: {title: string, amount: number, units: string}[]
   },
 }
+  Categories should be something like "fruit", "vegetable", "beef", "chicken", "cheese", "grain", etc.
   priced ingredients' units should be one of the following: "g", "ml", "tsp", "tbsp", "cup", "oz", "lb", "count"
   unpriced units can be whatever makes sense.
+  Priced ingredients are all the major ingredients of the recipe, like proteins, vegetables, grains, etc.
+  unpriced ingredients are minor ingredients, like spices, oils, vinegars, etc.
   Unpriced ingredients should be common pantry items like cooking oils, olive oil, vegetable oil, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary. Other unpriced ingredients could be things like salt, pepper, sugar, flour, etc.
   This is a recipe for Canadians so non-Canadian, International or uncommon spices should be priced. Some examples: Garam Masala, Sumac, Za'atar, turmeric, Dashi, tamarind paste, etc.
-  Basically anything a regular Canadian would have in their pantry should be unpriced.
   Unpriced ingredients should not include things like fresh herbs, like fresh basil, fresh rosemary, fresh thyme, etc.
   Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
   Optimize for cost, even if that means buying in bulk.
@@ -103,7 +105,7 @@ export const generatePricingIngredientsPreamble = async (
   tryAgain = false
 ) => `You are a helpful algorithm designed to choose ingredients from the grocery store for a ${
   recipe.title
-} recipe. 
+} recipe. You are trying to optimize for cost savings.
 Return responses in valid JSON following this example:
 {
   title: string;
@@ -122,8 +124,8 @@ I am looking for ${recipeIngredient.amount}${recipeIngredient.units} of ${
 While focusing on cost savings, tell me which of the following grocery items I should buy and how many of it I should buy.
 Amounts don't need to be exact, but should be close. If the recipe calls for 500g of chicken, 400g is fine. Don't buy two of the chicken in this case.
 But if the recipe calls for 500g of chicken, 250g is not enough. Buy more than one of the chicken in this case.
-When choosing between items, consider the perUnitPrice.
 When it comes to bell peppers, for example, if the recipe calls for 2 bell peppers, and the store sells them individually, you should buy two. If the store sells them in a mix pack of 3, you should buy 1 pack.
+When choosing between items, consider the perUnitPrice and optimize for cost savings.
 ${JSON.stringify(
   storeItems.map((item: any) => ({
     title: item.title,
@@ -138,7 +140,7 @@ ${
     ? `If the item I'm looking for is not in the list, tell me a substitute I should look for instead. Return it in the following format:
 {
 newTitle: string; 
-newQuantity: string;
+newCategory: string;
 }`
     : ``
 }
