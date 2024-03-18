@@ -7,6 +7,12 @@ export interface CompletionRequestOptions {
   jsonFormat?: boolean;
 }
 
+export enum CompletionServiceType {
+  OPENAI = "openai",
+  ANTHROPIC = "anthropic",
+  GOOGLE = "google",
+}
+
 export interface CompletionService {
   getCompletion(options: CompletionRequestOptions): Promise<CompletionResponse>;
 }

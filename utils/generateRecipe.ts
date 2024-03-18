@@ -14,7 +14,7 @@ import prisma from "@/lib/prisma";
 import { Ingredient } from "@prisma/client";
 import { generateImage } from "./image";
 import { downloadAndSaveImage } from "./downloadAndSaveImage";
-import { fetchSaleProteins } from "./chat/fetchSaleProteins";
+import { fetchSaleProteins } from "./fetchSaleProteins";
 
 export interface Recipe {
   id: string;

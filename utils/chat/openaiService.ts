@@ -1,4 +1,3 @@
-// openAIService.ts
 import {
   CompletionService,
   CompletionResponse,
