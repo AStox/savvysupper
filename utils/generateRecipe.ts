@@ -114,16 +114,15 @@ export async function generateRecipe(
 
   // generate instructions and price the ingredients. Can happen in parallel.
   progressCallback("Making a Shopping List", 0.5);
-  const [recipeInstructions, pricedRecipe] = await Promise.all([
-    generateRecipeInstructions(recipeIngredients),
-    priceIngredients(recipeIngredients),
-  ]);
+  const recipeInstructionsPromise = generateRecipeInstructions(recipeIngredients);
+  const pricedRecipe = priceIngredients(recipeIngredients);
 
   // Calculate Costs for the recipe
-  const recipeWithCosts = calculateCosts(pricedRecipe);
+  const recipeWithCosts = calculateCosts(await pricedRecipe);
 
   // Finalizing the Recipe with any last minute adjustments
   progressCallback("Doing a Taste Test", 0.7);
+  const recipeInstructions = await recipeInstructionsPromise;
   const finalizedRecipeFields = await finalizeRecipe({
     ...recipeWithCosts,
     instructions: recipeInstructions.instructions as string[],
@@ -178,7 +177,7 @@ async function generateRecipeIdea(
     previousRecipes,
     []
   );
-  console.log("generateRecipeIdea PREAMBLE", preamble);
+  // console.log("generateRecipeIdea PREAMBLE", preamble);
   let chatHistory = [
     {
       role: "user",
@@ -206,7 +205,7 @@ async function generateRecipeIngredients(recipeIdea: {
   dietaryRestrictions: string[];
 }): Promise<any> {
   const preamble = await generateRecipeIngredientsPreamble(recipeIdea);
-  console.log("generateRecipeIngredients PREAMBLE", preamble);
+  // console.log("generateRecipeIngredients PREAMBLE", preamble);
   let chatHistory = [
     {
       role: "user",
@@ -238,7 +237,7 @@ async function generateRecipeInstructions(recipeIdea: {
   dietaryRestrictions: string[];
 }): Promise<Partial<Recipe>> {
   const preamble = await generateRecipeInstructionsPreamble(recipeIdea);
-  console.log("generateRecipeInstructions PREAMBLE", preamble);
+  // console.log("generateRecipeInstructions PREAMBLE", preamble);
   let chatHistory = [
     {
       role: "user",
@@ -363,7 +362,7 @@ async function finalizeRecipe(
 
 async function generateImageForRecipe(recipe: any) {
   const prompt = await generateImagePreamble(recipe);
-  console.log("generateImageForRecipe PROMPT", prompt);
+  // console.log("generateImageForRecipe PROMPT", prompt);
   const openAIImageURL = (await generateImage(prompt)).url;
   const blobUrl = await downloadAndSaveImage(
     openAIImageURL,
