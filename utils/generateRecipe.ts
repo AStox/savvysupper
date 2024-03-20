@@ -10,7 +10,6 @@ import {
 } from "./prompts/preamble";
 import { fetchChatResponse } from "./chat";
 import { fetchSearchResults } from "./search";
-import prisma from "@/lib/prisma";
 import { Ingredient } from "@prisma/client";
 import { generateImage } from "./image";
 import { downloadAndSaveImage } from "./downloadAndSaveImage";
@@ -83,22 +82,19 @@ export enum Cuisines {
   Caribbean = "Caribbean",
 }
 
-interface RecipePreview {
-  title: string;
-  description: string;
-  image: string;
-  dietaryRestrictions: DietaryRestrictions[];
-}
-
 export async function generateRecipe(
   dietaryRestrictions: DietaryRestrictions[] = [],
   progressCallback: (status: string, progress: number) => void
 ): Promise<Recipe> {
+  // getting requesite data for recipe generation. Can happen asynchronously
   progressCallback("Thinking of a Recipe", 0.1);
-  const previousRecipes = await getPreviousRecipes();
-  const cuisine =
-    Object.values(Cuisines)[Math.floor(Math.random() * Object.values(Cuisines).length)];
-  const proteins = await fetchSaleProteins();
+  const [previousRecipes, cuisine, proteins] = await Promise.all([
+    getPreviousRecipes(),
+    getCuisine(),
+    fetchSaleProteins(),
+  ]);
+
+  // Generate simple recipe name and description. Needs to happen before we can proceed with ingredients, instructions, image.
   progressCallback("Thinking of a Recipe", 0.2);
   const recipeIdea = await generateRecipeIdea(
     proteins,
@@ -109,43 +105,24 @@ export async function generateRecipe(
   (recipeIdea as any).dietaryRestrictions = dietaryRestrictions;
   console.log("RECIPE IDEA", recipeIdea);
 
-  // Start image generation asynchronously
+  // Generate image for the recipe based on recipe idea. Nothing depends on this so it can happen asynchronously
   const recipeImagePromise = generateImageForRecipe(recipeIdea);
 
-  progressCallback("Choosing Ingredients", 0.3);
+  // generate an ingredient list for the recipe. Required for pricing and instructions, so await.
   const recipeIngredients = await generateRecipeIngredients(recipeIdea as any);
   console.log("RECIPE INGREDIENTS", recipeIngredients);
 
-  // Run recipe instructions generation and ingredient pricing concurrently
+  // generate instructions and price the ingredients. Can happen in parallel.
+  progressCallback("Making a Shopping List", 0.5);
   const [recipeInstructions, pricedRecipe] = await Promise.all([
     generateRecipeInstructions(recipeIngredients),
     priceIngredients(recipeIngredients),
   ]);
 
-  console.log("RECIPE INSTRUCTIONS", recipeInstructions);
-  console.log("PRICED RECIPE", pricedRecipe);
-
-  progressCallback("Making a Shopping List", 0.5);
-  // Perform operations that require the priced recipe
-  const validShoppingList = pricedRecipe.shoppingList.every((item) => {
-    if (!item.ingredient.title) {
-      console.log("ERROR missing ingredient: ", item);
-      throw new Error("Missing ingredient title");
-    }
-    return true;
-  });
-
-  if (!validShoppingList) {
-    throw new Error("Shopping list validation failed.");
-  }
-  console.log("VALIDATED SHOPPING LIST", pricedRecipe.shoppingList);
-
   // Calculate Costs for the recipe
   const recipeWithCosts = calculateCosts(pricedRecipe);
-  console.log("RECIPE WITH COSTS", recipeWithCosts);
 
   // Finalizing the Recipe with any last minute adjustments
-
   progressCallback("Doing a Taste Test", 0.7);
   const finalizedRecipeFields = await finalizeRecipe({
     ...recipeWithCosts,
@@ -160,30 +137,13 @@ export async function generateRecipe(
     prepTime: recipeInstructions.prepTime as number,
     cookTime: recipeInstructions.cookTime as number,
   };
-  console.log("FINALIZED RECIPE", finalizedRecipe);
 
   progressCallback("Crunching some numbers", 0.8);
-  const leftovers = await calculateLeftovers(finalizedRecipe);
-  console.log("LEFTOVERS", leftovers);
-  const recipeWithLeftovers = {
-    ...finalizedRecipe,
-    shoppingList: finalizedRecipe.shoppingList.map((item) => ({
-      ...item,
-      amountLeftover: leftovers.find(
-        (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
-      )?.amountLeftover,
-      units: leftovers.find(
-        (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
-      )?.units,
-    })),
-  };
-  console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
+  const recipeWithLeftovers = await calculateLeftovers(finalizedRecipe);
 
-  // Wait for the image promise here if the image is needed for the next steps
+  // Await for the image promise here
   const recipeImage = await recipeImagePromise;
-
   const recipeWithImage = { ...recipeWithLeftovers, image: recipeImage };
-  console.log("RECIPE WITH IMAGE", recipeWithImage);
 
   // Save recipe to database
   progressCallback("Saving recipe", 0.95);
@@ -373,6 +333,9 @@ async function priceIngredients(recipe: Recipe) {
       } as any;
     })
   );
+
+  validateShoppingList(recipe.shoppingList);
+
   return recipe;
 }
 
@@ -409,8 +372,8 @@ async function generateImageForRecipe(recipe: any) {
   return blobUrl;
 }
 
-async function calculateLeftovers(meal: Recipe): Promise<any[]> {
-  const leftovers = [];
+async function calculateLeftovers(meal: Recipe): Promise<Recipe> {
+  const leftovers: any[] = [];
   for (const ingredient of meal.ingredients) {
     const preamble = await generateLeftoversPreamble(
       ingredient,
@@ -427,5 +390,37 @@ async function calculateLeftovers(meal: Recipe): Promise<any[]> {
     console.log("calculateLeftovers RESPONSE", response);
     leftovers.push(...response.leftovers);
   }
-  return leftovers as any[];
+  const recipeWithLeftovers = {
+    ...meal,
+    shoppingList: meal.shoppingList.map((item) => ({
+      ...item,
+      amountLeftover: leftovers.find(
+        (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
+      )?.amountLeftover,
+      units: leftovers.find(
+        (leftover) => leftover.title.toLowerCase() === item.ingredient.title.toLowerCase()
+      )?.units,
+    })),
+  };
+  return recipeWithLeftovers;
+}
+
+async function getCuisine(): Promise<string> {
+  const cuisines = Object.values(Cuisines);
+  return cuisines[Math.floor(Math.random() * cuisines.length)];
+}
+
+function validateShoppingList(shoppingList: any[]) {
+  const validShoppingList = shoppingList.every((item) => {
+    if (!item.ingredient.title) {
+      console.log("ERROR missing ingredient: ", item);
+      throw new Error("Missing ingredient title");
+    }
+    return true;
+  });
+
+  if (!validShoppingList) {
+    throw new Error("Shopping list validation failed.");
+  }
+  console.log("VALIDATED SHOPPING LIST", shoppingList);
 }

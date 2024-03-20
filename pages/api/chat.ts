@@ -8,7 +8,7 @@ export const config = {
   maxDuration: 300,
 };
 
-const completionsService: CompletionServiceType = CompletionServiceType.ANTHROPIC;
+const completionsService: CompletionServiceType = CompletionServiceType.OPENAI;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
