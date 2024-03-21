@@ -34,7 +34,15 @@ export const generateRecipeIdeaPreamble = async (
   }
   The following are the ingredients that are the most discounted at the store right now, in order of greatest discount to least discount.
   You can use these as a starting point for your recipe idea, especially proteins, but you're generating recipes for a website so make sure to avoid repeating yourself using the listed recipes above.
-  ${proteinsOnSale.map((protein) => protein.title).join(", ")}
+  ${JSON.stringify(
+    proteinsOnSale.map((item: any) => ({
+      title: item.title,
+      price: item.currentPrice.toFixed(2),
+      discount: (item.regularPrice - item.currentPrice).toFixed(2),
+      amount: item.amount,
+      units: item.units,
+    }))
+  )}
 
   Return one recipe in JSON following this example:
   {
@@ -112,7 +120,7 @@ Return responses in valid JSON following this example:
   amountToBuy: number;
 }
 
-I am looking for ${recipeIngredient.amount}${recipeIngredient.units} of ${
+I am looking for ${recipeIngredient.amount} ${recipeIngredient.units} of ${
   recipeIngredient.title
 } for this recipe: ${recipe.title}. Ingredients must be ${recipe.dietaryRestrictions?.join(", ")}.
 While focusing on cost savings, tell me which of the following grocery items I should buy and how many of it I should buy.
@@ -123,7 +131,8 @@ When choosing between items, consider the perUnitPrice and optimize for cost sav
 ${JSON.stringify(
   storeItems.map((item: any) => ({
     title: item.title,
-    price: item.currentPrice,
+    price: item.currentPrice.toFixed(2),
+    discount: (item.regularPrice - item.currentPrice).toFixed(2),
     amount: item.amount,
     units: item.units,
   }))
@@ -148,7 +157,7 @@ You've generated the following recipe, then from a list of available grocery ite
   Adjust the title, description, and instructions to match the shopping list. Do not include brand names anywhere.
   The title should just be the same as the original recipe's title, but fix any inconsistencies, as ingredients may have been changed.
   Don't mention ingredient amounts in the instructions unless absolutely necessary, in which case, err on the side of the recipe's original amounts.
-  Update the description to fix any inconsistencies, as ingredients may have been changed. Mention any major ingredient changes in the description. This means changes like "chicken" to "tofu" or "beef" to "lamb", but not changes like "red bell pepper" to "green bell pepper". Only changes that alter the essence of the recipe should be mentioned.
+  Update the description to fix any inconsistencies, as ingredients may have been changed.
   present it in the following JSON format:
   
   {
@@ -165,9 +174,6 @@ export const generateFinalizeRecipePreamble2 =
   async () => `Now also adjust the dietary restrictions and cuisine based on the full recipe.
   return the adjusted fields along with the previous JSON like so:
   {
-    title: string;
-    description: string;
-    instructions: string[];
     cuisine: string;
     dietaryRestrictions: string[];
   }
@@ -193,6 +199,7 @@ export const generateImagePreamble = async (recipe: Recipe) => `
 
   Recipe:
     name: ${recipe.title}
+    cuisine: ${recipe.cuisine}
     description: ${recipe.description}}
   `;
 

@@ -18,7 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       size: "1024x1024",
     });
     const data = response.data[0];
-    console.log("DATA:", data);
     res.status(200).json(data);
   } catch (error) {
     console.error("Error with OpenAI image:", error);

@@ -44,7 +44,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         dietaryRestrictions: r.dietaryRestrictions,
       },
     });
-    console.log("RESPONSE FROM PRISMA:", response);
 
     res.status(200).json(r);
   } catch (error) {

@@ -103,7 +103,6 @@ export async function generateRecipe(
     previousRecipes
   );
   (recipeIdea as any).dietaryRestrictions = dietaryRestrictions;
-  console.log("RECIPE IDEA", recipeIdea);
 
   // Generate image for the recipe based on recipe idea. Nothing depends on this so it can happen asynchronously
   const recipeImagePromise = generateImageForRecipe(recipeIdea);
@@ -116,6 +115,7 @@ export async function generateRecipe(
   progressCallback("Making a Shopping List", 0.5);
   const recipeInstructionsPromise = generateRecipeInstructions(recipeIngredients);
   const pricedRecipe = priceIngredients(recipeIngredients);
+  console.log("PRICED RECIPE", pricedRecipe);
 
   // Calculate Costs for the recipe
   const recipeWithCosts = calculateCosts(await pricedRecipe);
@@ -136,13 +136,17 @@ export async function generateRecipe(
     prepTime: recipeInstructions.prepTime as number,
     cookTime: recipeInstructions.cookTime as number,
   };
+  console.log("FINALIZED RECIPE", finalizedRecipe);
 
   progressCallback("Crunching some numbers", 0.8);
   const recipeWithLeftovers = await calculateLeftovers(finalizedRecipe);
+  console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
 
   // Await for the image promise here
   const recipeImage = await recipeImagePromise;
   const recipeWithImage = { ...recipeWithLeftovers, image: recipeImage };
+
+  console.log("RECIPE WITH IMAGE", recipeWithImage);
 
   // Save recipe to database
   progressCallback("Saving recipe", 0.95);
@@ -150,7 +154,8 @@ export async function generateRecipe(
     `/api/saveRecipe?query=${encodeURIComponent(JSON.stringify(recipeWithImage))}`
   );
   progressCallback("Finished", 1);
-  return { ...recipeWithImage, response: await response.json() } as Recipe;
+  const saveResponse = await response.json();
+  return { ...recipeWithImage, response: saveResponse.title ? "OK" : "ERROR" } as Recipe;
 }
 
 async function getPreviousRecipes(): Promise<string[]> {
@@ -177,7 +182,7 @@ async function generateRecipeIdea(
     previousRecipes,
     []
   );
-  // console.log("generateRecipeIdea PREAMBLE", preamble);
+  console.log("generateRecipeIdea PREAMBLE", preamble);
   let chatHistory = [
     {
       role: "user",
@@ -279,11 +284,15 @@ async function priceIngredients(recipe: Recipe) {
         ingredient: { title: string; amount: number; units: string; category: string },
         tryAgain: boolean
       ) => {
-        const query = `title:${ingredient.title}, category:${ingredient.category}`;
+        const query = `title: ${ingredient.title}`;
         const results = await fetchSearchResults(query, 10, false);
+        console.log("SEARCH Query", query);
+        console.log("SEARCH Results", results);
         if (results.length === 0) {
           throw new Error(`No results found for ${ingredient.title} from the search`);
         }
+        console.log(`INGREDIENT SEARCH PREAMBLE
+        ${await generatePricingIngredientsPreamble(ingredient, results, recipe, tryAgain)}`);
         const chatHistory = [
           {
             role: "user",
@@ -347,16 +356,17 @@ async function finalizeRecipe(
       content: await generateFinalizeRecipePreamble1(recipe),
     },
   ];
-  const response = await fetchChatResponse(chatHistory);
+  const response1 = await fetchChatResponse(chatHistory);
   chatHistory.push({
     role: "assistant",
-    content: response,
+    content: response1,
   });
   chatHistory.push({
     role: "user",
     content: await generateFinalizeRecipePreamble2(),
   });
-  const finalRecipe = JSON.parse(await fetchChatResponse(chatHistory));
+  const response2 = JSON.parse(await fetchChatResponse(chatHistory));
+  const finalRecipe = { response1, ...response2 };
   return finalRecipe;
 }
 
@@ -421,5 +431,4 @@ function validateShoppingList(shoppingList: any[]) {
   if (!validShoppingList) {
     throw new Error("Shopping list validation failed.");
   }
-  console.log("VALIDATED SHOPPING LIST", shoppingList);
 }

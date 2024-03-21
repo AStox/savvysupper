@@ -32,7 +32,7 @@ async function similaritySearch(
         "onSale",
         1 - (embedding <=> ${vectorQuery}::vector) as similarity
       FROM ingredients
-      WHERE 1 - (embedding <=> ${vectorQuery}::vector) > .5
+      WHERE 1 - (embedding <=> ${vectorQuery}::vector) > .6
       AND "onSale" = true
       ORDER BY "discount" DESC, similarity DESC
       LIMIT ${limit};
@@ -51,8 +51,7 @@ async function similaritySearch(
         "onSale",
         1 - (embedding <=> ${vectorQuery}::vector) as similarity
       FROM ingredients
-      WHERE 1 - (embedding <=> ${vectorQuery}::vector) > .5
-      AND "onSale" = false
+      WHERE 1 - (embedding <=> ${vectorQuery}::vector) > .6
       ORDER BY "discount" DESC, similarity DESC
       LIMIT ${limit};
     `;
