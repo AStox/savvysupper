@@ -9,7 +9,7 @@ import {
   generateRecipeInstructionsPreamble,
 } from "./prompts/preamble";
 import { fetchChatResponse } from "./chat";
-import { fetchSearchResults } from "./search";
+import { fetchSearchByTitle, fetchSearchResults } from "./search";
 import { Ingredient } from "@prisma/client";
 import { generateImage } from "./image";
 import { downloadAndSaveImage } from "./downloadAndSaveImage";
@@ -115,7 +115,7 @@ export async function generateRecipe(
   progressCallback("Making a Shopping List", 0.5);
   const recipeInstructionsPromise = generateRecipeInstructions(recipeIngredients);
   const pricedRecipe = priceIngredients(recipeIngredients);
-  console.log("PRICED RECIPE", pricedRecipe);
+  console.log("PRICED RECIPE", await pricedRecipe);
 
   // Calculate Costs for the recipe
   const recipeWithCosts = calculateCosts(await pricedRecipe);
@@ -140,13 +140,13 @@ export async function generateRecipe(
 
   progressCallback("Crunching some numbers", 0.8);
   const recipeWithLeftovers = await calculateLeftovers(finalizedRecipe);
-  console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
+  // console.log("RECIPE WITH LEFTOVERS", recipeWithLeftovers);
 
   // Await for the image promise here
   const recipeImage = await recipeImagePromise;
   const recipeWithImage = { ...recipeWithLeftovers, image: recipeImage };
 
-  console.log("RECIPE WITH IMAGE", recipeWithImage);
+  // console.log("RECIPE WITH IMAGE", recipeWithImage);
 
   // Save recipe to database
   progressCallback("Saving recipe", 0.95);
@@ -310,6 +310,7 @@ async function priceIngredients(recipe: Recipe) {
       };
 
       let fromChat = await findClosestIngredient(ingredient, true);
+      console.log("FROM CHAT", fromChat);
       const secondIngredient = fromChat.title;
       if (fromChat.newTitle) {
         console.log(`Couldn't find ${firstIngredient}, trying ${fromChat.newTitle} instead`);
@@ -324,9 +325,9 @@ async function priceIngredients(recipe: Recipe) {
         );
       }
       const closestIngredientTitle = fromChat.title;
-      const closestIngredientCategory = fromChat.category;
-      const closestIngredientQuery = `title:${closestIngredientTitle}, category:${closestIngredientCategory}`;
-      const closestIngredient = (await fetchSearchResults(closestIngredientQuery, 1, false))[0];
+      // const closestIngredientCategory = fromChat.category;
+      const closestIngredientQuery = `title: ${closestIngredientTitle}`;
+      const closestIngredient = (await fetchSearchByTitle(closestIngredientQuery))[0];
       if (!closestIngredient) {
         recipe.shoppingList[i] = {
           error: `Could not find ${firstIngredient}${
@@ -334,6 +335,7 @@ async function priceIngredients(recipe: Recipe) {
           }`,
         } as any;
       }
+      console.log("Closest Ingredient", closestIngredient.title);
       recipe.shoppingList[i] = {
         ingredient: { ...closestIngredient },
         amountToBuy: fromChat.amountToBuy,
@@ -366,7 +368,7 @@ async function finalizeRecipe(
     content: await generateFinalizeRecipePreamble2(),
   });
   const response2 = JSON.parse(await fetchChatResponse(chatHistory));
-  const finalRecipe = { response1, ...response2 };
+  const finalRecipe = { ...JSON.parse(response1), ...response2 };
   return finalRecipe;
 }
 
@@ -388,7 +390,7 @@ async function calculateLeftovers(meal: Recipe): Promise<Recipe> {
       ingredient,
       meal.shoppingList.find((item) => item.recipeIngredientTitle === ingredient.title)
     );
-    console.log("calculateLeftovers PREAMBLE", preamble);
+    // console.log("calculateLeftovers PREAMBLE", preamble);
     let chatHistory = [
       {
         role: "user",
@@ -396,7 +398,7 @@ async function calculateLeftovers(meal: Recipe): Promise<Recipe> {
       },
     ];
     const response = JSON.parse(await fetchChatResponse(chatHistory));
-    console.log("calculateLeftovers RESPONSE", response);
+    // console.log("calculateLeftovers RESPONSE", response);
     leftovers.push(...response.leftovers);
   }
   const recipeWithLeftovers = {

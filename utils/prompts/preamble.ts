@@ -70,12 +70,12 @@ given the following recipe idea, choose the ingredients and return them followin
   unpriced units can be whatever makes sense.
   Priced ingredients are all the major ingredients of the recipe, like proteins, vegetables, grains, etc.
   unpriced ingredients are minor ingredients, like spices, oils, vinegars, etc.
-  Unpriced ingredients should be common pantry items like cooking oils, olive oil, vegetable oil, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary. Other unpriced ingredients could be things like salt, pepper, sugar, flour, etc.
+  Common pantry items like cooking oils, olive oil, vegetable oil, vinegars, sauces like Soy sauce, Worcestershire sauce, Hot sauce, condiments like  Mustard, Ketchup, Mayonnaise, spices and dried herbs like cinnamon, cumin, dried rosemary should all be unpriced ingredients. Other unpriced ingredients could be things like salt, pepper, sugar, flour, etc.
   This is a recipe for Canadians so non-Canadian, International or uncommon spices should be priced. Some examples: Garam Masala, Sumac, Za'atar, turmeric, Dashi, tamarind paste, etc.
   Unpriced ingredients should not include things like fresh herbs, like fresh basil, fresh rosemary, fresh thyme, etc.
   Keep the ingredients as generic as possible except in cases where it's an important destinction. For exmaple, use "bread crumbs" instead of "whole grain bread crumbs", but use "fresh basil" or "dry basil" instead of "basil".
   Optimize for cost, even if that means buying in bulk.
-  These meals are meant to be cost-saving, and simple to make, so don't include anything too fancy or expensive.
+  These meals are meant to be cost-saving and simple to make, so don't include anything too fancy or expensive.
   If the recipe has any dietary restrictions then you should only include ingredients that fit those restrictions.
 
   Recipe:
@@ -122,12 +122,17 @@ Return responses in valid JSON following this example:
 
 I am looking for ${recipeIngredient.amount} ${recipeIngredient.units} of ${
   recipeIngredient.title
-} for this recipe: ${recipe.title}. Ingredients must be ${recipe.dietaryRestrictions?.join(", ")}.
+} for this recipe: ${recipe.title}. ${
+  (recipe.dietaryRestrictions?.length || 0) > 0
+    ? `Ingredients must be ${recipe.dietaryRestrictions?.join(", ")}.`
+    : `This recipe has no dietary restrictions.`
+} 
+Avoid ingredients that are for a specific dietary restriction unless it's necessary for the recipe. For example, don't choose a gluten-free flour if the recipe isn't gluten-free.)
 While focusing on cost savings, tell me which of the following grocery items I should buy and how many of it I should buy.
 Amounts don't need to be exact, but should be close. If the recipe calls for 500g of chicken, 400g is fine. Don't buy two of the chicken in this case.
 But if the recipe calls for 500g of chicken, 250g is not enough. Buy more than one of the chicken in this case.
 When it comes to bell peppers, for example, if the recipe calls for 2 bell peppers, and the store sells them individually, you should buy two. If the store sells them in a mix pack of 3, you should buy 1 pack.
-When choosing between items, consider the perUnitPrice and optimize for cost savings. Always choose something thats on sale over something thats not, as long as it makes sense for the recipe.
+when choosing an item, optimize for cost, but only if the item won't affect the recipe too much. For example, if the recipe calls for chicken breasts, and the store has chicken thighs on sale, you can choose the thighs. But when making a stew with chicken broth, don't choose a sriracha flavoured broth because it's cheaper.
 ${JSON.stringify(
   storeItems.map((item: any) => ({
     title: item.title,
@@ -172,7 +177,7 @@ You've generated the following recipe, then from a list of available grocery ite
 
 export const generateFinalizeRecipePreamble2 =
   async () => `Now also adjust the dietary restrictions and cuisine based on the full recipe.
-  return the adjusted fields along with the previous JSON like so:
+  return just the adjusted fields in JSON like so:
   {
     cuisine: string;
     dietaryRestrictions: string[];
@@ -196,6 +201,7 @@ export const generateImagePreamble = async (recipe: Recipe) => `
   The meal should look like it's homemade, cooked by an amateur chef, as opposed to professionally made. But it should still be plated and displayed nicely.
   The photo should be taken from a 45 degree angle, and the dish should be centered, in focus and taking up at least 60% of the image
   All ingredients should be shown processed. That means no full onions, but rather chopped onions. No full chickens, but rather chicken breasts or thighs. No whole fish, but rather fillets or chunks.
+  Do NOT show cameras, lighting equipment, or any other objects in the photo. Just a close up of the meal, as if it were on a cooking website.
 
   Recipe:
     name: ${recipe.title}
