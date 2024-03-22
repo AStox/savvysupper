@@ -128,11 +128,12 @@ I am looking for ${recipeIngredient.amount} ${recipeIngredient.units} of ${
     : `This recipe has no dietary restrictions.`
 } 
 Avoid ingredients that are for a specific dietary restriction unless it's necessary for the recipe. For example, don't choose a gluten-free flour if the recipe isn't gluten-free.)
+Prefer unprocessed, whole ingredients over processed or flavoured. So choose something like "chicken broth" over "turmeric and ginger chicken broth".
 While focusing on cost savings, tell me which of the following grocery items I should buy and how many of it I should buy.
 Amounts don't need to be exact, but should be close. If the recipe calls for 500g of chicken, 400g is fine. Don't buy two of the chicken in this case.
 But if the recipe calls for 500g of chicken, 250g is not enough. Buy more than one of the chicken in this case.
 When it comes to bell peppers, for example, if the recipe calls for 2 bell peppers, and the store sells them individually, you should buy two. If the store sells them in a mix pack of 3, you should buy 1 pack.
-when choosing an item, optimize for cost, but only if the item won't affect the recipe too much. For example, if the recipe calls for chicken breasts, and the store has chicken thighs on sale, you can choose the thighs. But when making a stew with chicken broth, don't choose a sriracha flavoured broth because it's cheaper.
+
 ${JSON.stringify(
   storeItems.map((item: any) => ({
     title: item.title,
@@ -194,14 +195,10 @@ export const generateFinalizeRecipePreamble2 =
 
 export const generateImagePreamble = async (recipe: Recipe) => `
   A bright top-down lit, shadowless, studio quality photo of the following recipe plated and ready to serve in a nice, modern and clean setting. The plated dish should be alone in the photo. 
-  The light should be natural lighting from above to minimize shadows. The lighting should not be angled or cast shadows.
-  The photos should resemble those in NYT Cooking, Bon Appetit Magazine or Food 52.
+  The photo should resemble those from a recipe website, like NYT Cooking, Bon Appetit Magazine or Food 52.
   Use only the ingredients in the recipe and ensure they look as realistic as possible. Do not add ingredients, and do not use unnatural shapes or colours.
-  The meal should use realistic but with bright colours and should look appetizing and delicious.
-  The meal should look like it's homemade, cooked by an amateur chef, as opposed to professionally made. But it should still be plated and displayed nicely.
-  The photo should be taken from a 45 degree angle, and the dish should be centered, in focus and taking up at least 60% of the image
+  The photo should be taken from a 45 degree angle, and the dish should be centered, in focus and taking up at least 90% of the image
   All ingredients should be shown processed. That means no full onions, but rather chopped onions. No full chickens, but rather chicken breasts or thighs. No whole fish, but rather fillets or chunks.
-  Do NOT show cameras, lighting equipment, or any other objects in the photo. Just a close up of the meal, as if it were on a cooking website.
 
   Recipe:
     name: ${recipe.title}
