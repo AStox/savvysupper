@@ -16,7 +16,7 @@ export async function fetchSearchResults(query: string, limit: number, onSale: b
 
 export async function fetchSearchByTitle(query: string) {
   try {
-    const response = await fetch(`/api/searchCollection?query=${encodeURIComponent(query)}`);
+    const response = await fetch(`/api/searchByTitle?query=${encodeURIComponent(query)}`);
     if (!response.ok) {
       console.log("RESPONSE NOT OK:", response);
     }

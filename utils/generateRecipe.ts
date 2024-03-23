@@ -327,6 +327,7 @@ async function priceIngredients(recipe: Recipe) {
       const closestIngredientTitle = fromChat.title;
       // const closestIngredientCategory = fromChat.category;
       const closestIngredientQuery = closestIngredientTitle;
+      console.log("Closest Ingredient Query", closestIngredientQuery);
       const closestIngredient = (await fetchSearchByTitle(closestIngredientQuery))[0];
       if (!closestIngredient) {
         recipe.shoppingList[i] = {

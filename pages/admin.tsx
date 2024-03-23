@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./admin.module.css";
 import { DietaryRestrictions, generateRecipe } from "@/utils/generateRecipe";
-import { fetchSearchResults } from "@/utils/search";
+import { fetchSearchByTitle, fetchSearchResults } from "@/utils/search";
 import { generateImage } from "@/utils/image";
 import { downloadAndSaveImage } from "@/utils/downloadAndSaveImage";
 import { deleteRecipe } from "@/utils/deleteRecipe";
@@ -14,6 +14,7 @@ const AdminPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [limit, setLimit] = useState(10);
   const [onSale, setOnSale] = useState(false);
+  const [byTitle, setByTitle] = useState(false);
   const [imagePrompt, setImagePrompt] = useState("");
   const [recipe, setRecipe] = useState("");
   const [numberOfRecipes, setNumberOfRecipes] = useState(1);
@@ -61,7 +62,12 @@ const AdminPage = () => {
     setProgress("");
     setResponse("");
     setImageSrc("");
-    const data = await fetchSearchResults(searchQuery, limit, onSale);
+    let data;
+    if (byTitle) {
+      data = await fetchSearchByTitle(searchQuery);
+    } else {
+      data = await fetchSearchResults(searchQuery, limit, onSale);
+    }
     setResponse(JSON.stringify(data, null, 2));
     setLoading(false);
   };
@@ -147,6 +153,15 @@ const AdminPage = () => {
             disabled={loading}
           />
           On Sale
+        </label>
+        <label className={styles.onSaleCheckbox}>
+          <input
+            type="checkbox"
+            checked={byTitle}
+            onChange={(e) => setByTitle(e.target.checked)}
+            disabled={loading}
+          />
+          By Title
         </label>
         <button className={styles.searchButton} onClick={searchCollection} disabled={loading}>
           Search
