@@ -9,10 +9,7 @@ import ShoppingListSection from "@/components/ShoppingListSection";
 
 export const getStaticProps: GetStaticProps = async () => {
   const recipes = await prisma.recipe.findMany();
-  return {
-    props: { recipes },
-    revalidate: 10,
-  };
+  return { props: { recipes }, revalidate: 10 };
 };
 
 type Props = {
@@ -20,26 +17,44 @@ type Props = {
 };
 
 const HomePage: React.FC<Props> = ({ recipes }) => {
-  const [activeRestrictions, setActiveRestrictions] = useState<Set<DietaryRestrictions>>(new Set());
+  const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
 
-  const toggleRestriction = (restriction: DietaryRestrictions) => {
-    setActiveRestrictions((prev) => {
+  const toggleFilter = (filter: string) => {
+    setActiveFilters((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(restriction)) {
-        newSet.delete(restriction);
+      if (newSet.has(filter)) {
+        newSet.delete(filter);
       } else {
-        newSet.add(restriction);
+        newSet.add(filter);
       }
       return newSet;
     });
   };
 
   const filteredRecipes = recipes.filter((recipe) =>
-    activeRestrictions.size === 0
+    activeFilters.size === 0
       ? true
-      : Array.from(activeRestrictions).every((restriction) =>
-          recipe.dietaryRestrictions.includes(restriction)
+      : Array.from(activeFilters).every(
+          (filter) => recipe.cuisine === filter || recipe.dietaryRestrictions.includes(filter)
         )
+  );
+
+  // Calculate cuisine and dietary restriction counts
+  const cuisineCounts: { [cuisine: string]: number } = {};
+  const dietaryRestrictionCounts: { [restriction: string]: number } = {};
+  recipes.forEach((recipe) => {
+    const cuisine = recipe.cuisine;
+    cuisineCounts[cuisine] = (cuisineCounts[cuisine] || 0) + 1;
+
+    recipe.dietaryRestrictions.forEach((restriction) => {
+      dietaryRestrictionCounts[restriction] = (dietaryRestrictionCounts[restriction] || 0) + 1;
+    });
+  });
+
+  // Sort cuisine and dietary restriction counts in descending order
+  const sortedCuisineCounts = Object.entries(cuisineCounts).sort((a, b) => b[1] - a[1]);
+  const sortedDietaryRestrictionCounts = Object.entries(dietaryRestrictionCounts).sort(
+    (a, b) => b[1] - a[1]
   );
 
   return (
@@ -50,20 +65,37 @@ const HomePage: React.FC<Props> = ({ recipes }) => {
           <div className="flex flex-col w-full h-full overflow-y-auto">
             <div className="px-4 pt-8 md:px-8 lg:px-16">
               <h2 className="text-lg font-semibold mb-4">Filters</h2>
-              <div className="flex gap-2 flex-wrap">
-                {Object.values(DietaryRestrictions).map((restriction) => (
-                  <button
-                    key={restriction}
-                    onClick={() => toggleRestriction(restriction)}
-                    className={`rounded-full px-3 py-1 text-sm font-semibold cursor-pointer transition-colors duration-150 ease-in-out ${
-                      activeRestrictions.has(restriction)
-                        ? "bg-green-500 text-white"
-                        : "bg-green-200 hover:bg-green-300"
-                    }`}
-                  >
-                    {restriction}
-                  </button>
-                ))}
+              <div className="flex flex-col gap-2 mb-4">
+                <div className="flex gap-2 flex-wrap">
+                  {sortedCuisineCounts.map(([cuisine, count]) => (
+                    <button
+                      key={cuisine}
+                      onClick={() => toggleFilter(cuisine)}
+                      className={`rounded-full px-3 py-1 text-sm font-semibold cursor-pointer transition-colors duration-150 ease-in-out ${
+                        activeFilters.has(cuisine)
+                          ? "bg-green-500 text-white"
+                          : "bg-green-200 hover:bg-green-300"
+                      }`}
+                    >
+                      {cuisine}: {count}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex gap-2 flex-wrap">
+                  {sortedDietaryRestrictionCounts.map(([restriction, count]) => (
+                    <button
+                      key={restriction}
+                      onClick={() => toggleFilter(restriction)}
+                      className={`rounded-full px-3 py-1 text-sm font-semibold cursor-pointer transition-colors duration-150 ease-in-out ${
+                        activeFilters.has(restriction)
+                          ? "bg-green-500 text-white"
+                          : "bg-green-200 hover:bg-green-300"
+                      }`}
+                    >
+                      {restriction}: {count}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
             <MealPlanSection recipes={filteredRecipes} />
