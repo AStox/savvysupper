@@ -8,8 +8,34 @@ import { Recipe, DietaryRestrictions } from "@/utils/generateRecipe";
 import ShoppingListSection from "@/components/ShoppingListSection";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const recipes = await prisma.recipe.findMany();
-  return { props: { recipes }, revalidate: 10 };
+  const recipes = await prisma.recipe.findMany({
+    include: {
+      shoppingList: {
+        include: {
+          ingredient: {
+            select: {
+              id: true,
+              title: true,
+              amount: true,
+              units: true,
+              categories: true,
+              currentPrice: true,
+              regularPrice: true,
+              perUnitPrice: true,
+              discount: true,
+              onSale: true,
+              image: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return {
+    props: { recipes: recipes },
+    revalidate: 10,
+  };
 };
 
 type Props = {
@@ -18,6 +44,8 @@ type Props = {
 
 const HomePage: React.FC<Props> = ({ recipes }) => {
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
+
+  console.log(recipes);
 
   const toggleFilter = (filter: string) => {
     setActiveFilters((prev) => {

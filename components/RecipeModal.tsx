@@ -1,7 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import { Recipe } from "@/utils/generateRecipe";
-import { Ingredient } from "@prisma/client";
+import { Recipe, Ingredient as RecipeIngredient } from "@/utils/generateRecipe";
+import { Ingredient } from "@/prisma/client";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface RecipeModalProps {
   meal: Recipe;
@@ -15,50 +17,111 @@ const RecipeModal: React.FC<RecipeModalProps> = ({ meal, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="relative top-20 mx-auto p-5 border w-4/5 md:w-3/4 lg:w-3/4 shadow-lg rounded-md bg-white"
+        className="relative top-20 mx-auto w-4/5 md:w-3/4 lg:w-3/4 shadow-lg rounded-md bg-white overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex flex-col items-center space-y-4">
-          <Image
-            src={meal.image}
-            alt={meal.title}
-            width={300}
-            height={200}
-            className="rounded-md"
-          />
-          <h2 className="text-2xl font-bold">{meal.title}</h2>
+        <div className="flex flex-col items-center">
+          <div className="relative w-full h-96">
+            <Image src={meal.image} alt={meal.title} layout="fill" objectFit="cover" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"></div>
+            <h2 className="absolute bottom-4 left-4 text-3xl font-bold text-white">{meal.title}</h2>
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 bg-white bg-opacity-30 hover:bg-opacity-50 rounded-full p-2 transition duration-200"
+            >
+              <FontAwesomeIcon icon={faTimes} className="h-6 w-6 text-white" />
+            </button>
+          </div>
+          <div className="text-left w-full p-8">
+            <div className="bg-gray-100 rounded-lg p-6 mb-8">
+              <p className="text-lg italic text-gray-600">{meal.description}</p>
+            </div>
+            <h3 className="text-xl font-semibold mb-4">Ingredients</h3>
+            <ul className="space-y-4">
+              {meal.ingredients.map((recipeIngredient, index) => {
+                const shoppingListIngredient = meal.shoppingList.find(
+                  (item) => item.recipeIngredientTitle === recipeIngredient.title
+                );
+                return (
+                  <li key={index} className="flex items-center justify-between">
+                    <span className="w-48 truncate">{recipeIngredient.title}</span>
+                    {shoppingListIngredient && (
+                      <div className="flex items-center bg-gray-100 p-3 rounded ml-4 w-3/4">
+                        <div className="flex items-center gap-3 flex-1 truncate">
+                          {shoppingListIngredient.ingredient.image && (
+                            <Image
+                              src={shoppingListIngredient.ingredient.image}
+                              alt={shoppingListIngredient.ingredient.title}
+                              width={40}
+                              height={40}
+                              className="rounded-full"
+                            />
+                          )}
+                          <span className="font-semibold flex-1 truncate">
+                            {shoppingListIngredient.ingredient.title}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm">
+                            ({shoppingListIngredient.ingredient.amount}{" "}
+                            {shoppingListIngredient.ingredient.units})
+                          </span>
+                          <span className="font-semibold">
+                            x{shoppingListIngredient.amountToBuy}
+                          </span>
+                        </div>
+                        <div className="ml-4 flex-1">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`font-semibold ${
+                                shoppingListIngredient.ingredient.onSale ? "text-green-600" : ""
+                              }`}
+                            >
+                              ${shoppingListIngredient.ingredient.currentPrice}
+                            </span>
 
-          <div className="text-left w-full">
-            <h3 className="text-lg font-semibold ">Ingredients</h3>
-            <ul className="list-disc pl-5">
-              {meal.ingredients.map((ingredient, index) => (
-                <li key={index} className="">
-                  {ingredient.title}{" "}
-                </li>
-              ))}
-              {meal.unpricedIngredients.map((ingredient, index) => (
-                <li key={index} className="">
-                  {ingredient.title}{" "}
-                </li>
-              ))}
+                            {shoppingListIngredient.ingredient.discount > 0 && (
+                              <>
+                                <span className="text-gray-500 line-through">
+                                  ${shoppingListIngredient.ingredient.regularPrice}
+                                </span>
+                                <span className="text-green-600">
+                                  (
+                                  {(
+                                    (shoppingListIngredient.ingredient.discount /
+                                      shoppingListIngredient.ingredient.regularPrice) *
+                                    100
+                                  ).toFixed(0)}
+                                  % off)
+                                </span>
+                              </>
+                            )}
+                            <span className="text-sm">
+                              ($
+                              {Number(shoppingListIngredient.ingredient.perUnitPrice).toFixed(2)}/
+                              {shoppingListIngredient.ingredient.units})
+                            </span>
+                          </div>
+                          <div className="text-sm truncate">
+                            ({shoppingListIngredient.amountLeftover} {shoppingListIngredient.units}{" "}
+                            leftover)
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
-
-            <h3 className="text-lg font-semibold ">Instructions</h3>
-            <ol className="list-decimal pl-5">
+            <h3 className="text-xl font-semibold mt-8 mb-4">Instructions</h3>
+            <ol className="space-y-4 list-decimal pl-5">
               {meal.instructions.map((instruction, index) => (
-                <li key={index} className="">
+                <li key={index} className="text-lg">
                   {instruction}
                 </li>
               ))}
             </ol>
           </div>
-
-          <button
-            onClick={onClose}
-            className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"
-          >
-            Close
-          </button>
         </div>
       </div>
     </div>
